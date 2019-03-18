@@ -5,16 +5,11 @@ from django.views.generic.base import RedirectView
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls, name="admin"),
-    path('', RedirectView.as_view(url='admin/', permanent=False,), name='index'),
+    path("admin/", admin.site.urls, name="admin"),
+    path("", RedirectView.as_view(url="admin/", permanent=False), name="index"),
 ]
 
 if settings.DEBUG:
     import debug_toolbar
-    urlpatterns = [
-        path('__debug__/', include(debug_toolbar.urls)),
 
-    ] + urlpatterns
-
-
-
+    urlpatterns = [path("__debug__/", include(debug_toolbar.urls))] + urlpatterns
