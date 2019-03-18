@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 
 class Product(models.Model):
@@ -9,10 +10,10 @@ class Product(models.Model):
     stock = models.PositiveIntegerField()
     available = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ('name',)
+        ordering = ("name",)
 
     def __str__(self):
         return self.name

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>e-commerce</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+
+<body>
+    {% for product in products %}
+    <div>
+        <p>{{ product.name }}</p>
+        <p>{{ product.description }}</p>
+        <p>{{ product.price }}</p>
+        <p>{{ product.stock }}</p>
+    </div>
+    {% endfor %}
+</body>
+
+</html>
