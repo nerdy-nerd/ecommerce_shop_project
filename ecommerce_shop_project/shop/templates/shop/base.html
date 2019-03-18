@@ -1,5 +1,6 @@
 {% load static %}
 <html>
+<<<<<<< HEAD
     <head>
         <title>DE-commerce Shop/title>
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
@@ -23,4 +24,37 @@
             </div>
         </div>
     </body>
+||||||| merged common ancestors
+
+<head>
+    <title>E-commerce</title>
+</head>
+
+<body>
+    {% block content%}
+    {%endblock%}
+</body>
+
+=======
+    <head>
+        <title>Django Girls blog</title>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="{% static 'css/shop.css' %}">
+    </head>
+    <body>
+        <div class="page-header">
+            <h1><a href="/">E-commerce shop</a></h1>
+        </div>
+        <div class="content container">
+            <div class="row">
+                <div class="col-md-8">
+                {% block content %}
+                {% endblock %}
+                </div>
+            </div>
+        </div>
+    </body>
+>>>>>>> dodanie base'a i stylu, po poprawach gita
 </html>
