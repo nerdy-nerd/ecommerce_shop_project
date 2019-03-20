@@ -1,20 +1,11 @@
-<!DOCTYPE html>
-<html>
+{% extends "shop/base.html"%}
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>e-commerce</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+{% block content %}
+{% for product in products %}
+<div>
+    <h1> <a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h1>
 
-</head>
 
-<body>
-    {% for product in products %}
-    <div>
-        <p>{{ product.name }} | {{ product.price }} </p>
-    </div>
-    {% endfor %}
-</body>
-
-</html>
+</div>
+{% endfor %}
+{%endblock%}
