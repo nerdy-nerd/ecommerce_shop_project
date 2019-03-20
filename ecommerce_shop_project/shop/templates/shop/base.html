@@ -1,6 +1,7 @@
 {% load static %}
 <html>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <head>
         <title>DE-commerce Shop/title>
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
@@ -60,4 +61,40 @@
         </div>
     </body>
 >>>>>>> dodanie base'a i stylu, po poprawach gita
+||||||| merged common ancestors
+
+<head>
+    <title>E-commerce</title>
+</head>
+
+<body>
+    {% block content%}
+    {%endblock%}
+</body>
+
+=======
+    <head>
+        <title>DE-commerce Shop/title>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="{% static 'css/shop.css' %}">
+    </head>
+    <body>
+        <div class="page-header">
+            {% if user.is_authenticated %}
+                <a href="{% url 'product_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
+            {% endif %}
+            <h1><a href="/">E-commerce Shop</a></h1>
+        </div>
+        <div class="content container">
+            <div class="row">
+                <div class="col-md-8">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </body>
+>>>>>>> 216fc0809eb5f75a94b67f6a96680c0e2abcb366
 </html>
