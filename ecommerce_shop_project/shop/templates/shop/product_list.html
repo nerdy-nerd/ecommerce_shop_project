@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    {% load static %}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>e-commerce</title>
@@ -12,6 +13,7 @@
 <body>
     {% for product in products %}
     <div>
+        <img src="{% static 'shop/sportscar_car_sports.jpg'%}" alt="Hi!"/>
         <p>{{ product.name }} | {{ product.price }} </p>
     </div>
     {% endfor %}
