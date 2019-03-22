@@ -1,14 +1,12 @@
 from django.conf import settings
 from django.urls import include, path
 from django.contrib import admin
-from django.views.generic.base import RedirectView
-
+from django.conf.urls.static import static
 
 urlpatterns = [
     path("admin/", admin.site.urls, name="admin"),
-    #path("", RedirectView.as_view(url="admin/", permanent=False), name="index"),
     path("", include(("shop.urls", "shop"), namespace="shop"))
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     import debug_toolbar
