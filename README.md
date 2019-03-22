@@ -10,3 +10,9 @@ Django 2.1.7
 
 ## Code Formatter
 1. To format your code properly use command: black <source_file_or_directory>
+
+## Workflow
+1. Temporary for development process from .gitignore deleted dbsqlite and media to use common database with products and images.
+2. Created superuser admin 
+3. After adding the data to db/changing the model migrate and commit updates
+
