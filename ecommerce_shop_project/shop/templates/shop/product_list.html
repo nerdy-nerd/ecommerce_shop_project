@@ -3,9 +3,8 @@
 {% block content %}
 {% for product in products %}
 <div>
-    <h1> <a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h1>
-
-
+    <h1> <a href="{{ product.get_absolute_url }}"> {{ product.name }}</a></h1>
+    <img class="img-product" src="{{product.image.url}}"/>
 </div>
 {% endfor %}
 {%endblock%}
