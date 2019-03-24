@@ -8,7 +8,7 @@ def register(request):
         form = AccountRegisterForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, "Account created")
+            #messages.success(request, "Account created")
             return redirect('shop:product_list')
 
     else:

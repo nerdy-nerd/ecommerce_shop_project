@@ -1,5 +1,6 @@
 {% extends 'shop/base.html' %}
 
+{% load crispy_forms_tags %}
 
 {% block content %}
 <div>
@@ -7,7 +8,7 @@
         {% csrf_token%}
         <fieldset>
             <legend>Register Your account</legend>
-            {{ form.as_p }}
+            {{ form|crispy }}
         </fieldset>
         <div>
             <button type="submit">Sugn Up</button>
