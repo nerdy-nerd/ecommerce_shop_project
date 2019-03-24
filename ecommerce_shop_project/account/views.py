@@ -9,7 +9,7 @@ def register(request):
         if form.is_valid():
             form.save()
             #messages.success(request, "Account created")
-            return redirect('shop:product_list')
+            return redirect('account:login')
 
     else:
         form = AccountRegisterForm()
