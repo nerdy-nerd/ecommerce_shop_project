@@ -11,14 +11,22 @@
 
 <body>
     <div class="page-header">
-        {% if user.is_authenticated %}
-        <a href="" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
-        {% endif %}
         <h1><a href="{%url 'shop:product_list'%}">E-commerce Shop</a></h1>
+        {% if user.is_authenticated %}
+        <a class="nav-item nav-link" href="#">Profile`</a>
+        <a class="nav-item nav-link" href="{% url 'account:logout' %}">Logout</a>
+        {% else %}
+        <div class="navbar-nav">
+            <a class="nav-item nav-link" href="{% url 'account:login' %}">Login</a>
+            <a class="nav-item nav-link" href="{% url 'account:register' %}">Register</a>
+        </div>
+        {% endif %}
     </div>
+
     <div class="content container">
         <div class="row">
             <div class="col-md-8">
+
                 {% block content %}
                 {% endblock %}
             </div>
