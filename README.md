@@ -10,3 +10,7 @@ Django 2.1.7
 
 ## Code Formatter
 1. To format your code properly use command: black <source_file_or_directory>
+
+## Workflow
+1. After changing the model, run the command python manage.py migrate.
+2. Do not forget to commit updates and database. 
