@@ -1,0 +1,22 @@
+{% extends 'shop/base.html' %}
+
+
+{% block content %}
+<div>
+    <form method="POST">
+        {% csrf_token%}
+        <fieldset>
+            <legend>Register Your account</legend>
+            {{ form.as_p }}
+        </fieldset>
+        <div>
+            <button type="submit">Sugn Up</button>
+        </div>
+    </form>
+    <div>
+        <small>
+            Already Have An Account? <a href="#">Log In</a>
+        </small>
+    </div>
+</div>
+{% endblock %}
