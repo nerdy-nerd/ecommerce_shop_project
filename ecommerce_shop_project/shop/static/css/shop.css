@@ -1,56 +1,84 @@
-h1 a, h2 a {
-    color: rgb(194, 165, 0);
-    font-family: 'Lobster';
+body {
+  background: #fafafa;
+  color: #333333;
+  margin-top: 5rem;
 }
 
-body{
-  padding-left: 45px;
+h1, h2, h3, h4, h5, h6 {
+  color: #444444;
 }
 
-
-.page-header {
-    background-color: rgb(194, 165, 0);
-    margin-top: 0;
-    padding: 20px 20px 20px 40px;
+ul {
+  margin: 0;
 }
 
-.page-header h1, .page-header h1 a, .page-header h1 a:visited, .page-header h1 a:active {
-    color: #ffffff;
-    font-size: 36pt;
-    text-decoration: none;
+.bg-steel {
+  background-color: #5f788a;
 }
 
-.content {
-    margin-left: 40px;
+.site-header .navbar-nav .nav-link {
+  color: #cbd5db;
 }
 
-h1, h2, h3, h4 {
-    font-family: 'Lobster', cursive;
+.site-header .navbar-nav .nav-link:hover {
+  color: #ffffff;
 }
 
-.date {
-    color: #828282;
+.site-header .navbar-nav .nav-link.active {
+  font-weight: 500;
 }
 
-.save {
-    float: right;
+.content-section {
+  background: #ffffff;
+  padding: 10px 20px;
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+  margin-bottom: 20px;
 }
 
-.post-form textarea, .post-form input {
-    width: 100%;
+.article-title {
+  color: #444444;
 }
 
-.top-menu, .top-menu:hover, .top-menu:visited {
-    color: #ffffff;
-    float: right;
-    font-size: 26pt;
-    margin-right: 20px;
+a.article-title:hover {
+  color: #428bca;
+  text-decoration: none;
 }
 
-.post {
-    margin-bottom: 70px;
+.article-content {
+  white-space: pre-line;
 }
 
-.post h2 a, .post h2 a:visited {
-    color: #000000;
+.article-img {
+  height: 65px;
+  width: 65px;
+  margin-right: 16px;
+}
+
+.article-metadata {
+  padding-bottom: 1px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid #e3e3e3
+}
+
+.article-metadata a:hover {
+  color: #333;
+  text-decoration: none;
+}
+
+.article-svg {
+  width: 25px;
+  height: 25px;
+  vertical-align: middle;
+}
+
+.account-img {
+  height: 125px;
+  width: 125px;
+  margin-right: 20px;
+  margin-bottom: 16px;
+}
+
+.account-heading {
+  font-size: 2.5rem;
 }
