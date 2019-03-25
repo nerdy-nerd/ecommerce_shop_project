@@ -2,22 +2,31 @@
 
 {% load crispy_forms_tags %}
 
+
 {% block content %}
-<div>
-    <form method="POST">
-        {% csrf_token%}
-        <fieldset>
-            <legend>Register Your account</legend>
-            {{ form|crispy }}
-        </fieldset>
-        <div>
-            <button type="submit">Sign Up</button>
+<div class="container">
+    <div class="row justify-content-center align-items-center" style="height:100vh">
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token%}
+                        <fieldset>
+                            <legend>Register Your account</legend>
+                            {{ form|crispy }}
+                        </fieldset>
+                        <div>
+                            <button type="submit">Sign Up</button>
+                        </div>
+                    </form>
+                    <div>
+                        <small>
+                            Already Have An Account? <a href="{% url 'account:login'%}">Log In</a>
+                        </small>
+                    </div>
+                </div>
+            </div>
         </div>
-    </form>
-    <div>
-        <small>
-            Already Have An Account? <a href="{% url 'account:login'%}">Log In</a>
-        </small>
     </div>
 </div>
 {% endblock %}

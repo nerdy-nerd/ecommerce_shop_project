@@ -1,11 +1,26 @@
 {% extends 'shop/base.html' %}
+{% block content%}
 
-{% block content %}
-<a class="btn btn-primary" href="{%url 'shop:product_list'%}">Home</a>
-<img class="img-product" src="{{product.image.url}}"/>
-<h1>{{product.name}}</h1>
-<h2>{{product.description}}</h2>
-<h2>{{product.price}}</h2>
-<h2>{{product.stock}}</h2>
 
-{% endblock %}
+{% include 'shop/categories.html' %}
+
+<div class="col-lg-9">
+
+    <div class="card mt-4">
+        <img class="card-img-top img-fluid" src="{{product.image.url}}" alt="">
+        <div class="card-body">
+            <h3 class="card-title">{{ product.name }}</h3>
+            <h4>${{ product.price }}</h4>
+            <p class="card-text">{{ product.description}}</p>
+            <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
+            4.0 stars
+        </div>
+    </div>
+    <!-- /.card -->
+
+</div>
+<!-- /.col-lg-9 -->
+
+
+
+{% endblock%}
