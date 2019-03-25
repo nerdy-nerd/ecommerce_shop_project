@@ -8,6 +8,7 @@ User = get_user_model()
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    phone = models.CharField(max_length=100, null=True, blank=True)
     street = models.CharField(max_length=100, null=True, blank=True)
     city = models.CharField(max_length=100, null=True, blank=True)
     province = models.CharField(max_length=100, null=True, blank=True)
