@@ -5,6 +5,10 @@ from django.shortcuts import get_object_or_404
 
 def product_list(request):
     products = Product.objects.all()
+    for p in products:
+        total_rating = int(p.total_rating)
+        p.stars = range(total_rating)
+        p.empty_stars = range(5 - total_rating)
     context = {"products": products}
     return render(request, "shop/product_list.html", context=context)
 

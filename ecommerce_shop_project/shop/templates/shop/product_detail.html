@@ -12,8 +12,15 @@
             <h3 class="card-title">{{ product.name }}</h3>
             <h4>${{ product.price }}</h4>
             <p class="card-text">{{ product.description}}</p>
-            {{ stars }}
-            {{ empty_stars }}
+            <span class="text-warning">
+            {% for s in stars %}
+               &#9733;
+            {% endfor %}
+                {% for s in empty_stars %}
+               &#9734;
+            {% endfor %}
+                </span>
+
             <!--<span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>-->
             <!--4.0 stars-->
         </div>
