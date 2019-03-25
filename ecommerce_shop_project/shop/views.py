@@ -11,4 +11,7 @@ def product_list(request):
 
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
-    return render(request, "shop/product_detail.html", {"product": product})
+    total_rating = int(product.total_rating)
+    stars = range(total_rating)
+    empty_stars = range(5 - total_rating)
+    return render(request, "shop/product_detail.html", {"product": product, "stars": stars, "empty_stars": empty_stars})
