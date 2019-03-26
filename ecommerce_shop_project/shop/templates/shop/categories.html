@@ -3,13 +3,12 @@
 
 
     <ul class="list-group">
-        <li class="list-group-item list-group-item-light">Hatchback</li>
-        <li class="list-group-item list-group-item-light">Sedan</li>
-        <li class="list-group-item list-group-item-light">Kombi</li>
-        <li class="list-group-item list-group-item-light">Suv</li>
-        <li class="list-group-item list-group-item-light">Terenowe</li>
-        <li class="list-group-item list-group-item-light">Van</li>
-        <li class="list-group-item list-group-item-light">Dostawcze</li>
+        {% for cat in category_list %}
+        <a href="{{cat.get_absolute_url}}">
+            <li class="list-group-item list-group-item-light">{{cat.name}}</li>
+        </a>
+
+        {% endfor %}
     </ul>
 
 </div>
