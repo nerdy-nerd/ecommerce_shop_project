@@ -12,6 +12,7 @@
             <h3 class="card-title">{{ product.name }}</h3>
             <h4>${{ product.price }}</h4>
             <p class="card-text">{{ product.description}}</p>
+            {% if product.count_rating %}
             <span class="text-warning">
             {% for s in stars %}
                &#9733;
@@ -19,6 +20,10 @@
                 {% for s in empty_stars %}
                &#9734;
             {% endfor %}
+
+             {% else%}
+                This product is not rated
+              {% endif %}
                 </span>
 
             <!--<span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>-->

@@ -49,16 +49,16 @@
                     {% if product.count_rating %}
                     <span class="text-muted">
                        {{ stars }}
-            {% for s in product.stars %}
-
-                        &#9733;
-            {% endfor %}
-                {% for s in product.empty_stars %}
-               &#9734;
-            {% endfor %}
-{% endif %}
+                      {% for s in product.stars %}
+                         &#9733;
+                        {% endfor %}
+                       {% for s in product.empty_stars %}
+                         &#9734;
+                        {% endfor %}
+                        {% else %}
+                        This product is not rated
+                     {% endif %}
                 </span>
-                    <!--<small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>-->
                 </div>
             </div>
         </div>
