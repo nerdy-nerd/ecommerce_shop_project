@@ -32,4 +32,3 @@ class UserAdminCreationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ("email", "staff", "admin")
-
