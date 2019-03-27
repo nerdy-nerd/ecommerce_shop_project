@@ -36,6 +36,16 @@
                     <a class="nav-item nav-link" href="#">About</a>
                     <a class="nav-item nav-link" href="#">Contact</a>
                 </div>
+                <div class="search-nav">
+                    <form action="." method="get">
+                        <input type="text" name="q" class="search" value="{% if query %}{{ query }}{% endif %}">
+                        <button type="submit" class="btn-dark">Szukaj</button>
+                        {% if query %}
+                        <button type="submit" formmethod="post" class="close-icon" name="clear-button"></button>
+                        {% csrf_token %}
+                        {% endif %}
+                    </form>
+                </div>
                 <!-- Navbar Right Side -->
                 <div class="navbar-nav">
                     {% if user.is_authenticated %}
@@ -48,6 +58,7 @@
                     {% endif %}
                 </div>
             </div>
+            
         </div>
     </nav>
 

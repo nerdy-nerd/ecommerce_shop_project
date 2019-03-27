@@ -27,6 +27,17 @@ class IndexView(ListView):
 
         return context
 
+    def get(self, request, *args, **kwargs):
+        query = request.GET.get("q")
+        products = Product.objects.all()
+        if query:
+            products = products.filter(name__contains=query)
+        populate_products_add_ratings(products)
+        context = super().get_context_data(*args, **kwargs)
+        context["query"] = query
+
+        return render(request, self.template_name, context=context)
+
 
 class CategoryProductView(ListView):
 

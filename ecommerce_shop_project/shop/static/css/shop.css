@@ -82,3 +82,38 @@ a.article-title:hover {
 .account-heading {
   font-size: 2.5rem;
 }
+
+.search-nav {
+  margin: auto;
+  position: relative;
+}
+
+.search {
+  width: 70%;
+}
+
+.close-icon {
+  position: absolute;
+  right: 80px;
+  top:10%;
+  border:1px solid transparent;
+  background-color: transparent;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.close-icon:after {
+  content: "X";
+  display: block;
+  width: 15px;
+  height: 15px;
+  z-index:1;
+  bottom: 0;
+  margin: auto;
+  padding: 2px;
+  text-align: center;
+  color: black;
+  font-weight: normal;
+  font-size: 12px;
+  cursor: pointer;
+}
