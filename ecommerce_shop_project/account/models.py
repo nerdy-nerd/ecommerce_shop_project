@@ -34,9 +34,16 @@ class User(AbstractBaseUser):
     active = models.BooleanField(default=True)  # can login
     staff = models.BooleanField(default=False)  # staff user non superuser
     admin = models.BooleanField(default=False)  # superuser
-    timestamp = models.DateTimeField(auto_now_add=True)
-    # confirm     = models.BooleanField(default=False)
-    # confirmed_date     = models.DateTimeField(default=False)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    phone = models.CharField(max_length=100, null=True, blank=True)
+    street = models.CharField(max_length=100, null=True, blank=True)
+    city = models.CharField(max_length=100, null=True, blank=True)
+    province = models.CharField(max_length=100, null=True, blank=True)
+    code = models.CharField(max_length=100, null=True, blank=True)
 
     USERNAME_FIELD = "email"  # username
     REQUIRED_FIELDS = []
