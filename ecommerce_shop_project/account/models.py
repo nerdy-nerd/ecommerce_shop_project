@@ -44,6 +44,7 @@ class User(AbstractBaseUser):
     city = models.CharField(max_length=100, null=True, blank=True)
     province = models.CharField(max_length=100, null=True, blank=True)
     code = models.CharField(max_length=100, null=True, blank=True)
+    country = models.CharField(max_length=100, null=True, blank=True)
 
     USERNAME_FIELD = "email"  # username
     REQUIRED_FIELDS = []

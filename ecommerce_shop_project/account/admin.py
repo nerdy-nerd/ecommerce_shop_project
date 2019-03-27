@@ -20,9 +20,12 @@ class UserAdmin(BaseUserAdmin):
     fieldsets = (
         (None, {"fields": ("email", "password")}),
         ("Personal info", {"fields": ("first_name", "last_name", "phone")}),
-        ("Adress", {"fields": ("street", "city", "province", "code")}),
+        ("Adress", {"fields": ("street", "city", "province", "code", "country")}),
+        ("Timestamps", {"fields": ("created", "updated")}),
         ("Permissions", {"fields": ("active", "admin", "staff")}),
     )
+    readonly_fields = ("created", "updated")
+
     add_fieldsets = (
         (None, {"classes": ("wide",), "fields": ("email", "password1", "password2")}),
     )

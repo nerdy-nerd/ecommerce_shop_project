@@ -16,7 +16,16 @@ class AccountRegisterForm(UserCreationForm):
 class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ["email"]
+        fields = (
+            "first_name",
+            "last_name",
+            "phone",
+            "street",
+            "city",
+            "province",
+            "code",
+            "country",
+        )
 
 
 class UserAdminCreationForm(UserCreationForm):
@@ -28,4 +37,13 @@ class UserAdminCreationForm(UserCreationForm):
 class UserAdminChangeForm(UserChangeForm):
     class Meta:
         model = User
-        fields = ("email", "password", "active", "admin")
+        fields = (
+            "first_name",
+            "last_name",
+            "phone",
+            "street",
+            "city",
+            "province",
+            "code",
+            "country",
+        )
