@@ -46,7 +46,19 @@
                     <p class="card-text">{{ product.description }}</p>
                 </div>
                 <div class="card-footer">
-                    <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                    {% if product.count_rating %}
+                    <span class="text-muted">
+                       {{ stars }}
+                      {% for s in product.stars %}
+                         &#9733;
+                        {% endfor %}
+                       {% for s in product.empty_stars %}
+                         &#9734;
+                        {% endfor %}
+                        {% else %}
+                        This product is not rated
+                     {% endif %}
+                </span>
                 </div>
             </div>
         </div>
