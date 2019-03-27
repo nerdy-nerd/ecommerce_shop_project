@@ -46,9 +46,9 @@
                     <p class="card-text">{{ product.description }}</p>
                 </div>
                 <div class="card-footer">
+                    {{product.price}}
                     {% if product.count_rating %}
                     <span class="text-muted">
-                       {{ stars }}
                       {% for s in product.stars %}
                          &#9733;
                         {% endfor %}

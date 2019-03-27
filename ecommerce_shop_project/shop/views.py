@@ -5,6 +5,14 @@ from django.views.generic.list import ListView
 from django.http import HttpResponse
 
 
+def populate_products_add_ratings(products):
+    for p in products:
+        total_rating = int(p.total_rating)
+        p.stars = range(total_rating)
+        p.empty_stars = range(5 - total_rating)
+    return products
+
+
 class IndexView(ListView):
 
     model = Category
@@ -13,7 +21,10 @@ class IndexView(ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context["products"] = Product.objects.all()
+        products = Product.objects.all()
+        populate_products_add_ratings(products)
+        context["products"] = products
+
         return context
 
 
@@ -24,23 +35,15 @@ class CategoryProductView(ListView):
 
     def get_queryset(self):
         self.category = get_object_or_404(Category, name=self.kwargs["name"])
-        return self.category.product_set.all()
+        products = self.category.product_set.all()
+        populate_products_add_ratings(products)
+        return products
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context["category_list"] = Category.objects.all()
         context["category"] = self.category
         return context
-
-
-def product_list(request):
-    products = Product.objects.all()
-    for p in products:
-        total_rating = int(p.total_rating)
-        p.stars = range(total_rating)
-        p.empty_stars = range(5 - total_rating)
-    context = {"products": products}
-    return render(request, "shop/product_list.html", context=context)
 
 
 def product_detail(request, pk):
