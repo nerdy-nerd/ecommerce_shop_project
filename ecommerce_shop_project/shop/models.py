@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils import timezone
 from django.urls import reverse
 
 
@@ -8,6 +7,9 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse("shop:category_product", args=[str(self.name)])
 
 
 class Product(models.Model):

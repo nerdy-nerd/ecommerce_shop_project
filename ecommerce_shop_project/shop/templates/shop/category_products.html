@@ -33,7 +33,7 @@
     </div>
 
     <div class="row">
-
+        {% if products %}
         {% for product in products %}
         <div class="col-lg-4 col-md-6 mb-4">
             <div class="card h-100">
@@ -46,23 +46,26 @@
                     <p class="card-text">{{ product.description }}</p>
                 </div>
                 <div class="card-footer">
-                    {{product.price}}
                     {% if product.count_rating %}
                     <span class="text-muted">
-                      {% for s in product.stars %}
-                         &#9733;
+                        {{ stars }}
+                        {% for s in product.stars %}
+                        &#9733;
                         {% endfor %}
-                       {% for s in product.empty_stars %}
-                         &#9734;
+                        {% for s in product.empty_stars %}
+                        &#9734;
                         {% endfor %}
                         {% else %}
                         This product is not rated
-                     {% endif %}
-                </span>
+                        {% endif %}
+                    </span>
                 </div>
             </div>
         </div>
         {% endfor %}
+        {% else %}
+        <h3>There are no products in {{category.name}} category</h3>
+        {% endif %}
     </div>
     <!-- /.row -->
 
