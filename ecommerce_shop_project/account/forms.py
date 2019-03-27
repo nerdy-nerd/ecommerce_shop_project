@@ -1,30 +1,39 @@
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
-
-
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django import forms
+from django.contrib.auth import get_user_model
 
 
-# class AccountRegisterForm(UserCreationForm):
-#     email = forms.EmailField(required=True)
-
-#     def __init__(self, *args, **kwargs):
-#         super().__init__(*args, **kwargs)
-#         for fieldname in ["username", "password1", "password2"]:
-#             self.fields[fieldname].help_text = None
-
-#     class Meta:
-#         model = User
-#         fields = ["username", "email", "password1", "password2"]
+User = get_user_model()
 
 
-# class UserUpdateForm(forms.ModelForm):
-#     class Meta:
-#         model = User
-#         fields = ["username", "email", "first_name", "last_name"]
+class AccountRegisterForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ["email", "password1", "password2"]
 
 
-# class ProfileUpdateForm(forms.ModelForm):
-#     class Meta:
-#         model = Profile
-#         fields = ["street", "city", "province", "code", "phone"]
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ["email"]
+
+
+class UserAdminCreationForm(UserCreationForm):
+    """A form for creating new users. Includes all the required
+    fields, plus a repeated password."""
+
+    class Meta:
+        model = User
+        fields = ("email", "staff", "admin")
+
+
+class UserAdminChangeForm(UserChangeForm):
+    """A form for updating users. Includes all the fields on
+    the user, but replaces the password field with admin's
+    password hash display field.
+    """
+
+    class Meta:
+        model = User
+        fields = ("email", "password", "active", "admin")
