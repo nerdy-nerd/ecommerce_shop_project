@@ -33,17 +33,3 @@ class UserAdminCreationForm(UserCreationForm):
         model = User
         fields = ("email", "staff", "admin")
 
-
-class UserAdminChangeForm(UserChangeForm):
-    class Meta:
-        model = User
-        fields = (
-            "first_name",
-            "last_name",
-            "phone",
-            "street",
-            "city",
-            "province",
-            "code",
-            "country",
-        )
