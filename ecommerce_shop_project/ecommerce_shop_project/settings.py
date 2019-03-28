@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "shop",
     "account",
     "crispy_forms",
+    "cart",
 ]
 
 MIDDLEWARE = [
@@ -126,9 +127,10 @@ CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 LOGIN_REDIRECT_URL = "shop:index"
 
-INTERNAL_IPS = ['127.0.0.1']
+INTERNAL_IPS = ["127.0.0.1"]
 
 AUTH_USER_MODEL = "account.CustomUser"
 
 AUTH_USER_MODEL = "account.User"
 
+CART_SESSION_ID = "cart"

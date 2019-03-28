@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import Product, Category
 from django.shortcuts import get_object_or_404
 from django.views.generic.list import ListView
+from cart.forms import CartAddProductForm
 from django.http import HttpResponse
 
 
@@ -58,13 +59,13 @@ class CategoryProductView(ListView):
 
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
+    cart_product_form = CartAddProductForm()
     category_list = Category.objects.all()
 
     # star rating
     total_rating = int(product.total_rating)
     stars = range(total_rating)
     empty_stars = range(5 - total_rating)
-
     # comments
     comments = product.comment_set.filter(active=True)
 
@@ -76,10 +77,9 @@ def product_detail(request, pk):
             new_comment.user = request.user
             new_comment.save()
         #after submin redirect to porduct page
-            return redirect(product) # same as product.get_absolute_url
+            return redirect(product)  # same as product.get_absolute_url
     else:
         form = CommentForm()
-
     context = {
         "product": product,
         "category_list": category_list,
@@ -87,6 +87,6 @@ def product_detail(request, pk):
         "empty_stars": empty_stars,
         "comments": comments,
         "form": form,
+        "cart_product_form": cart_product_form,
     }
     return render(request, "shop/product_detail.html", context=context)
-

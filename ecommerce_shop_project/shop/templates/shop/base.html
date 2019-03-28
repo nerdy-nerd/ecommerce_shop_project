@@ -79,6 +79,22 @@
         <!-- /.row -->
 
     </div>
+    <div class="container">
+    <div class="row" style="margin-top: 6%">
+         <button class="btn btn-info pull-right">
+            {% with totail_items=cart|length %}
+                {% if cart|length > 0 %}
+                    My Shopping Order:
+                    <a href="{% url 'cart:cart_detail' %}" style="color: #ffffff">
+                        {{ totail_items }} item {{ totail_items|pluralize }}, $ {{ cart.get_total_price }}
+                    </a>
+                    {% else %}
+                    Your cart is empty.
+                {% endif %}
+            {% endwith %}
+         </button>
+    </div>
+</div>
     <!-- /.container -->
     <!-- Footer -->
     <footer class="py-5 bg-dark">

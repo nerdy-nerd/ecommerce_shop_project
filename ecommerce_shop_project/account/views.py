@@ -57,6 +57,7 @@ def profile(request):
     user = get_object_or_404(User, pk=request.user.pk)
     context = {"user": user, "profile_page": True}
     return render(request, "account/profile.html", context=context)
+<<<<<<< HEAD
 
 
 class ProfileUpdateView(LoginRequiredMixin, UpdateView):
@@ -69,3 +70,5 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     def get_object(self):
         user = User.objects.get(pk=self.request.user.id)
         return user
+=======
+>>>>>>> temp
