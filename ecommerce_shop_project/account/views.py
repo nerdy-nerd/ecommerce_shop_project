@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
-from django.contrib import messages
 from django.contrib.auth.views import LoginView, LogoutView
 from django.views.generic import UpdateView
 from django.contrib.auth.decorators import login_required
@@ -17,7 +16,6 @@ def register(request):
         form = AccountRegisterForm(request.POST)
         if form.is_valid():
             form.save()
-            # messages.success(request, "Account created")
             return redirect("shop:index")
 
     else:
@@ -39,25 +37,11 @@ class UserLogoutView(LogoutView):
         model = User
 
 
-# def profile(request):
-#     if request.method == "POST":
-#         user_form = UserUpdateForm(request.POST, instance=request.user)
-#         if user_form.is_valid:
-#             user_form.save()
-
-#     else:
-#         user_form = UserUpdateForm(instance=request.user)
-
-#     context = {"u_form": user_form}
-#     return render(request, "account/profile.html", context=context)
-
-
 @login_required(login_url=reverse_lazy("account:login"))
 def profile(request):
     user = get_object_or_404(User, pk=request.user.pk)
     context = {"user": user, "profile_page": True}
     return render(request, "account/profile.html", context=context)
-<<<<<<< HEAD
 
 
 class ProfileUpdateView(LoginRequiredMixin, UpdateView):
@@ -70,5 +54,4 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     def get_object(self):
         user = User.objects.get(pk=self.request.user.id)
         return user
-=======
->>>>>>> temp
+

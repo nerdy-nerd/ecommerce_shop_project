@@ -69,6 +69,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                'cart.context_processors.cart',
             ]
         },
     }
@@ -134,3 +135,4 @@ AUTH_USER_MODEL = "account.CustomUser"
 AUTH_USER_MODEL = "account.User"
 
 CART_SESSION_ID = "cart"
+
