@@ -19,24 +19,20 @@ class IndexView(ListView):
     template_name = "shop/index.html"
     context_object_name = "category_list"
 
+    def post(self, *args, **kwargs):
+        return self.get(*args, **kwargs)
+
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        products = Product.objects.all()
-        populate_products_add_ratings(products)
-        context["products"] = products
-
-        return context
-
-    def get(self, request, *args, **kwargs):
-        query = request.GET.get("q")
+        query = self.request.GET.get("q")
         products = Product.objects.all()
         if query:
             products = products.filter(name__contains=query)
         populate_products_add_ratings(products)
-        context = super().get_context_data(*args, **kwargs)
+        context["products"] = products
         context["query"] = query
 
-        return render(request, self.template_name, context=context)
+        return context
 
 
 class CategoryProductView(ListView):
