@@ -49,8 +49,11 @@
                 <!-- Navbar Right Side -->
                 <div class="navbar-nav">
                     {% if user.is_authenticated %}
-                    <a class="nav-item nav-link" href="{% url 'account:profile' %}">Welcome,
-                        {{ user.username }}</a>
+                    {% block topbarbuttons%}
+                    <a class="nav-item nav-link" href="{% url 'account:profile'%}">Welcome,
+                        {{ user.email }}</a>ć
+                    {% endblock %}
+
                     <a class="nav-item nav-link" href="{% url 'account:logout' %}">Logout</a>
                     {% else %}
                     <a class="nav-item nav-link" href="{% url 'account:login' %}">Login</a>
