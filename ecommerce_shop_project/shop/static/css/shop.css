@@ -117,3 +117,14 @@ a.article-title:hover {
   font-size: 12px;
   cursor: pointer;
 }
+.user_name{
+  font-size:14px;
+  font-weight: bold;
+}
+.comments-list {
+  border-bottom: 3px dotted #ccc;
+}
+.media{
+  padding: 8px;
+  border: 1px solid #ccc;
+}

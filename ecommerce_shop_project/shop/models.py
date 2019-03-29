@@ -1,5 +1,9 @@
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth import get_user_model
+from django.utils import timezone
+
+User = get_user_model()
 
 
 class Category(models.Model):
@@ -22,7 +26,7 @@ class Product(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='images/', default="")
+    image = models.ImageField(upload_to="images/", default="")
     total_rating = models.DecimalField(max_digits=3, decimal_places=2, default=0)
     count_rating = models.PositiveIntegerField(default=0)
 
@@ -34,3 +38,18 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Comment(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    body = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ["created"]
+
+    def __str__(self):
+        return "Comment from {} related to {}".format(self.user, self.product)

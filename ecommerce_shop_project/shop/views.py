@@ -1,8 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Product, Category
 from django.shortcuts import get_object_or_404
 from django.views.generic.list import ListView
 from django.http import HttpResponse
+
+
+from .forms import CommentForm
 
 
 def populate_products_add_ratings(products):
@@ -56,9 +59,34 @@ class CategoryProductView(ListView):
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
     category_list = Category.objects.all()
+
+    # star rating
     total_rating = int(product.total_rating)
     stars = range(total_rating)
     empty_stars = range(5 - total_rating)
-    context = {"product": product, "category_list": category_list, "stars": stars, "empty_stars": empty_stars}
+
+    # comments
+    comments = product.comment_set.filter(active=True)
+
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            new_comment = form.save(commit=False)
+            new_comment.product = product
+            new_comment.user = request.user
+            new_comment.save()
+        #after submin redirect to porduct page
+            return redirect(product) # same as product.get_absolute_url
+    else:
+        form = CommentForm()
+
+    context = {
+        "product": product,
+        "category_list": category_list,
+        "stars": stars,
+        "empty_stars": empty_stars,
+        "comments": comments,
+        "form": form,
+    }
     return render(request, "shop/product_detail.html", context=context)
 
