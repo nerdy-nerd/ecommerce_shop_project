@@ -25,9 +25,13 @@
 
                 {% else%}
                 This product is not rated
-                {% endif %}
-            </span>
-
+              {% endif %}
+                </span>
+            <form action="{% url 'cart:cart_add' product.id %}" method="post">
+                                {% csrf_token %}
+                                {{ cart_product_form }}
+                                <input type="submit" value="add to cart" class="btn btn-primary">
+                            </form>
             <!--<span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>-->
             <!--4.0 stars-->
         </div>
