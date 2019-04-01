@@ -33,8 +33,7 @@
         <div class="collapse navbar-collapse" id="navbarToggle">
             <div class="navbar-nav mr-auto">
                 <a class="nav-item nav-link" href="{% url 'shop:index' %}">Home</a>
-                <a class="nav-item nav-link" hrefls
-                        ="#">About</a>
+                <a class="nav-item nav-link" href="#">About</a>
                 <a class="nav-item nav-link" href="#">Contact</a>
             </div>
             <div class="search-nav">
@@ -54,7 +53,7 @@
                     {% if cart|length > 0 %}
                     My Shopping Order:
                     <a href="{% url 'cart:cart_detail' %}" style="color: #ffffff">
-                        {{ totail_items }} item {{ totail_items|pluralize }}, $ {{ cart.get_total_price }}
+                        {{ totail_items }} item{{ totail_items|pluralize }}, $ {{ cart.get_total_price }}
                     </a>
                     {% else %}
                     Your cart is empty.
