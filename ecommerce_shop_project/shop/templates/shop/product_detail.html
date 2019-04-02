@@ -59,19 +59,14 @@
                             <p><small>{{comment.updated}}</small></p>
                             <div class="body-text">{{comment.body}}</div>
                             <input type="submit" value="save" class="hidden submit-button">
-
-
                             {% if user.id == comment.user.id %}
-
-
-
-
-                            <input type="button" value="edit" onclick="switchVisibiliy({{comment.pk}})">
-
-
+                            <input type="button" value="edit" class=" edit-button"
+                                onclick="switchVisibiliy({{comment.pk}})">
+                            {% endif %}
+                        </form>
                     </div>
-                    {% endif %}
-                    </form>
+
+
                 </div>
                 {% endfor %}
                 {% if user.is_authenticated %}
@@ -102,7 +97,8 @@
         form = document.querySelector(".comment-" + comment_pk);
         form.querySelector(".body-text").classList.toggle('hidden');
         form.querySelector(".body-input").classList.toggle('hidden');
-        form.querySelector(".submit-button").classList.toggle('hidden')
+        form.querySelector(".submit-button").classList.toggle('hidden');
+        form.querySelector(".edit-button").classList.toggle('hidden');
     }
 
 </script>

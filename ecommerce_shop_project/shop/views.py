@@ -103,8 +103,6 @@ def add_comment(request, product_pk=None, comment_pk=None):
             form = CommentForm(request.POST, instance=comment)
             form.save()
             product = comment.product
-    else:
-        print("aaaa")
 
         # after submin redirect to porduct page
     return redirect(product)  # same as product.get_absolute_url
