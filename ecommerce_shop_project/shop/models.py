@@ -53,3 +53,6 @@ class Comment(models.Model):
 
     def __str__(self):
         return "Comment from {} related to {}".format(self.user, self.product)
+
+    def get_absolute_url(self):
+        return reverse("shop:edit_comment", kwargs={"comment_pk": int(self.id)})

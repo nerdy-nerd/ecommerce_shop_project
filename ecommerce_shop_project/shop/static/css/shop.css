@@ -128,3 +128,13 @@ a.article-title:hover {
   padding: 8px;
   border: 1px solid #ccc;
 }
+
+.hidden
+{
+  display: none;
+}
+
+/* .visible
+{
+  display: initial;
+} */

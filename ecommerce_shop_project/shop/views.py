@@ -1,9 +1,12 @@
 from django.shortcuts import render, redirect
-from .models import Product, Category
+from .models import Product, Category, Comment
 from django.shortcuts import get_object_or_404
 from django.views.generic.list import ListView
 from cart.forms import CartAddProductForm
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+from django.urls import reverse_lazy, resolve
+from django.views.decorators.http import require_POST
 
 
 from .forms import CommentForm
@@ -69,17 +72,8 @@ def product_detail(request, pk):
     # comments
     comments = product.comment_set.filter(active=True)
 
-    if request.method == "POST":
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            new_comment = form.save(commit=False)
-            new_comment.product = product
-            new_comment.user = request.user
-            new_comment.save()
-        #after submin redirect to porduct page
-            return redirect(product)  # same as product.get_absolute_url
-    else:
-        form = CommentForm()
+    form = CommentForm()
+
     context = {
         "product": product,
         "category_list": category_list,
@@ -90,3 +84,27 @@ def product_detail(request, pk):
         "cart_product_form": cart_product_form,
     }
     return render(request, "shop/product_detail.html", context=context)
+
+
+@login_required(login_url=reverse_lazy("shop:login"))
+@require_POST
+def add_comment(request, product_pk=None, comment_pk=None):
+    form = CommentForm(request.POST)
+    if form.is_valid():
+        if product_pk:
+            product = get_object_or_404(Product, pk=product_pk)
+
+            new_comment = form.save(commit=False)
+            new_comment.product = product
+            new_comment.user = request.user
+            new_comment.save()
+        else:
+            comment = get_object_or_404(Comment, pk=comment_pk)
+            form = CommentForm(request.POST, instance=comment)
+            form.save()
+            product = comment.product
+    else:
+        print("aaaa")
+
+        # after submin redirect to porduct page
+    return redirect(product)  # same as product.get_absolute_url

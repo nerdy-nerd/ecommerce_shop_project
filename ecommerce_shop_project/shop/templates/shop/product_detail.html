@@ -6,6 +6,9 @@
 
 {% include 'shop/categories.html' %}
 
+
+
+
 <div class="col-lg-9">
 
     <div class="card mt-4">
@@ -48,16 +51,33 @@
                 {% for comment in comments %}
                 <div class="media">
                     <div class="media-body">
-                        <h4 class="media-heading user_name">{{ comment.user.username  }}</h4>
-                        <p><small>{{comment.updated}}</small></p>
-                        {{comment.body}}
+                        <h4 class="media-heading user_name">{{ comment.user  }}</h4>
+                        <form class="comment-{{comment.pk}}"
+                            action="{% url 'shop:edit_comment' comment_pk=comment.pk %}" method="POST">
+                            {% csrf_token %}
+                            <input type="text" name="body" value="{{comment.body}}" class="hidden body-input">
+                            <p><small>{{comment.updated}}</small></p>
+                            <div class="body-text">{{comment.body}}</div>
+                            <input type="submit" value="save" class="hidden submit-button">
+
+
+                            {% if user.id == comment.user.id %}
+
+
+
+
+                            <input type="button" value="edit" onclick="switchVisibiliy({{comment.pk}})">
+
+
                     </div>
+                    {% endif %}
+                    </form>
                 </div>
                 {% endfor %}
                 {% if user.is_authenticated %}
                 <div class="media">
                     <div class="media-body">
-                        <form method="POST">
+                        <form method="POST" action="{% url 'shop:add_comment' product_pk=product.pk %}">
                             {% csrf_token %}
                             {{ form|crispy}}
                             <button type="submit">Add Comment</button>
@@ -77,6 +97,14 @@
 </div>
 <!-- /.col-lg-9 -->
 
+<script>
+    function switchVisibiliy(comment_pk) {
+        form = document.querySelector(".comment-" + comment_pk);
+        form.querySelector(".body-text").classList.toggle('hidden');
+        form.querySelector(".body-input").classList.toggle('hidden');
+        form.querySelector(".submit-button").classList.toggle('hidden')
+    }
 
+</script>
 
 {% endblock%}
