@@ -48,8 +48,8 @@
                 </div>
                 <!-- Navbar Right Side -->
                 <div class="navbar-nav">
-                    <div class="cart">
-                        {% with total_items=cart|length %}
+                    <button class="btn btn-info pull-right">
+                        {% with totail_items=cart|length %}
                         {% if cart|length > 0 %}
                         My Shopping Order:
                         <a href="{% url 'cart:cart_detail' %}" style="color: #ffffff">
@@ -59,8 +59,8 @@
                         Your cart is empty.
                         {% endif %}
                         {% endwith %}
-                    </div>
 
+                    </button>
                     {% block topbarbuttons%}
                     {% if user.is_authenticated %}
                     <a class="nav-item nav-link" href="{% url 'account:profile'%}">
@@ -74,7 +74,6 @@
                     {% endblock %}
 
                 </div>
-
             </div>
         </div>
     </nav>
