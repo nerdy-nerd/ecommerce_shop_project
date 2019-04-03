@@ -9,7 +9,8 @@ urlpatterns = [
     path("contact/", include("contact.urls")),
     path("", include(("shop.urls", "shop"), namespace="shop")),
     path("account/", include(("account.urls", "account"), namespace="account")),
-    path('orders/', include('orders.urls')),
+    path("orders/", include("orders.urls")),
+    path("staff/", include(("staff.urls", "staff"), namespace="staff")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

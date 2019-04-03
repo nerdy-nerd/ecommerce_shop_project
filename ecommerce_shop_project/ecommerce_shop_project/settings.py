@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "cart",
     "orders",
     "contact",
+    "staff",
 ]
 
 MIDDLEWARE = [
@@ -71,7 +72,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                'cart.context_processors.cart',
+                "cart.context_processors.cart",
             ]
         },
     }
@@ -131,8 +132,6 @@ CRISPY_TEMPLATE_PACK = "bootstrap4"
 LOGIN_REDIRECT_URL = "shop:index"
 
 INTERNAL_IPS = ["127.0.0.1"]
-
-AUTH_USER_MODEL = "account.CustomUser"
 
 AUTH_USER_MODEL = "account.User"
 
