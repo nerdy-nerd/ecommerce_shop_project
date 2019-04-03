@@ -86,7 +86,7 @@ def product_detail(request, pk):
     return render(request, "shop/product_detail.html", context=context)
 
 
-@login_required(login_url=reverse_lazy("shop:login"))
+@login_required(login_url=reverse_lazy("account:login"))
 @require_POST
 def add_comment(request, product_pk=None, comment_pk=None):
     form = CommentForm(request.POST)
