@@ -1,4 +1,8 @@
 from django.urls import path
-from shop.views import IndexView
+from . import views
 
-urlpatterns = [path("", IndexView.as_view(), name="product_list")]
+urlpatterns = [
+    path("panel/", views.PanelView.as_view(), name="panel"),
+    path("add_product", views.AddProductView.as_view(), name="add_product"),
+]
+
