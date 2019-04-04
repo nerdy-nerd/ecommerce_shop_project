@@ -1,18 +1,13 @@
-from django.shortcuts import render, reverse
+from django.shortcuts import render, reverse, get_object_or_404
 from django.views.generic.list import ListView
 from django.views.generic import TemplateView
 from shop import models
 from django.db.models import Count
-from django.views.generic.edit import CreateView
-
-from django.http import HttpResponse
+from django.views.generic.edit import CreateView, UpdateView
 
 
 class PanelView(TemplateView):
     template_name = "staff/panel.html"
-
-
-
 
 
 class ProductListView(ListView):
@@ -40,9 +35,8 @@ class UserListView(ListView):
 class AddCategoryView(CreateView):
     template_name = "staff/add_category.html"
     model = models.Category
-    fields = [
-            "name",
-        ]
+    fields = ["name"]
+
     def get_success_url(self):
         return reverse("staff:category_list")
 
@@ -51,14 +45,48 @@ class AddProductView(CreateView):
     template_name = "staff/add_product.html"
     model = models.Product
     fields = [
-            "category",
-            "name",
-            "slug",
-            "description",
-            "price",
-            "stock",
-            "available",
-            "image",
-        ]
+        "category",
+        "name",
+        "slug",
+        "description",
+        "price",
+        "stock",
+        "available",
+        "image",
+    ]
+
     def get_success_url(self):
         return reverse("staff:product_list")
+
+
+class UpdateProductView(UpdateView):
+    template_name = "staff/update_product.html"
+    fields = [
+        "category",
+        "name",
+        "slug",
+        "description",
+        "price",
+        "stock",
+        "available",
+        "image",
+    ]
+
+    def get_success_url(self):
+        return reverse("staff:product_list")
+
+    def get_object(self):
+        prod = get_object_or_404(models.Product, pk=self.kwargs["pk"])
+        return prod
+
+
+class UpdateCategoryView(UpdateView):
+    template_name = "staff/update_category.html"
+    fields = ["name"]
+
+    def get_success_url(self):
+        return reverse("staff:category_list")
+
+    def get_object(self):
+        cat = get_object_or_404(models.Category, pk=self.kwargs["pk"])
+        return cat

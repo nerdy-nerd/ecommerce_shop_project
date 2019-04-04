@@ -18,7 +18,7 @@
         {% endwith%}
         <div class="list-group">
             {% for product in products%}
-            <a href="#" class="list-group-item list-group-item-action">
+            <a href="{% url 'staff:update_product' pk=product.pk %}" class="list-group-item list-group-item-action">
                 {{product.name}} |
                 {{product.category}} |
                 {{product.stock}} |
