@@ -1,0 +1,41 @@
+{% extends 'staff/base.html' %}
+
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<div class="row">
+    <div class="col">
+        <h3>Catalog</h3>
+        <div class="list-group">
+            <a href="{% url 'staff:product_list' %}" class="list-group-item list-group-item-action">Products</a>
+            <a href="{% url 'staff:category_list' %}" class="list-group-item list-group-item-action">Categories</a>
+            <a href="{% url 'staff:comment_list' %}" class="list-group-item list-group-item-action">Comments</a>
+        </div>
+    </div>
+
+
+</div>
+
+<div class="row">
+    <div class="col">
+        <h3>Users</h3>
+        <div class="list-group">
+            <a href="{% url 'staff:user_list' %}" class="list-group-item list-group-item-action">Users</a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <h3>Orders</h3>
+        <div class="list-group">
+            <a href="#" class="list-group-item list-group-item-action">Orders</a>
+            <a href="#" class="list-group-item list-group-item-action">Payments</a>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
