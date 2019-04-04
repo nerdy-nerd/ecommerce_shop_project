@@ -9,5 +9,6 @@ urlpatterns = [
     path("comments_list", views.CommentListView.as_view(), name="comment_list"),
     path("user_list", views.UserListView.as_view(), name="user_list"),
     path("add_product", views.AddProductView.as_view(), name="add_product"),
+    path("add_category", views.AddCategoryView.as_view(), name="add_category"),
 ]
 

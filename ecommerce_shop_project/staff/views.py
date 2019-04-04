@@ -4,7 +4,7 @@ from django.views.generic import TemplateView
 from shop import models
 from django.db.models import Count
 from django.views.generic.edit import CreateView
-from . import forms
+
 from django.http import HttpResponse
 
 
@@ -12,22 +12,7 @@ class PanelView(TemplateView):
     template_name = "staff/panel.html"
 
 
-class AddProductView(CreateView):
-    template_name = "staff/add_product.html"
-    #form_class = forms.ProductForm
-    model = models.Product
-    fields = [
-            "category",
-            "name",
-            "slug",
-            "description",
-            "price",
-            "stock",
-            "available",
-            "image",
-        ]
-    def get_success_url(self):
-        return reverse("staff:product_list")
+
 
 
 class ProductListView(ListView):
@@ -50,3 +35,30 @@ class CommentListView(ListView):
 
 class UserListView(ListView):
     template_name = "TEMPLATE_NAME"
+
+
+class AddCategoryView(CreateView):
+    template_name = "staff/add_category.html"
+    model = models.Category
+    fields = [
+            "name",
+        ]
+    def get_success_url(self):
+        return reverse("staff:category_list")
+
+
+class AddProductView(CreateView):
+    template_name = "staff/add_product.html"
+    model = models.Product
+    fields = [
+            "category",
+            "name",
+            "slug",
+            "description",
+            "price",
+            "stock",
+            "available",
+            "image",
+        ]
+    def get_success_url(self):
+        return reverse("staff:product_list")

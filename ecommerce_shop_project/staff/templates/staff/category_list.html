@@ -7,12 +7,9 @@
         <div>
             <h2>Categories</h2>
             <div class="text-right">
-                <button>Add category</button>
+                <a href="{%url 'staff:add_category'%}" class="btn btn-info">Add category</a>
             </div>
         </div>
-
-
-
         {% with categories.count as total_categories %}
         <small>Total categories: {{total_categories}} </small>
         {% endwith%}
