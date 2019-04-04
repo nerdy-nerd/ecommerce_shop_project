@@ -88,7 +88,7 @@ def product_detail(request, pk):
 
 @login_required(login_url=reverse_lazy("account:login"))
 @require_POST
-def add_comment(request, product_pk=None, comment_pk=None):
+def process_comment(request, product_pk=None, comment_pk=None):
     form = CommentForm(request.POST)
     if form.is_valid():
         if product_pk:
