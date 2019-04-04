@@ -14,8 +14,18 @@ class PanelView(TemplateView):
 
 class AddProductView(CreateView):
     template_name = "staff/add_product.html"
-    form_class = forms.ProductForm
-
+    #form_class = forms.ProductForm
+    model = models.Product
+    fields = [
+            "category",
+            "name",
+            "slug",
+            "description",
+            "price",
+            "stock",
+            "available",
+            "image",
+        ]
     def get_success_url(self):
         return reverse("staff:product_list")
 
