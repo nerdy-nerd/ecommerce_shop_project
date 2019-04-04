@@ -1,0 +1,16 @@
+{% extends 'staff/base.html' %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+
+<h2>Delete {{category.name}}:</h2>
+
+<form method="post">{% csrf_token %}
+    <p>Are you sure you want to delete "{{ category.name }}"?
+        This will delete all related products!!!
+    </p>
+    <input type=button class="btn btn-info" value="Go Back" onClick="javascript:history.go(-1);">
+    <input class="btn btn-danger text-right" type="submit" value="Confirm">
+</form>
+
+{% endblock %}

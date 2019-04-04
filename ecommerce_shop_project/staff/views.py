@@ -3,7 +3,7 @@ from django.views.generic.list import ListView
 from django.views.generic import TemplateView
 from shop import models
 from django.db.models import Count
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 
 class PanelView(TemplateView):
@@ -60,6 +60,7 @@ class AddProductView(CreateView):
 
 
 class UpdateProductView(UpdateView):
+    model = models.Product
     template_name = "staff/update_product.html"
     fields = [
         "category",
@@ -81,8 +82,33 @@ class UpdateProductView(UpdateView):
 
 
 class UpdateCategoryView(UpdateView):
+    model = models.Category
     template_name = "staff/update_category.html"
     fields = ["name"]
+
+    def get_success_url(self):
+        return reverse("staff:category_list")
+
+    def get_object(self):
+        cat = get_object_or_404(models.Category, pk=self.kwargs["pk"])
+        return cat
+
+
+class DeleteProductView(DeleteView):
+    model = models.Product
+    template_name = "staff/delete_product.html"
+
+    def get_success_url(self):
+        return reverse("staff:product_list")
+
+    def get_object(self):
+        prod = get_object_or_404(models.Product, pk=self.kwargs["pk"])
+        return prod
+
+
+class DeleteCategoryView(DeleteView):
+    model = models.Category
+    template_name = "staff/delete_category.html"
 
     def get_success_url(self):
         return reverse("staff:category_list")

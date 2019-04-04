@@ -23,5 +23,16 @@ urlpatterns = [
         views.UpdateCategoryView.as_view(),
         name="update_category",
     ),
+    # delete
+    path(
+        "delete_product/<int:pk>",
+        views.DeleteProductView.as_view(),
+        name="delete_product",
+    ),
+    path(
+        "delete_category/<int:pk>",
+        views.DeleteCategoryView.as_view(),
+        name="delete_category",
+    ),
 ]
 
