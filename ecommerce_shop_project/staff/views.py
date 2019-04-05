@@ -1,9 +1,13 @@
 from django.shortcuts import render, reverse, get_object_or_404
 from django.views.generic.list import ListView
 from django.views.generic import TemplateView
-from shop import models
 from django.db.models import Count
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.contrib.auth import get_user_model
+from shop import models
+
+
+User = get_user_model()
 
 
 class PanelView(TemplateView):
@@ -25,11 +29,15 @@ class CategoryListView(ListView):
 
 
 class CommentListView(ListView):
-    template_name = "TEMPLATE_NAME"
+    model = User
+    template_name = "staff/user_list.html"
+    context_object_name = "users"
 
 
 class UserListView(ListView):
-    template_name = "TEMPLATE_NAME"
+    model = User
+    template_name = "staff/user_list.html"
+    context_object_name = "users"
 
 
 class AddCategoryView(CreateView):

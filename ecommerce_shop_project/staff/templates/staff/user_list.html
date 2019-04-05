@@ -1,0 +1,30 @@
+{% extends 'staff/base.html' %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="row">
+    <div class="col">
+        <div>
+            <h2>Users</h2>
+            <div class="text-right">
+                <a href="{%url 'staff:add_product'%}" class="btn btn-info">Add product</a>
+            </div>
+        </div>
+
+
+
+
+        <div class="list-group">
+            {% for user in users%}
+            <a href="#" class="list-group-item list-group-item-action">
+                {{user.email}} |
+                {{user.first_name}} |
+                {{user.last_name}} |
+                {{user.is_active}}
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
