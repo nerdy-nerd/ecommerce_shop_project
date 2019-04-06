@@ -1,0 +1,42 @@
+{% extends 'staff/base.html' %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="row">
+    <div class="col">
+        <div>
+            <h2>Comments</h2>
+        </div>
+        <div class="row">
+            <div class="col">
+                <a href="{% url 'staff:panel' %}" class="btn btn-info">Go back</a>
+            </div>
+        </div>
+        {% with comments.count as total_comments %}
+        <small>Total comments: {{total_comments}} </small>
+        {% endwith%}
+
+
+        <div class="list-group">
+            {% for comment in comments %}
+            <a href="{% url 'staff:toggle_comment' pk=comment.pk %}"
+                class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <strong> {{comment.product}}</strong>
+                    <strong> {{comment.user}} </strong>
+                    <strong> {{comment.active|yesno:"Active,Inactive"}} </strong>
+                    <strong> </strong>
+                    <strong> </strong>
+                    <strong> </strong>
+                    <small>{{comment.created}}</small>
+                </div>
+                <p class="mb-1">
+                    {{comment.body}}
+                </p>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -3,12 +3,18 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-
+<div>
+    <h2>Add new product:</h2>
+    <div class="row">
+        <div class="col">
+            <a href="{% url 'staff:product_list' %}" class="btn btn-info">Go back</a>
+        </div>
+    </div>
+</div>
 
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <fieldset>
-        <legend>Add new product:</legend>
         {{form|crispy}}
     </fieldset>
     <div>

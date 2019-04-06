@@ -1,4 +1,4 @@
-from django.shortcuts import render, reverse, get_object_or_404
+from django.shortcuts import render, reverse, get_object_or_404, redirect
 from django.views.generic.list import ListView
 from django.views.generic import TemplateView
 from django.db.models import Count
@@ -15,9 +15,9 @@ class PanelView(TemplateView):
 
 
 class ProductListView(ListView):
-    model = models.Product
     template_name = "staff/product_list.html"
     context_object_name = "products"
+    queryset = models.Product.objects.all().prefetch_related("category")
 
 
 class CategoryListView(ListView):
@@ -29,9 +29,11 @@ class CategoryListView(ListView):
 
 
 class CommentListView(ListView):
-    model = User
-    template_name = "staff/user_list.html"
-    context_object_name = "users"
+    model = models.Comment
+    template_name = "staff/comment_list.html"
+    context_object_name = "comments"
+    ordering = ["-created", "active"]
+    queryset = models.Comment.objects.all().prefetch_related("product", "user")
 
 
 class UserListView(ListView):
@@ -124,3 +126,11 @@ class DeleteCategoryView(DeleteView):
     def get_object(self):
         cat = get_object_or_404(models.Category, pk=self.kwargs["pk"])
         return cat
+
+
+def toggle_comment_activity(request, pk):
+    comment = get_object_or_404(models.Comment, pk=pk)
+    comment.active = not comment.active
+    comment.save()
+    return redirect(reverse("staff:comment_list"))
+
