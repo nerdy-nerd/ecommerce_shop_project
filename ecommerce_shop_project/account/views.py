@@ -16,7 +16,7 @@ def register(request):
         form = AccountRegisterForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("shop:index")
+            return redirect("account:login")
 
     else:
         form = AccountRegisterForm()

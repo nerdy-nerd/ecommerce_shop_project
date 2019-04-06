@@ -1,0 +1,18 @@
+{% extends 'staff/base.html' %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <fieldset>
+        <legend>Add new product:</legend>
+        {{form|crispy}}
+    </fieldset>
+    <div>
+        <button type="submit" class="btn btn-info">Add</button>
+    </div>
+</form>
+{% endblock %}

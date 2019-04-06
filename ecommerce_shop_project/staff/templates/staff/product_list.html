@@ -1,0 +1,32 @@
+{% extends 'staff/base.html' %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="row">
+    <div class="col">
+        <div>
+            <h2>Products</h2>
+            <div class="text-right">
+                <a href="{%url 'staff:add_product'%}" class="btn btn-info">Add product</a>
+            </div>
+        </div>
+
+
+
+        {% with products.count as total_products %}
+        <small>Total products: {{total_products}} </small>
+        {% endwith%}
+        <div class="list-group">
+            {% for product in products%}
+            <a href="{% url 'staff:update_product' pk=product.pk %}" class="list-group-item list-group-item-action">
+                {{product.name}} |
+                {{product.category}} |
+                {{product.stock}} |
+                {{product.price}}
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
