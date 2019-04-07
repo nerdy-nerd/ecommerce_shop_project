@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "contact",
     "staff",
     "dynamic_cart",
+    "subscription",
 ]
 
 MIDDLEWARE = [
