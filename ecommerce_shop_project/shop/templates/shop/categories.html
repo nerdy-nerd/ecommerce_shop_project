@@ -2,10 +2,11 @@
 
 
 
-    <ul class="list-group">
+    <ul class="category-menu list-group">
         {% for cat in category_list %}
         <a href="{{cat.get_absolute_url}}">
-            <li class="list-group-item list-group-item-light">{{cat.name}}</li>
+            <li class="list-group-item list-group-item-light {% if view.kwargs.name == cat.name%}active{% endif %}">
+                {{cat.name}}</li>
         </a>
 
         {% endfor %}
