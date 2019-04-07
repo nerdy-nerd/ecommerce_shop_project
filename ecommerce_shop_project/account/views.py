@@ -40,7 +40,7 @@ class UserLogoutView(LogoutView):
 @login_required(login_url=reverse_lazy("account:login"))
 def profile(request):
     user = get_object_or_404(User, pk=request.user.pk)
-    context = {"user": user, "profile_page": True}
+    context = {"user": user}
     return render(request, "account/profile.html", context=context)
 
 

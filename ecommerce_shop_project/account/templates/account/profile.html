@@ -1,16 +1,99 @@
 {% extends 'shop/base.html' %}
 
 {% load crispy_forms_tags %}
-{% block topbarbuttons%}
-<a class="nav-item nav-link" href="{% url 'account:profile_edit' %}">Edit profile</a>
-{% endblock %}
-
 {% block content %}
 <div class="container">
-    <div class="col-sm-9 col-md-6 col-lg-8">
-        {{ user.email }}
-        {{ user.first_name }}
-        {{ user.last_name }}
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+
+                <div class="card-body">
+                    <div class="card-title mb-4">
+                        <div class="d-flex justify-content-start">
+                            <div class="image-container">
+                                <img src="http://placehold.it/150x150" id="imgProfile"
+                                    style="width: 150px; height: 150px" class="img-thumbnail" />
+                            </div>
+                            <div class="userData ml-3">
+                                <h2 class="d-block" style="font-size: 1.5rem; font-weight: bold">{{user.email}}</h2>
+                                <h6 class="d-block"><a href="{% url 'account:profile_edit' %}">Edit profile</a> </h6>
+                                <h6 class="d-block"><a href="#">Change password</a> </h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="tab-content ml-1" id="myTabContent">
+                                <div class="tab-pane fade show active" id="basicInfo" role="tabpanel"
+                                    aria-labelledby="basicInfo-tab">
+
+                                    {% if user.first_name %}
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-2 col-5">
+                                            <label style="font-weight:bold;">Full Name</label>
+                                        </div>
+                                        <div class="col-md-8 col-6">
+                                            {{user.first_name}} {{user.last_name}}
+                                        </div>
+                                    </div>
+                                    <hr />
+
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-2 col-5">
+                                            <label style="font-weight:bold;">Phone</label>
+                                        </div>
+                                        <div class="col-md-8 col-6">
+                                            {{user.phone}}
+                                        </div>
+                                    </div>
+                                    <hr />
+
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-2 col-5">
+                                            <label style="font-weight:bold;">Adress</label>
+                                        </div>
+                                        <div class="col-md-8 col-6">
+                                            {{user.street}} <br>
+                                            {{user.code}} {{user.city}} <br>
+                                            {%if user.province%}
+                                            {{user.province}}
+                                            {% else %}
+
+                                            {%endif%}
+                                            {{user.country}}
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    {% else%}
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-2 col-5">
+                                            <label style="font-weight:bold;">Provide additional data by editing Your
+                                                profile</label>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    {% endif %}
+
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-2 col-5">
+                                            <label style="font-weight:bold;">Created</label>
+                                        </div>
+                                        <div class="col-md-8 col-6">
+                                            {{user.created}}
+                                        </div>
+                                    </div>
+                                    <hr />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

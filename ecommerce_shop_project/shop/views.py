@@ -70,7 +70,8 @@ def product_detail(request, pk):
     stars = range(total_rating)
     empty_stars = range(5 - total_rating)
     # comments
-    comments = product.comment_set.filter(active=True)
+    comments = product.comment_set.filter(active=True).prefetch_related("user")
+    # queryset = models.Comment.objects.all().prefetch_related("product", "user")
 
     form = CommentForm()
 
