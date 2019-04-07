@@ -1,0 +1,14 @@
+{% extends 'shop/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Subscribe - {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="subscription">
+    <h1>Subscribe to our newsletter and get 10% off your next order </h1>
+    <form role="form" action="." method="post" style="padding:15px;">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock %}

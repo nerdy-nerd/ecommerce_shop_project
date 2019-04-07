@@ -12,6 +12,7 @@ urlpatterns = [
     path("staff/", include(("staff.urls", "staff"), namespace="staff")),
     path('orders/', include('orders.urls')),
     path('dynamic_cart/', include("dynamic_cart.urls")),
+    path('subscription/', include('subscription.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
