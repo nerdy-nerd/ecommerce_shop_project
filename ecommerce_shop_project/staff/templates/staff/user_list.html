@@ -6,24 +6,53 @@
     <div class="col">
         <div>
             <h2>Users</h2>
-            <div class="text-right">
-                <a href="{%url 'staff:add_product'%}" class="btn btn-info">Add product</a>
+        </div>
+        <div class="row">
+            <div class="col">
+                <a href="{% url 'staff:panel'%}" class="btn btn-info">Go back</a>
             </div>
         </div>
+        {% with users.count as total_users %}
+        <small>Total users: {{total_users}} </small>
+        {% endwith%}
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Email</th>
+                    <th scope="col">First name</th>
+                    <th scope="col">Last name</th>
+                    <th scope="col">Active</th>
+                    <th scope="col">Staff</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users%}
+                <tr>
+                    <td> {{user.email}} </td>
+                    <td> {% if user.first_name %}{{user.first_name}}
+                        {% else %}
+                        empty
+                        {% endif%}</td>
+                    <td>{% if user.last_name %}{{user.last_name}}
+                        {% else %}
+                        empty
+                        {% endif%}</td>
+                    <td>{% if user.is_active %} &check;
+                        {% else %}
+                        &cross;
+                        {% endif%}</td>
+                    <td>{% if user.is_staff %} &check;
+                        {% else %}
+                        &cross;
+                        {% endif%}</td>
+                    <td><a href="#" class="btn btn-secondary">Details</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
-
-
-
-        <div class="list-group">
-            {% for user in users%}
-            <a href="#" class="list-group-item list-group-item-action">
-                {{user.email}} |
-                {{user.first_name}} |
-                {{user.last_name}} |
-                {{user.is_active}}
-            </a>
-            {% endfor %}
-        </div>
     </div>
 </div>
 

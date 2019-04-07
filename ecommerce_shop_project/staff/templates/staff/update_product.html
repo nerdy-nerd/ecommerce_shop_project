@@ -4,10 +4,16 @@
 {% block content %}
 
 <h2>Update {{product.name}}:</h2>
-
-<div class="text-right">
-    <a href="{%url 'staff:delete_product' pk=product.pk%}" class="btn btn-danger">Delete product</a>
+<div class="row">
+    <div class="col">
+        <a href="{% url 'staff:product_list' %}" class="btn btn-info">Go back</a>
+    </div>
+    <div class="col text-right">
+        <a href="{%url 'staff:delete_product' pk=product.pk%}" class="btn btn-danger">Delete product</a>
+    </div>
 </div>
+
+
 
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}

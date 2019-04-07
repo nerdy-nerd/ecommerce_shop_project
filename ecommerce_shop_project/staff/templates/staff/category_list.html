@@ -6,21 +6,41 @@
     <div class="col">
         <div>
             <h2>Categories</h2>
-            <div class="text-right">
-                <a href="{%url 'staff:add_category'%}" class="btn btn-info">Add category</a>
+            <div class="row">
+                <div class="col">
+                    <a href="{%url 'staff:panel'%}" class="btn btn-info"">Go back</a>
+                </div>
+                <div class=" col text-right">
+                        <a href="{%url 'staff:add_category'%}" class="btn btn-info">Add category</a>
+                </div>
             </div>
         </div>
         {% with categories.count as total_categories %}
         <small>Total categories: {{total_categories}} </small>
         {% endwith%}
-        <div class="list-group">
-            {% for category in categories %}
-            <a href="{% url 'staff:update_category' pk=category.pk %}" class="list-group-item list-group-item-action">
-                {{category.name}} |
-                {{category.prod_count}}
-            </a>
-            {% endfor %}
-        </div>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Products quantity</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for category in categories %}
+                <tr>
+                    <td>{{category.name}}</td>
+                    <td>{{category.prod_count}}</td>
+                    <td></td>
+                    <td></td>
+                    <td><a href="{% url 'staff:update_category' pk=category.pk %}" class="btn btn-secondary">Edit</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>
 

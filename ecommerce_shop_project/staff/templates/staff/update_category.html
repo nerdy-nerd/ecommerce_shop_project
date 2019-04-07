@@ -4,9 +4,13 @@
 {% block content %}
 
 <h2>Update {{category.name}}:</h2>
-
-<div class="text-right">
-    <a href="{%url 'staff:delete_category' pk=category.pk%}" class="btn btn-danger">Delete category</a>
+<div class="row">
+    <div class="col">
+        <a href="{% url 'staff:category_list' %}" class="btn btn-info">Go back</a>
+    </div>
+    <div class="col text-right">
+        <a href="{%url 'staff:delete_category' pk=category.pk%}" class="btn btn-danger">Delete category</a>
+    </div>
 </div>
 
 <form method="POST">
