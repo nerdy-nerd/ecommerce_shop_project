@@ -144,3 +144,7 @@ ul .list-group-item:hover{
   background-color: #5bc0de !important;
   border-color: #5bc0de !important;
 }
+
+a:hover {
+  text-decoration: none;
+}
