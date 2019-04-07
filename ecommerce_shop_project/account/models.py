@@ -39,12 +39,12 @@ class User(AbstractBaseUser):
 
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    phone = models.CharField(max_length=100, null=True, blank=True)
-    street = models.CharField(max_length=100, null=True, blank=True)
-    city = models.CharField(max_length=100, null=True, blank=True)
+    phone = models.CharField(max_length=100, null=True)
+    street = models.CharField(max_length=100, null=True)
+    city = models.CharField(max_length=100, null=True)
     province = models.CharField(max_length=100, null=True, blank=True)
-    code = models.CharField(max_length=100, null=True, blank=True)
-    country = models.CharField(max_length=100, null=True, blank=True)
+    code = models.CharField(max_length=100, null=True)
+    country = models.CharField(max_length=100, null=True)
 
     USERNAME_FIELD = "email"  # username
     REQUIRED_FIELDS = []
