@@ -46,7 +46,7 @@
                         {% else %}
                         &cross;
                         {% endif%}</td>
-                    <td><a href="#" class="btn btn-secondary">Details</a>
+                    <td><a href="{% url 'staff:user_detail' pk=user.pk%}" class="btn btn-secondary">Detail</a>
                     </td>
                 </tr>
                 {% endfor %}

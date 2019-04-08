@@ -5,12 +5,14 @@ from .views import (
     CategoryListView,
     CommentListView,
     UserListView,
+    OrderListView,
     AddProductView,
     AddCategoryView,
     UpdateProductView,
     UpdateCategoryView,
     DeleteProductView,
     DeleteCategoryView,
+    UserDetailView,
     toggle_comment_activity,
 )
 from .decorators import staff_required
@@ -36,6 +38,7 @@ urlpatterns = [
     path(
         "comment_list", staff_required(CommentListView.as_view()), name="comment_list"
     ),
+    path("order_list", staff_required(OrderListView.as_view()), name="order_list"),
     # edit
     path(
         "update_product/<int:pk>",
@@ -57,6 +60,12 @@ urlpatterns = [
         "delete_category/<int:pk>",
         staff_required(DeleteCategoryView.as_view()),
         name="delete_category",
+    ),
+    # detail
+    path(
+        "user_detail/<int:pk>",
+        staff_required(UserDetailView.as_view()),
+        name="user_detail",
     ),
     # other
     path(
