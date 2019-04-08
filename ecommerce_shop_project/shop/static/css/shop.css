@@ -134,7 +134,17 @@ a.article-title:hover {
   display: none;
 }
 
-/* .visible
-{
-  display: initial;
-} */
+ul .active{
+  color: #fff !important;
+  background-color: #5bc0de !important;
+  border-color: #5bc0de !important;
+}
+ul .list-group-item:hover{
+  color: #fff !important;
+  background-color: #5bc0de !important;
+  border-color: #5bc0de !important;
+}
+
+a:hover {
+  text-decoration: none;
+}

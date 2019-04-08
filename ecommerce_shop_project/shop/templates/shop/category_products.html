@@ -37,13 +37,13 @@
         {% for product in products %}
         <div class="col-lg-4 col-md-6 mb-4">
             <div class="card h-100">
-                <a href="#"><img class="card-img-top" src="{{product.image.url}}" alt=""></a>
+                <a href="#"><img class="card-img-top" src="{{product.image.url}}" alt="" width="250" height="380"></a>
                 <div class="card-body">
                     <h4 class="card-title">
                         <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
                     </h4>
                     <h5>${{ product.price }}</h5>
-                    <p class="card-text">{{ product.description }}</p>
+                    <p class="card-text">{{ product.description|truncatewords:7}}</p>
                 </div>
                 <div class="card-footer">
                     {% if product.count_rating %}
@@ -64,7 +64,14 @@
         </div>
         {% endfor %}
         {% else %}
-        <h3>There are no products in {{category.name}} category</h3>
+
+        <div class="col">
+            <div class="card">
+                <h3>There are no products in {{category.name}} category</h3>
+            </div>
+
+        </div>
+
         {% endif %}
     </div>
     <!-- /.row -->

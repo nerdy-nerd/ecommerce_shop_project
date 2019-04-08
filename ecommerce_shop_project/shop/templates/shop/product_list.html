@@ -43,22 +43,22 @@
                         <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
                     </h4>
                     <h5>${{ product.price }}</h5>
-                    <p class="card-text">{{ product.description }}</p>
+                    <p class="card-text">{{ product.description|truncatewords:7 }}</p>
                 </div>
                 <div class="card-footer">
                     {{product.price}}
                     {% if product.count_rating %}
                     <span class="text-muted">
-                      {% for s in product.stars %}
-                         &#9733;
+                        {% for s in product.stars %}
+                        &#9733;
                         {% endfor %}
-                       {% for s in product.empty_stars %}
-                         &#9734;
+                        {% for s in product.empty_stars %}
+                        &#9734;
                         {% endfor %}
                         {% else %}
                         This product is not rated
-                     {% endif %}
-                </span>
+                        {% endif %}
+                    </span>
                 </div>
             </div>
         </div>
