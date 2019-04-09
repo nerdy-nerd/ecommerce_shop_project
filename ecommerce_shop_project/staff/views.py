@@ -1,10 +1,11 @@
 from django.shortcuts import render, reverse, get_object_or_404, redirect
 from django.views.generic.list import ListView
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, DetailView
 from django.db.models import Count
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth import get_user_model
 from shop import models
+from orders.models import Order
 
 
 User = get_user_model()
@@ -134,3 +135,13 @@ def toggle_comment_activity(request, pk):
     comment.save()
     return redirect(reverse("staff:comment_list"))
 
+
+class UserDetailView(DetailView):
+    model = User
+    template_name = "staff/user_detail.html"
+
+
+class OrderListView(ListView):
+    template_name = "staff/order_list.html"
+    context_object_name = "orders"
+    queryset = Order.objects.all()
