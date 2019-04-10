@@ -31,9 +31,9 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser):
     email = models.EmailField(max_length=255, unique=True)
-    active = models.BooleanField(default=True)  # can login
-    staff = models.BooleanField(default=False)  # staff user non superuser
-    admin = models.BooleanField(default=False)  # superuser
+    is_active = models.BooleanField(default=True)  # can login
+    is_staff = models.BooleanField(default=False)  # staff user non superuser
+    is_admin = models.BooleanField(default=False)  # superuser
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -66,14 +66,3 @@ class User(AbstractBaseUser):
     def has_module_perms(self, app_label):
         return True
 
-    @property
-    def is_staff(self):
-        return self.staff
-
-    @property
-    def is_admin(self):
-        return self.admin
-
-    @property
-    def is_active(self):
-        return self.active

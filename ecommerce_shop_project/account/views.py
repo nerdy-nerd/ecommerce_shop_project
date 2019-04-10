@@ -1,6 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import (
+    LoginView,
+    LogoutView,
+    PasswordResetView,
+    PasswordResetDoneView,
+    PasswordResetConfirmView,
+    PasswordResetCompleteView,
+)
 from django.views.generic import UpdateView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -54,4 +61,27 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     def get_object(self):
         user = User.objects.get(pk=self.request.user.id)
         return user
+
+
+class AccountPasswordResetView(PasswordResetView):
+
+    template_name = "account/password_reset_form.html"
+    success_url = reverse_lazy("account:password_reset_done")
+    email_template_name = "account/password_reset_email.html"
+
+
+class AccountPasswordResetDoneView(PasswordResetDoneView):
+
+    template_name = "account/password_reset_done.html"
+
+
+class AccountPasswordResetConfirm(PasswordResetConfirmView):
+
+    success_url = reverse_lazy("account:password_reset_complete")
+    template_name = "account/password_reset_confirm.html"
+
+
+class AccoutnPasswordResetCompleteView(PasswordResetCompleteView):
+
+    template_name = "account/password_reset_complete.html"
 
