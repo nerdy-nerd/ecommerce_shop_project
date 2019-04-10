@@ -6,6 +6,7 @@ from .views import (
     UserLogoutView,
     profile,
     ProfileUpdateView,
+    AccountPasswordChangeView,
     AccountPasswordResetView,
     AccountPasswordResetDoneView,
     AccountPasswordResetConfirm,
@@ -17,8 +18,13 @@ urlpatterns = [
     path("register/", register, name="register"),
     path("login/", UserLoginView.as_view(), name="login"),
     path("logout/", UserLogoutView.as_view(), name="logout"),
+    # profile
     path("profile/", profile, name="profile"),
     path("profile_edit/", ProfileUpdateView.as_view(), name="profile_edit"),
+    path(
+        "password_change/", AccountPasswordChangeView.as_view(), name="password_change"
+    ),
+    # password reset
     path("password_reset/", AccountPasswordResetView.as_view(), name="password_reset"),
     path(
         "password_reset/done/",
