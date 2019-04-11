@@ -1,15 +1,16 @@
 from django.shortcuts import render, redirect
-from .models import Product, Category, Comment
 from django.shortcuts import get_object_or_404
 from django.views.generic.list import ListView
-from cart.forms import CartAddProductForm
-from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy, resolve
 from django.views.decorators.http import require_POST
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-
+from .models import Product, Category, Comment
+from cart.forms import CartAddProductForm
 from .forms import CommentForm
+
+OBJECTS_PER_PAGE = 2
 
 
 def populate_products_add_ratings(products):
@@ -35,6 +36,17 @@ class IndexView(ListView):
         products = Product.objects.all()
         if query:
             products = products.filter(name__contains=query)
+
+        page = self.request.GET.get("page", 1)
+        paginator = Paginator(products, OBJECTS_PER_PAGE)
+
+        try:
+            products = paginator.page(page)
+        except PageNotAnInteger:
+            products = paginator.page(1)
+        except EmptyPage:
+            products = paginator.page(paginator.num_pages)
+
         populate_products_add_ratings(products)
         context["products"] = products
         context["query"] = query
@@ -46,6 +58,7 @@ class CategoryProductView(ListView):
 
     template_name = "shop/category_products.html"
     context_object_name = "products"
+    paginate_by = OBJECTS_PER_PAGE
 
     def get_queryset(self):
         self.category = get_object_or_404(Category, name=self.kwargs["name"])
