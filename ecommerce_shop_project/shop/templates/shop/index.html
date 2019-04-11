@@ -63,8 +63,22 @@
             </div>
         </div>
         {% endfor %}
+    </div> <!-- /.row -->
+    {% if products.has_other_pages %}
+    <div class="pagination center-block">
+        <span class="page-links">
+            {% if products.has_previous %}
+            <a href="{{ request.path }}?page={{ products.previous_page_number }}">previous</a>
+            {% endif %}
+            <span class="page-current">
+                Page {{ products.number }} of {{ products.paginator.num_pages }}.
+            </span>
+            {% if products.has_next %}
+            <a href="{{ request.path }}?page={{ products.next_page_number }}">next</a>
+            {% endif %}
+        </span>
     </div>
-    <!-- /.row -->
+    {% endif %}
 
 </div>
 <!-- /.col-lg-9 -->
