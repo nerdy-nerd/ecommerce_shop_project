@@ -31,4 +31,4 @@ class UserUpdateForm(forms.ModelForm):
 class UserAdminCreationForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ("email", "staff", "admin")
+        fields = ("email", "is_staff", "is_admin")
