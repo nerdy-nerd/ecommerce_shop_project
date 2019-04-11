@@ -55,16 +55,7 @@ class AddCategoryView(CreateView):
 class AddProductView(CreateView):
     template_name = "staff/add_product.html"
     model = models.Product
-    fields = [
-        "category",
-        "name",
-        "slug",
-        "description",
-        "price",
-        "stock",
-        "available",
-        "image",
-    ]
+    fields = ["category", "name", "description", "price", "stock", "available", "image"]
 
     def get_success_url(self):
         return reverse("staff:product_list")

@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 from django.utils import timezone
+from django.utils.text import slugify
 
 User = get_user_model()
 
@@ -32,6 +33,22 @@ class Product(models.Model):
 
     class Meta:
         ordering = ("name",)
+
+    def _get_unique_slug(self):
+        slug = slugify(self.name)
+        unique_slug = slug
+
+        ind = 1
+        while Product.objects.filter(slug=unique_slug).exists():
+            unique_slug += "-{}".format(ind)
+            ind += 1
+
+        return unique_slug
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = self._get_unique_slug()
+        super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse("shop:product_detail", args=[str(self.id)])
