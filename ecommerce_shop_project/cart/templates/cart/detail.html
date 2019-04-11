@@ -1,5 +1,6 @@
 {% extends 'shop/base.html' %}
 {% load static %}
+<link href="{% static 'css/detail.css' %}" rel="stylesheet">
 {% block title %}
 Your Shopping Cart
 {% endblock %}
@@ -47,16 +48,11 @@ Your Shopping Cart
                 <td>
                     <form action="{% url 'cart:cart_add' product.id %}" method="post">
                         {% csrf_token %}
-                        <div id="field1">
-                            <button type="button" id="sub" class="sub"
-                                    onclick="minOne()">-
-                            </button>
-                            <input type="number" id="1" value="1" min="1" max="20"/>
-                            <button type="button" id="add" class="add"
-                                    onclick="addOne()">+
-                            </button>
+                        <div id="field">
+                            <button type="button" id="sub" class="sub">-</button>
+                            {{ item.update_quantity_form.quantity }}
+                            <button type="button" id="add" class="add">+</button>
                         </div>
-                        {{ item.update_quantity_form.quantity }}
                         {{ item.update_quantity_form.update }}
                         <input type="submit" value="Update" class="btn btn-info">
                     </form>
@@ -82,18 +78,11 @@ Your Shopping Cart
         </p>
     </div>
 </div>
-
-<script>
-function addOne() {
-		alert("The paragraph was clicked.");
-		}
-
-</script>
-<script>
-function minOne() {
-		if this.next().val() > 1 {
-    	if this.next().val() > 1 this.next().val+this.next().val() - 1;
-		}
-		</script>
+<script
+        src="https://code.jquery.com/jquery-3.4.0.min.js"
+        integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
+        crossorigin="anonymous"></script>
+{% block extrajs %}
+<script src="{% static 'js/quantity_buttons.js' %}"></script>
 {% endblock %}
-
+{% endblock %}
