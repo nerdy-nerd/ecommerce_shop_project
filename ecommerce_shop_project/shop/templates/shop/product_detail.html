@@ -31,9 +31,9 @@
             <form action="{% url 'cart:cart_add' product.id %}" method="post">
                 {% csrf_token %}
                 <div id="field">
-                    <button type="button" id="sub" class="sub">-</button>
+                    <!--<button type="button" id="sub" class="sub">-</button>-->
                     {{ cart_product_form }}
-                    <button type="button" id="add" class="add">+</button>
+                    <!--<button type="button" id="add" class="add">+</button>-->
                 </div>
                 <input type="submit" value="add to cart" class="btn btn-primary">
             </form>
@@ -101,6 +101,8 @@
         form.querySelector(".submit-button").classList.toggle('hidden');
         form.querySelector(".edit-button").classList.toggle('hidden');
     }
+
+
 
 
 
