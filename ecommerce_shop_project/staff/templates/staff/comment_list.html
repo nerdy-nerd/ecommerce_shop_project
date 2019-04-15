@@ -24,11 +24,8 @@
                 <div class="d-flex w-100 justify-content-between">
                     <strong> {{comment.product}}</strong>
                     <strong> {{comment.user}} </strong>
-                    <strong> {{comment.active|yesno:"Active,Inactive"}} </strong>
-                    <strong> </strong>
-                    <strong> </strong>
-                    <strong> </strong>
-                    <small>{{comment.created}}</small>
+                    <strong> {{comment.is_active|yesno:"Active,Inactive"}} </strong>
+                    <small>{{comment.date_created}}</small>
                 </div>
                 <p class="mb-1">
                     {{comment.body}}
