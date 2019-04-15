@@ -152,3 +152,24 @@ a:hover {
 #commentContent{
   margin-top: 30px;
 }
+
+.cover-image{
+
+  width: 400px;
+  
+  display: block;
+
+}
+
+.product-info{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+}
+
+@media only screen and (max-width: 700px) {
+  .product-info{
+    flex-direction: column;
+  }
+}
