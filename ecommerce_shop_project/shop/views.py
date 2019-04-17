@@ -101,6 +101,16 @@ def product_detail(request, pk):
     return render(request, "shop/product_detail.html", context=context)
 
 
+def about(request):
+    category_list = Category.objects.all()
+    cart_product_form = CartAddProductForm()
+    context = {
+        "category_list": category_list,
+        "cart_product_form": cart_product_form,
+    }
+    return render(request, "shop/about.html", context=context)
+
+
 @login_required(login_url=reverse_lazy("account:login"))
 @require_POST
 def process_comment(request, product_pk=None, comment_pk=None):
@@ -125,3 +135,6 @@ def process_comment(request, product_pk=None, comment_pk=None):
 
         # after submin redirect to porduct page
     return redirect(product)  # same as product.get_absolute_url
+
+
+
