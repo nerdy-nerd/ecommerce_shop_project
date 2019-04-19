@@ -1,5 +1,19 @@
-body {
-  background: #fafafa;
-  color: #333333;
-  margin-top: 5rem;
+
+.content {
+  text-align: justify;
+  text-justify: auto;
+}
+.title {
+  font-size: 20px;
+  font-family: "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace;
+  text-align: justify;
+}
+.about {
+  font-size: 25px;
+  font-family: "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace;
+  text-align: center;
+}
+.philosophy {
+  font-size: 25px;
+  text-align: center;
 }
