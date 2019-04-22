@@ -4,7 +4,16 @@ from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.utils.text import slugify
 
+from django.conf import settings
+
+import datetime
+
 User = get_user_model()
+
+
+TIME_DELTA_TO_COMMENT_EDITION = datetime.timedelta(
+    seconds=settings.TIME_TO_EDIT_COMMENT_IN_SECONDS
+)
 
 
 class Category(models.Model):
@@ -26,7 +35,9 @@ class Product(models.Model):
     available = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(
+        Category, on_delete=models.SET_NULL, null=True, blank=True
+    )
     image = models.ImageField(upload_to="images/", default="")
     total_rating = models.DecimalField(max_digits=3, decimal_places=2, default=0)
     count_rating = models.PositiveIntegerField(default=0)
@@ -67,6 +78,9 @@ class Comment(models.Model):
 
     class Meta:
         ordering = ["created"]
+
+    def is_editable(self):
+        return timezone.now() - self.created < TIME_DELTA_TO_COMMENT_EDITION
 
     def __str__(self):
         return "Comment from {} related to {}".format(self.user, self.product)

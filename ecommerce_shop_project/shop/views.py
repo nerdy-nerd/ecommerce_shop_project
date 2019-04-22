@@ -6,6 +6,8 @@ from django.urls import reverse_lazy, resolve
 from django.views.decorators.http import require_POST
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
+import datetime
+
 from .models import Product, Category, Comment
 from cart.forms import CartAddProductForm
 from .forms import CommentForm
@@ -84,7 +86,6 @@ def product_detail(request, pk):
     empty_stars = range(5 - total_rating)
     # comments
     comments = product.comment_set.filter(active=True).prefetch_related("user")
-    # queryset = models.Comment.objects.all().prefetch_related("product", "user")
 
     form = CommentForm()
 
@@ -103,6 +104,9 @@ def product_detail(request, pk):
 @login_required(login_url=reverse_lazy("account:login"))
 @require_POST
 def process_comment(request, product_pk=None, comment_pk=None):
+
+    time_delta = datetime.timedelta(seconds=30)
+
     form = CommentForm(request.POST)
     if form.is_valid():
         if product_pk:
@@ -113,6 +117,7 @@ def process_comment(request, product_pk=None, comment_pk=None):
             new_comment.user = request.user
             new_comment.save()
         else:
+
             comment = get_object_or_404(Comment, pk=comment_pk)
             form = CommentForm(request.POST, instance=comment)
             form.save()
