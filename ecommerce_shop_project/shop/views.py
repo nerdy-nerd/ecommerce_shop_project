@@ -85,7 +85,8 @@ def product_detail(request, pk):
     stars = range(total_rating)
     empty_stars = range(5 - total_rating)
     # comments
-    comments = product.comment_set.filter(active=True).prefetch_related("user")
+    comments = product.comment_set.filter(is_active=True).prefetch_related("user")
+    # queryset = models.Comment.objects.all().prefetch_related("product", "user")
 
     form = CommentForm()
 
@@ -104,10 +105,7 @@ def product_detail(request, pk):
 def about(request):
     category_list = Category.objects.all()
     cart_product_form = CartAddProductForm()
-    context = {
-        "category_list": category_list,
-        "cart_product_form": cart_product_form,
-    }
+    context = {"category_list": category_list, "cart_product_form": cart_product_form}
     return render(request, "shop/about.html", context=context)
 
 
@@ -135,6 +133,4 @@ def process_comment(request, product_pk=None, comment_pk=None):
 
         # after submin redirect to porduct page
     return redirect(product)  # same as product.get_absolute_url
-
-
 
