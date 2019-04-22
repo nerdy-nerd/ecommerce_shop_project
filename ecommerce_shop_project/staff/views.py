@@ -46,6 +46,12 @@ class UserListView(ListView):
     context_object_name = "users"
 
 
+class OrderListView(ListView):
+    model = Order
+    template_name = "staff/order_list.html"
+    context_object_name = "orders"
+
+
 class AddCategoryView(CreateView):
     template_name = "staff/add_category.html"
     model = models.Category
