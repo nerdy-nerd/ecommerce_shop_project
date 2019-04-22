@@ -62,7 +62,7 @@
                             </p>
                             <div class="body-text">{{comment.body}}</div>
 
-                            {% if user.id == comment.user_id%}
+                            {% if user.id == comment.user_id and comment.is_editable%}
                             <input type="submit" value="save" class="hidden submit-button">
                             <input type="button" value="edit" class=" edit-button"
                                 onclick="switchVisibiliy({{comment.pk}})">
