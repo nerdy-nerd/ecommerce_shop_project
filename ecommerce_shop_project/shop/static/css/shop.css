@@ -148,3 +148,7 @@ ul .list-group-item:hover{
 a:hover {
   text-decoration: none;
 }
+
+#commentContent{
+  margin-top: 30px;
+}

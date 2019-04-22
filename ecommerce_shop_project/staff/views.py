@@ -1,12 +1,15 @@
 from django.shortcuts import render, reverse, get_object_or_404, redirect
 from django.views.generic.list import ListView
-from django.views.generic import TemplateView, DetailView
+from django.views.generic.edit import ModelFormMixin
+from django.views.generic import TemplateView, DetailView, FormView, View
 from django.db.models import Count
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth import get_user_model
+from django.views.generic.detail import SingleObjectMixin
+
 from shop import models
 from orders.models import Order
-
+from .forms import PublishCommentForm
 
 User = get_user_model()
 
@@ -33,7 +36,7 @@ class CommentListView(ListView):
     model = models.Comment
     template_name = "staff/comment_list.html"
     context_object_name = "comments"
-    ordering = ["-date_created", "is_active"]
+    ordering = ["-is_new", "-date_created"]
     queryset = models.Comment.objects.all().prefetch_related("product", "user")
 
 
@@ -120,11 +123,39 @@ class DeleteCategoryView(DeleteView):
         return cat
 
 
-def toggle_comment_activity(request, pk):
-    comment = get_object_or_404(models.Comment, pk=pk)
-    comment.is_active = not comment.is_active
-    comment.save()
-    return redirect(reverse("staff:comment_list"))
+class CommentDetailView(View):
+    def get(self, request, *args, **kwargs):
+        view = CommentDetail.as_view()
+        return view(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        view = PublishComment.as_view()
+        return view(request, *args, **kwargs)
+
+
+class CommentDetail(DetailView):
+    model = models.Comment
+    template_name = "staff/comment_detail.html"
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["form"] = PublishCommentForm(instance=self.object)
+        return context
+
+    def get_object(self):
+        self.object = super().get_object()
+        self.object.is_new = False
+        self.object.save()
+        return self.object
+
+
+class PublishComment(UpdateView):
+    template_name = "staff/comment_detail.html"
+    form_class = PublishCommentForm
+    model = models.Comment
+
+    def get_success_url(self):
+        return reverse("staff:comment_list")
 
 
 class UserDetailView(DetailView):
@@ -136,3 +167,10 @@ class OrderListView(ListView):
     template_name = "staff/order_list.html"
     context_object_name = "orders"
     queryset = Order.objects.all()
+
+
+def toggle_comment_activity(request, pk):
+    comment = get_object_or_404(models.Comment, pk=pk)
+    comment.is_active = not comment.is_active
+    comment.save()
+    return redirect(reverse("staff:comment_list"))

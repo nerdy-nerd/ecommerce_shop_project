@@ -1,0 +1,78 @@
+{% extends 'staff/base.html' %}
+
+{% block content %}
+
+
+<div class="row">
+    <div class="col">
+        <a href="{% url 'staff:comment_list'%}" class="btn btn-info">Go back</a>
+    </div>
+</div>
+
+<div class="col-12">
+    <div class="tab-content ml-1" id="commentContent">
+
+
+        <div class="row">
+            <div class="col-sm-3 col-md-2 col-5">
+                <label style="font-weight:bold;">Product</label>
+            </div>
+            <div class="col-md-8 col-6">
+                {{ object.product }}
+            </div>
+        </div>
+        <hr />
+
+        <div class="row">
+            <div class="col-sm-3 col-md-2 col-5">
+                <label style="font-weight:bold;">User</label>
+            </div>
+            <div class="col-md-8 col-6">
+                {{ object.user }}
+            </div>
+        </div>
+        <hr />
+
+        <div class="row">
+            <div class="col-sm-3 col-md-2 col-5">
+                <label style="font-weight:bold;">Created</label>
+            </div>
+            <div class="col-md-8 col-6">
+                {{object.date_created}}
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-sm-3 col-md-2 col-5">
+                <label style="font-weight:bold;">Body</label>
+            </div>
+            <div class="col-md-8 col-6">
+                {{object.body}}
+            </div>
+
+        </div>
+        <hr />
+
+        <div class="row">
+            <div class="col-sm-3 col-md-2 col-5">
+                <label style="font-weight:bold;">Published</label>
+            </div>
+            <div class="col-md-8 col-6">
+                <form id='publishCommentForm' method="POST">
+                    {% csrf_token %}
+                    {{form.as_p}}
+                </form>
+            </div>
+
+        </div>
+        <hr />
+
+
+        <input value="Save" type="submit" form="publishCommentForm" class="btn btn-info" />
+
+    </div>
+</div>
+
+
+
+{% endblock %}

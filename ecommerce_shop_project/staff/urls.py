@@ -13,6 +13,7 @@ from .views import (
     DeleteProductView,
     DeleteCategoryView,
     UserDetailView,
+    CommentDetailView,
     toggle_comment_activity,
 )
 from .decorators import staff_required
@@ -66,6 +67,11 @@ urlpatterns = [
         "user_detail/<int:pk>",
         staff_required(UserDetailView.as_view()),
         name="user_detail",
+    ),
+    path(
+        "comment_detail/<int:pk>",
+        staff_required(CommentDetailView.as_view()),
+        name="comment_detail",
     ),
     # other
     path(

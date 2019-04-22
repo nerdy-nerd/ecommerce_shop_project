@@ -17,22 +17,33 @@
         {% endwith%}
 
 
-        <div class="list-group">
-            {% for comment in comments %}
-            <a href="{% url 'staff:toggle_comment' pk=comment.pk %}"
-                class="list-group-item list-group-item-action flex-column align-items-start">
-                <div class="d-flex w-100 justify-content-between">
-                    <strong> {{comment.product}}</strong>
-                    <strong> {{comment.user}} </strong>
-                    <strong> {{comment.is_active|yesno:"Active,Inactive"}} </strong>
-                    <small>{{comment.date_created}}</small>
-                </div>
-                <p class="mb-1">
-                    {{comment.body}}
-                </p>
-            </a>
-            {% endfor %}
-        </div>
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Product name</th>
+                    <th scope="col">User</th>
+                    <th scope="col">Date created</th>
+                    <th scope="col">Published</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for comment in comments %}
+                <tr class="{% if comment.is_new %} table-primary {% endif %}">
+                    <td>{{comment.product}} </td>
+                    <td>{{comment.user}}</td>
+                    <td>{{comment.date_created}}</td>
+                    <td>{% if comment.is_active %} &check;
+                        {% else %}
+                        &cross;
+                        {% endif%}</td>
+                    <td><a href="{% url 'staff:comment_detail' pk=comment.pk %}" class="btn btn-secondary">Detail</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>
 
