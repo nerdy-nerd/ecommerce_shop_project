@@ -9,8 +9,8 @@
 
 <div class="col-lg-9">
 
-    <div class="card mt-4">
-        <img class="card-img-top img-fluid" src="{{product.image.url}}" alt="">
+    <div class="card mt-4 product-info">
+        <img class="card-img-top img-fluid cover-image" src="{{product.image.url}}" alt="">
         <div class="card-body">
             <h3 class="card-title">{{ product.name }}</h3>
             <h4>${{ product.price }}</h4>
@@ -62,7 +62,7 @@
                             </p>
                             <div class="body-text">{{comment.body}}</div>
 
-                            {% if user.id == comment.user_id%}
+                            {% if user.id == comment.user_id and comment.is_editable%}
                             <input type="submit" value="save" class="hidden submit-button">
                             <input type="button" value="edit" class=" edit-button"
                                 onclick="switchVisibiliy({{comment.pk}})">
