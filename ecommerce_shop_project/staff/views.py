@@ -175,3 +175,9 @@ def toggle_comment_activity(request, pk):
     comment.save()
     return redirect(reverse("staff:comment_list"))
 
+
+def toggle_comment_activity(request, pk):
+    comment = get_object_or_404(models.Comment, pk=pk)
+    comment.is_active = not comment.is_active
+    comment.save()
+    return redirect(reverse("staff:comment_list"))

@@ -79,6 +79,11 @@ urlpatterns = [
         staff_required(OrderDetailView.as_view()),
         name="order_detail",
     ),
+    path(
+        "comment_detail/<int:pk>",
+        staff_required(CommentDetailView.as_view()),
+        name="comment_detail",
+    ),
     # other
     path(
         "toggle_comment/<int:pk>",
