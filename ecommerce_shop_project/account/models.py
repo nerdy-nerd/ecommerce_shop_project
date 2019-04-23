@@ -37,6 +37,8 @@ class User(AbstractBaseUser):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    orders = models.ManyToManyField("orders.Order")
+
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     phone = models.CharField(max_length=100, null=True)
