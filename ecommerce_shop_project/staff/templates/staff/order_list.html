@@ -34,11 +34,8 @@
                     <td>{{order.first_name}}</td>
                     <td>{{order.last_name}}</td>
                     <td>{{order.created}}</td>
-                    <<<<<<< HEAD <td><a href="{% url 'staff:order_detail' pk=order.pk %}"
-                            class="btn btn-secondary">Detail</a></td>
-                        =======
-                        <td><a href="#" class="btn btn-secondary">Detail</a></td>
-                        >>>>>>> add order list
+                    <td><a href="{% url 'staff:order_detail' pk=order.pk %}" class="btn btn-secondary">Detail</a></td>
+
                 </tr>
                 {% endfor %}
             </tbody>

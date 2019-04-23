@@ -175,8 +175,3 @@ def toggle_comment_activity(request, pk):
     comment.save()
     return redirect(reverse("staff:comment_list"))
 
-
-class OrderDetailView(DetailView):
-    model = Order
-    template_name = "staff/order_detail.html"
-

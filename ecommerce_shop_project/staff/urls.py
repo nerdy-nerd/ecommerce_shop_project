@@ -86,4 +86,3 @@ urlpatterns = [
         name="toggle_comment",
     ),
 ]
-
