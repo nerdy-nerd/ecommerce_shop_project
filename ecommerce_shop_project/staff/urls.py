@@ -6,6 +6,7 @@ from .views import (
     CommentListView,
     UserListView,
     OrderListView,
+    OrderDetailView,
     AddProductView,
     AddCategoryView,
     UpdateProductView,
@@ -72,6 +73,11 @@ urlpatterns = [
         "comment_detail/<int:pk>",
         staff_required(CommentDetailView.as_view()),
         name="comment_detail",
+    ),
+    path(
+        "order_detail/<int:pk>",
+        staff_required(OrderDetailView.as_view()),
+        name="order_detail",
     ),
     # other
     path(
