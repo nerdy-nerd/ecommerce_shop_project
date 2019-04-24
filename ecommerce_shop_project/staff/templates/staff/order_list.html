@@ -1,0 +1,47 @@
+{% extends 'staff/base.html' %}
+
+
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="row">
+    <div class="col">
+        <div>
+            <h2>Orders</h2>
+            <div class="row">
+                <div class="col">
+                    <a href="{% url 'staff:panel' %}" class="btn btn-info">Go back</a>
+                </div>
+            </div>
+        </div>
+
+        {% with orders.count as total_orders %}
+        <small>Total orders: {{total_orders}} </small>
+        {% endwith%}
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">First name</th>
+                    <th scope="col">Last name</th>
+                    <th scope="col">Date created</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{order.id}} </td>
+                    <td>{{order.first_name}}</td>
+                    <td>{{order.last_name}}</td>
+                    <td>{{order.created}}</td>
+                    <td><a href="{% url 'staff:order_detail' pk=order.pk %}" class="btn btn-secondary">Detail</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+{% endblock %}

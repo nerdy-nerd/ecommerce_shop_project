@@ -46,6 +46,12 @@ class UserListView(ListView):
     context_object_name = "users"
 
 
+class OrderListView(ListView):
+    model = Order
+    template_name = "staff/order_list.html"
+    context_object_name = "orders"
+
+
 class AddCategoryView(CreateView):
     template_name = "staff/add_category.html"
     model = models.Category
@@ -163,14 +169,14 @@ class UserDetailView(DetailView):
     template_name = "staff/user_detail.html"
 
 
-class OrderListView(ListView):
-    template_name = "staff/order_list.html"
-    context_object_name = "orders"
-    queryset = Order.objects.all()
-
-
 def toggle_comment_activity(request, pk):
     comment = get_object_or_404(models.Comment, pk=pk)
     comment.is_active = not comment.is_active
     comment.save()
     return redirect(reverse("staff:comment_list"))
+
+
+class OrderDetailView(DetailView):
+    model = Order
+    template_name = "staff/order_detail.html"
+
