@@ -11,6 +11,7 @@ from .views import (
     AccountPasswordResetDoneView,
     AccountPasswordResetConfirm,
     AccoutnPasswordResetCompleteView,
+    order_detail,
 )
 
 app_name = "account"
@@ -41,4 +42,5 @@ urlpatterns = [
         AccoutnPasswordResetCompleteView.as_view(),
         name="password_reset_complete",
     ),
+    path("order_detail/<int:pk>", order_detail, name="order_detail"),
 ]

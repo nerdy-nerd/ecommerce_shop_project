@@ -41,40 +41,45 @@
         <td>${{ order.get_total_cost }} </td>
     </tr>
     <tr>
-        <th>State</th>
-        <td>{% if order.paid %}Paid{% else %}Waiting for payment
-            {% endif %}</td>
+        <th>Paid</th>
+        <td>
+            <form id='pay' method="POST">
+                {% csrf_token %}
+                {{form.as_p}}
+            </form>
+        </td>
     </tr>
 </table>
+<input value="Save" type="submit" form="pay" class="btn btn-info" />
 
-<div class="module">
-    <table class="table table-bordered">
-        <h2>Items</h2>
-        <thead>
-            <tr>
-                <th scope="col">Product</th>
-                <th scope="col">Price</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Total</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in order.items.all %}
-            <tr>
-                <td>{{ item.product.name }}</td>
-                <td class="num">${{ item.price }}</td>
-                <td class="num">{{ item.quantity }}</td>
-                <td class="num">${{ item.get_cost }}</td>
-            </tr>
-            {% endfor %}
-            <tr>
-                <td colspan="3"></td>
-            </tr>
-            <tr class="total">
-                <td colspan="3">Total</td>
-                <td class="num">${{ order.get_total_cost }}</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+
+<table class="table table-bordered">
+    <h2>Items</h2>
+    <thead>
+        <tr>
+            <th scope="col">Product</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in order.items.all %}
+        <tr>
+            <td>{{ item.product.name }}</td>
+            <td class="num">${{ item.price }}</td>
+            <td class="num">{{ item.quantity }}</td>
+            <td class="num">${{ item.get_cost }}</td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="3"></td>
+        </tr>
+        <tr class="total">
+            <td colspan="3">Total</td>
+            <td class="num">${{ order.get_total_cost }}</td>
+        </tr>
+    </tbody>
+</table>
+
 {% endblock %}

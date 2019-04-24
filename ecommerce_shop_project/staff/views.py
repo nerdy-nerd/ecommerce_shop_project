@@ -9,7 +9,7 @@ from django.views.generic.detail import SingleObjectMixin
 
 from shop import models
 from orders.models import Order
-from .forms import PublishCommentForm
+from .forms import PublishCommentForm, OrderPayForm
 
 User = get_user_model()
 
@@ -50,6 +50,7 @@ class OrderListView(ListView):
     model = Order
     template_name = "staff/order_list.html"
     context_object_name = "orders"
+    queryset = Order.objects.all().prefetch_related("items")
 
 
 class AddCategoryView(CreateView):
@@ -176,8 +177,34 @@ def toggle_comment_activity(request, pk):
     return redirect(reverse("staff:comment_list"))
 
 
-def toggle_comment_activity(request, pk):
-    comment = get_object_or_404(models.Comment, pk=pk)
-    comment.is_active = not comment.is_active
-    comment.save()
-    return redirect(reverse("staff:comment_list"))
+class OrderDetailView(View):
+    def get(self, request, *args, **kwargs):
+        view = OrderDetail.as_view()
+        return view(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        view = OrderPay.as_view()
+        return view(request, *args, **kwargs)
+
+
+class OrderDetail(DetailView):
+    model = Order
+    template_name = "staff/order_detail.html"
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.prefetch_related("items")
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["form"] = OrderPayForm(instance=self.object)
+        return context
+
+
+class OrderPay(UpdateView):
+    form_class = OrderPayForm
+    model = Order
+    template_name = "staff/order_detail.html"
+
+    def get_success_url(self):
+        return reverse("staff:order_list")
