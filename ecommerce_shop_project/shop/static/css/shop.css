@@ -145,7 +145,7 @@ ul .list-group-item:hover{
   border-color: #5bc0de !important;
 }
 
-a:hover {
+ul a:hover {
   text-decoration: none;
 }
 
@@ -172,4 +172,8 @@ a:hover {
   .product-info{
     flex-direction: column;
   }
+}
+
+#exTab1 .tab-content {
+  padding : 5px 15px;
 }

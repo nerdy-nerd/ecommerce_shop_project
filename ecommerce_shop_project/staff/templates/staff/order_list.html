@@ -21,20 +21,23 @@
             <thead>
                 <tr>
                     <th scope="col">Id</th>
-                    <th scope="col">First name</th>
-                    <th scope="col">Last name</th>
                     <th scope="col">Date created</th>
-                    <th scope="col"></th>
+                    <th scope="col">Order state</th>
+                    <th scope="col">User</th>
+                    <th scope="col">Total value</th>
                 </tr>
             </thead>
             <tbody>
                 {% for order in orders %}
                 <tr>
                     <td>{{order.id}} </td>
-                    <td>{{order.first_name}}</td>
-                    <td>{{order.last_name}}</td>
                     <td>{{order.created}}</td>
+                    <td>{{ order.paid}}</td>
+                    <td>{{order.first_name}} {{order.last_name}}</td>
+                    <td> {{order.get_total_cost}}</td>
+
                     <td><a href="{% url 'staff:order_detail' pk=order.pk %}" class="btn btn-secondary">Detail</a></td>
+
                 </tr>
                 {% endfor %}
             </tbody>

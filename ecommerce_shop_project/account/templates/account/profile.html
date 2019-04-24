@@ -22,73 +22,86 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="tab-content ml-1" id="myTabContent">
-                                <div class="tab-pane fade show active" id="basicInfo" role="tabpanel"
-                                    aria-labelledby="basicInfo-tab">
 
+                    <div id="exTab1" class="container">
+                        <ul class="nav nav-tabs">
+                            <li class="active">
+                                <a href="#1" data-toggle="tab">Overview</a>
+                            </li>
+                            <li><a href="#2" data-toggle="tab">Orders</a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content ">
+                            <div class="tab-pane active" id="1">
+
+                                <table class="table">
                                     {% if user.first_name %}
-                                    <div class="row">
-                                        <div class="col-sm-3 col-md-2 col-5">
-                                            <label style="font-weight:bold;">Full Name</label>
-                                        </div>
-                                        <div class="col-md-8 col-6">
-                                            {{user.first_name}} {{user.last_name}}
-                                        </div>
-                                    </div>
-                                    <hr />
-
-                                    <div class="row">
-                                        <div class="col-sm-3 col-md-2 col-5">
-                                            <label style="font-weight:bold;">Phone</label>
-                                        </div>
-                                        <div class="col-md-8 col-6">
-                                            {{user.phone}}
-                                        </div>
-                                    </div>
-                                    <hr />
-
-                                    <div class="row">
-                                        <div class="col-sm-3 col-md-2 col-5">
-                                            <label style="font-weight:bold;">Adress</label>
-                                        </div>
-                                        <div class="col-md-8 col-6">
-                                            {{user.street}} <br>
+                                    <tr>
+                                        <th>Full Name</th>
+                                        <td>{{user.first_name}} {{user.last_name}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Phone</th>
+                                        <td> {{user.phone}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Adress</th>
+                                        <td>{{user.street}} <br>
                                             {{user.code}} {{user.city}} <br>
                                             {%if user.province%}
                                             {{user.province}}
                                             {% else %}
 
                                             {%endif%}
-                                            {{user.country}}
-                                        </div>
-
-                                    </div>
-                                    <hr />
+                                            {{user.country}}</td>
+                                    </tr>
                                     {% else%}
-                                    <div class="row">
-                                        <div class="col-sm-3 col-md-2 col-5">
-                                            <label style="font-weight:bold;">Provide additional data by editing Your
-                                                profile</label>
-                                        </div>
-                                    </div>
-                                    <hr />
+                                    <tr>
+                                        <th>Phone</th>
+                                        <td> Provide additional data by editing Your
+                                            profile</td>
+                                    </tr>
                                     {% endif %}
+                                    <tr>
+                                        <th>Created</th>
+                                        <td>{{ user.created }}</td>
+                                    </tr>
 
-                                    <div class="row">
-                                        <div class="col-sm-3 col-md-2 col-5">
-                                            <label style="font-weight:bold;">Created</label>
-                                        </div>
-                                        <div class="col-md-8 col-6">
-                                            {{user.created}}
-                                        </div>
-                                    </div>
-                                    <hr />
-                                </div>
+                                </table>
+                            </div>
+                            <div class="tab-pane" id="2">
+                                {% if user.orders %}
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Order no.</th>
+                                            <th scope="col">Created</th>
+                                            <th scope="col">Total value</th>
+                                            <th scope="col">status</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for order in user.orders.all %}
+                                        <tr>
+                                            <td>{{order.pk}}</td>
+                                            <td>{{order.created}}</td>
+                                            <td>{{order.get_total_cost}}</td>
+                                            <td>{% if order.paid %}Paid{% else %}Waiting for payment
+                                                {% endif %}</td>
+                                            <td><a href="{% url 'account:order_detail' pk=order.pk %}"
+                                                    class="btn btn-secondary">Detail</a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                {%  endif %}
                             </div>
                         </div>
                     </div>
+
 
 
                 </div>

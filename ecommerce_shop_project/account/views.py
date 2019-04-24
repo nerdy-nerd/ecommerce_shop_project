@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
+from django.http import Http404
 from django.contrib.auth.views import (
     LoginView,
     LogoutView,
@@ -15,6 +16,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .forms import AccountRegisterForm, UserUpdateForm
 from django.contrib.auth import get_user_model
+
+from orders.models import Order
 
 User = get_user_model()
 
@@ -47,9 +50,7 @@ class UserLogoutView(LogoutView):
 
 @login_required(login_url=reverse_lazy("account:login"))
 def profile(request):
-    user = get_object_or_404(User, pk=request.user.pk)
-    context = {"user": user}
-    return render(request, "account/profile.html", context=context)
+    return render(request, "account/profile.html")
 
 
 class ProfileUpdateView(LoginRequiredMixin, UpdateView):
@@ -92,3 +93,12 @@ class AccoutnPasswordResetCompleteView(PasswordResetCompleteView):
 
     template_name = "account/password_reset_complete.html"
 
+
+@login_required(login_url=reverse_lazy("account:login"))
+def order_detail(request, pk):
+    if not request.user.orders.filter(pk=pk).exists():
+        raise Http404()
+    order = Order.objects.prefetch_related("items").get(pk=pk)
+    # total_cost = order.get_total_cost()
+    context = {"order": order}
+    return render(request, "account/order_detail.html", context=context)
