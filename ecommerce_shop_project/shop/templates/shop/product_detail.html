@@ -28,6 +28,17 @@
                 This product is not rated
                 {% endif %}
             </span>
+            {% if user.is_authenticated %}
+            <form action="{% url 'shop:add_rating' product_id=product.id  %}" method="post">
+                {% csrf_token %}
+                <div id="field1">
+
+                    {{ rating_form }}
+
+                </div>
+                <input type="submit" value="Rate this product" class="btn btn-primary">
+            </form>
+            {% endif %}
             <form action="{% url 'cart:cart_add' product.id %}" method="post">
                 {% csrf_token %}
                 <div id="field">
@@ -53,7 +64,7 @@
                     <div class="media-body">
                         <h4 class="media-heading user_name">{{ comment.user }}</h4>
                         <form class="comment-{{comment.pk}}"
-                            action="{% url 'shop:edit_comment' comment_pk=comment.pk %}" method="POST">
+                              action="{% url 'shop:edit_comment' comment_pk=comment.pk %}" method="POST">
                             {% csrf_token %}
                             <input type="text" name="body" value="{{comment.body}}" class="hidden body-input">
                             <p>
@@ -65,7 +76,7 @@
                             {% if user.id == comment.user_id and comment.is_editable%}
                             <input type="submit" value="save" class="hidden submit-button">
                             <input type="button" value="edit" class=" edit-button"
-                                onclick="switchVisibiliy({{comment.pk}})">
+                                   onclick="switchVisibiliy({{comment.pk}})">
                             {% endif %}
                         </form>
                     </div>
@@ -110,9 +121,10 @@
 
 
 
+
 </script>
 <script src="https://code.jquery.com/jquery-3.4.0.min.js"
-    integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
+        integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
 {% block extrajs %}
 <script src="{% static 'js/quantity_buttons.js' %}"></script>
 {% endblock %}
