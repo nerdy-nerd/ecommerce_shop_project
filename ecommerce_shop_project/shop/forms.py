@@ -7,3 +7,6 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ["body"]
 
+
+class RatingForm(forms.Form):
+    rating = forms.IntegerField(max_value=5, min_value=1)

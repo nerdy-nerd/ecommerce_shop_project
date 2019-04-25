@@ -2,15 +2,15 @@ from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 from django.views.generic.list import ListView
 from django.contrib.auth.decorators import login_required
-from django.urls import reverse_lazy, resolve
+from django.urls import reverse_lazy
 from django.views.decorators.http import require_POST
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 import datetime
 
-from .models import Product, Category, Comment
+from .models import Product, Category, Comment, Rating
 from cart.forms import CartAddProductForm
-from .forms import CommentForm
+from .forms import CommentForm, RatingForm
 
 OBJECTS_PER_PAGE = 2
 
@@ -24,7 +24,6 @@ def populate_products_add_ratings(products):
 
 
 class IndexView(ListView):
-
     model = Category
     template_name = "shop/index.html"
     context_object_name = "category_list"
@@ -57,7 +56,6 @@ class IndexView(ListView):
 
 
 class CategoryProductView(ListView):
-
     template_name = "shop/category_products.html"
     context_object_name = "products"
     paginate_by = OBJECTS_PER_PAGE
@@ -89,7 +87,7 @@ def product_detail(request, pk):
     # queryset = models.Comment.objects.all().prefetch_related("product", "user")
 
     form = CommentForm()
-
+    rating_form = RatingForm()
     context = {
         "product": product,
         "category_list": category_list,
@@ -98,6 +96,7 @@ def product_detail(request, pk):
         "comments": comments,
         "form": form,
         "cart_product_form": cart_product_form,
+        "rating_form": rating_form,
     }
     return render(request, "shop/product_detail.html", context=context)
 
@@ -112,7 +111,6 @@ def about(request):
 @login_required(login_url=reverse_lazy("account:login"))
 @require_POST
 def process_comment(request, product_pk=None, comment_pk=None):
-
     time_delta = datetime.timedelta(seconds=30)
 
     form = CommentForm(request.POST)
@@ -134,3 +132,18 @@ def process_comment(request, product_pk=None, comment_pk=None):
         # after submin redirect to porduct page
     return redirect(product)  # same as product.get_absolute_url
 
+
+@login_required(login_url=reverse_lazy("account:login"))
+@require_POST
+def process_rating(request, product_id):
+    product = get_object_or_404(Product, product_id)
+    user = request.user
+    if Rating.objects.filter(product=product, user=user).exists():
+        form = RatingForm(request.POST)
+        if form.is_valid():
+            rating_note = form.cleaned_data["rating"]
+            product.total_rating += rating_note
+            product.count_rating += 1
+            product.save()
+            Rating.objects.create(product=product, user=user)
+    return redirect(product)
