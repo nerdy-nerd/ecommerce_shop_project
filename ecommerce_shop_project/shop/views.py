@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 from django.views.decorators.http import require_POST
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.http import HttpResponse
 
 import datetime
 
@@ -93,7 +94,7 @@ def product_detail(request, pk):
     # comments
     comments = product.comment_set.filter(is_active=True).prefetch_related("user")
     # queryset = models.Comment.objects.all().prefetch_related("product", "user")
-
+    likes = product.likes
     form = CommentForm()
     rating_form = RatingForm()
     context = {
@@ -106,6 +107,7 @@ def product_detail(request, pk):
         "cart_product_form": cart_product_form,
         "rating_form": rating_form,
         "rating": rating,
+        "likes": likes,
     }
     return render(request, "shop/product_detail.html", context=context)
 
@@ -159,3 +161,17 @@ def process_rating(request, product_id):
             product.save()
             Rating.objects.create(product=product, user=user)
     return redirect(product)
+
+
+def like_product(request):
+    product_id = request.POST.get('product_id', None)
+
+    likes = 0
+    if product_id:
+        product = Product.objects.get(id=int(product_id))
+        if product is not None:
+            likes = product.likes + 1
+            product.likes = likes
+            product.save()
+
+    return HttpResponse(likes)

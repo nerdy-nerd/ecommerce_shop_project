@@ -14,6 +14,12 @@
         <div class="card-body">
             <h3 class="card-title">{{ product.name }}</h3>
             <h4>${{ product.price }}</h4>
+
+            <button id="likes" data-id="{{product.id}}" class="btn btn-mini btn-danger glyphicon glyphicon-heart"
+                    type="button">
+                {% if product.likes > 0 %} {{ product.likes }} {% endif %}
+            </button>
+
             <p class="card-text">{{ product.description}}</p>
 
             <span class="ratings">
@@ -128,14 +134,23 @@
         form.querySelector(".edit-button").classList.toggle('hidden');
     }
 
+
 </script>
 <script>
     document.querySelectorAll(".ratings > span > span" ).forEach(s => s.addEventListener("mouseover", () => console.log("cos")));
 </script>
+
 <script src="https://code.jquery.com/jquery-3.4.0.min.js"
         integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
+{% csrf_token %}
+<script type="text/javascript">
+// using jQuery
+var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+
+</script>
+
 {% block extrajs %}
-<script src="{% static 'js/quantity_buttons.js' %}"></script>
+<script src="{% static 'js/like_button.js' %}"></script>
 {% endblock %}
 
 
