@@ -84,10 +84,6 @@
                               action="{% url 'shop:edit_comment' comment_pk=comment.pk %}" method="POST">
                             {% csrf_token %}
                             <input type="text" name="body" value="{{comment.body}}" class="hidden body-input">
-                            <p>
-                                <small>{{comment.updated}}</small>
-
-                            </p>
                             <div class="body-text">{{comment.body}}</div>
 
                             {% if user.id == comment.user_id and comment.is_editable%}
