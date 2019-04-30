@@ -79,9 +79,13 @@ def product_detail(request, pk):
     category_list = Category.objects.all()
 
     # star rating
-    total_rating = int(product.total_rating)
-    stars = range(total_rating)
-    empty_stars = range(5 - total_rating)
+    if product.count_rating:
+        rating = int(product.total_rating/product.count_rating)
+        stars = range(rating)
+        empty_stars = range(5 - rating)
+    else:
+        stars = range(5)
+        empty_stars = None
     # comments
     comments = product.comment_set.filter(is_active=True).prefetch_related("user")
     # queryset = models.Comment.objects.all().prefetch_related("product", "user")
@@ -97,6 +101,7 @@ def product_detail(request, pk):
         "form": form,
         "cart_product_form": cart_product_form,
         "rating_form": rating_form,
+        "rating": rating,
     }
     return render(request, "shop/product_detail.html", context=context)
 
@@ -134,13 +139,16 @@ def process_comment(request, product_pk=None, comment_pk=None):
 
 
 @login_required(login_url=reverse_lazy("account:login"))
-@require_POST
 def process_rating(request, product_id):
-    product = get_object_or_404(Product, product_id)
+    print('!!!!!!!!!', product_id)
+    product = get_object_or_404(Product, id=product_id)
     user = request.user
-    if Rating.objects.filter(product=product, user=user).exists():
+    print(Rating.objects.all())
+    if not Rating.objects.filter(product=product, user=user).exists():
+        print('!!!!!!!!!cscsssssssssssssss')
         form = RatingForm(request.POST)
         if form.is_valid():
+            print('!!!!!!!!!cscsssssssssssssss!!!!!!!!!!!!!!!!!!!!!!!!')
             rating_note = form.cleaned_data["rating"]
             product.total_rating += rating_note
             product.count_rating += 1
