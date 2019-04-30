@@ -9,4 +9,4 @@ class CommentForm(forms.ModelForm):
 
 
 class RatingForm(forms.Form):
-    rating = forms.IntegerField(max_value=5, min_value=1)
+    rating = forms.IntegerField(max_value=5, min_value=1, widget=forms.HiddenInput)
