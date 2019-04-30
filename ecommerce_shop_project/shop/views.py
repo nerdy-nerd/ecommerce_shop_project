@@ -81,7 +81,7 @@ def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
     cart_product_form = CartAddProductForm()
     category_list = Category.objects.all()
-
+    rating = 0
     # star rating
     if product.count_rating:
         rating = int(product.total_rating / product.count_rating)
