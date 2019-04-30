@@ -11,20 +11,9 @@ class UserAdmin(BaseUserAdmin):
 
     add_form = UserAdminCreationForm
 
-    list_display = ("email", "is_admin", "first_name", "last_name")
+    list_display = ("email", "is_admin")
     list_filter = ("is_admin",)
-    fieldsets = (
-        (None, {"fields": ("email", "password")}),
-        ("Personal info", {"fields": ("first_name", "last_name", "phone")}),
-        ("Adress", {"fields": ("street", "city", "province", "code", "country")}),
-        ("Timestamps", {"fields": ("created", "updated")}),
-        ("Permissions", {"fields": ("is_active", "is_admin", "is_staff")}),
-    )
     readonly_fields = ("created", "updated")
-
-    add_fieldsets = (
-        (None, {"classes": ("wide",), "fields": ("email", "password1", "password2")}),
-    )
     search_fields = ("email",)
     ordering = ("email",)
     filter_horizontal = ()

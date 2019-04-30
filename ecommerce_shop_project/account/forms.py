@@ -16,16 +16,7 @@ class AccountRegisterForm(UserCreationForm):
 class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = (
-            "first_name",
-            "last_name",
-            "phone",
-            "street",
-            "city",
-            "province",
-            "code",
-            "country",
-        )
+        fields = ("email",)
 
 
 class UserAdminCreationForm(UserCreationForm):

@@ -39,15 +39,6 @@ class User(AbstractBaseUser):
 
     orders = models.ManyToManyField("orders.Order")
 
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    phone = models.CharField(max_length=100, null=True)
-    street = models.CharField(max_length=100, null=True)
-    city = models.CharField(max_length=100, null=True)
-    province = models.CharField(max_length=100, null=True, blank=True)
-    code = models.CharField(max_length=100, null=True)
-    country = models.CharField(max_length=100, null=True)
-
     USERNAME_FIELD = "email"  # username
     REQUIRED_FIELDS = []
 
@@ -68,3 +59,14 @@ class User(AbstractBaseUser):
     def has_module_perms(self, app_label):
         return True
 
+
+class Address(models.Model):
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="adresses")
+    name = models.CharField(max_length=100)
+    phone = models.CharField(max_length=100, null=True)
+    street = models.CharField(max_length=100, null=True)
+    city = models.CharField(max_length=100, null=True)
+    province = models.CharField(max_length=100, null=True, blank=True)
+    postal_code = models.CharField(max_length=100, null=True)
+    country = models.CharField(max_length=100, null=True)
