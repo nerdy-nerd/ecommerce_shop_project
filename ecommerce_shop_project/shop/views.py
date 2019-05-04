@@ -17,9 +17,13 @@ OBJECTS_PER_PAGE = 2
 
 def populate_products_add_ratings(products):
     for p in products:
-        total_rating = int(p.total_rating)
-        p.stars = range(total_rating)
-        p.empty_stars = range(5 - total_rating)
+        if p.count_rating:
+            total_rating = int(p.total_rating / p.count_rating)
+            p.stars = range(total_rating)
+            p.empty_stars = range(5 - total_rating)
+        else:
+            p.stars = range(5)
+            p.empty_stars = None
     return products
 
 
@@ -77,10 +81,10 @@ def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
     cart_product_form = CartAddProductForm()
     category_list = Category.objects.all()
-
+    rating = 0
     # star rating
     if product.count_rating:
-        rating = int(product.total_rating/product.count_rating)
+        rating = int(product.total_rating / product.count_rating)
         stars = range(rating)
         empty_stars = range(5 - rating)
     else:
@@ -140,15 +144,15 @@ def process_comment(request, product_pk=None, comment_pk=None):
 
 @login_required(login_url=reverse_lazy("account:login"))
 def process_rating(request, product_id):
-    print('!!!!!!!!!', product_id)
+    print("!!!!!!!!!", product_id)
     product = get_object_or_404(Product, id=product_id)
     user = request.user
     print(Rating.objects.all())
     if not Rating.objects.filter(product=product, user=user).exists():
-        print('!!!!!!!!!cscsssssssssssssss')
+        print("!!!!!!!!!cscsssssssssssssss")
         form = RatingForm(request.POST)
         if form.is_valid():
-            print('!!!!!!!!!cscsssssssssssssss!!!!!!!!!!!!!!!!!!!!!!!!')
+            print("!!!!!!!!!cscsssssssssssssss!!!!!!!!!!!!!!!!!!!!!!!!")
             rating_note = form.cleaned_data["rating"]
             product.total_rating += rating_note
             product.count_rating += 1
