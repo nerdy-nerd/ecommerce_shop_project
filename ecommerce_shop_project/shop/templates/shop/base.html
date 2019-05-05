@@ -42,7 +42,7 @@
                 <div class="search-nav">
                     <form action="." method="get">
                         <input type="text" name="q" class="search" value="{% if query %}{{ query }}{% endif %}">
-                        <button type="submit" class="btn-dark">Szukaj</button>
+                        <button type="submit" class="btn-dark">Search</button>
                         {% if query %}
                         <button type="submit" formmethod="post" class="close-icon" name="clear-button"></button>
                         {% csrf_token %}
