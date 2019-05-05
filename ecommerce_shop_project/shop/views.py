@@ -6,9 +6,8 @@ from django.urls import reverse_lazy
 from django.views.decorators.http import require_POST
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse
-
+from django.views.decorators.csrf import csrf_exempt
 import datetime
-
 from .models import Product, Category, Comment, Rating
 from cart.forms import CartAddProductForm
 from .forms import CommentForm, RatingForm
@@ -163,6 +162,7 @@ def process_rating(request, product_id):
     return redirect(product)
 
 
+@csrf_exempt
 def like_product(request):
     product_id = request.POST.get('product_id', None)
 

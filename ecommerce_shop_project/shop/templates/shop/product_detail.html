@@ -6,6 +6,9 @@
 
 {% include 'shop/categories.html' %}
 
+<head>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" type="text/css" rel="stylesheet">
+</head>
 
 <div class="col-lg-9">
 
@@ -15,11 +18,9 @@
             <h3 class="card-title">{{ product.name }}</h3>
             <h4>${{ product.price }}</h4>
 
-            <button id="likes" data-id="{{product.id}}" class="btn btn-mini btn-danger glyphicon glyphicon-heart"
-                    type="button">
+            <button id="likes" data-id="{{product.id}}" class="btn btn-danger fa fa-heart" type="button">
                 {% if product.likes > 0 %} {{ product.likes }} {% endif %}
             </button>
-
             <p class="card-text">{{ product.description}}</p>
 
             <span class="ratings">
@@ -134,7 +135,6 @@
         form.querySelector(".edit-button").classList.toggle('hidden');
     }
 
-
 </script>
 <script>
     document.querySelectorAll(".ratings > span > span" ).forEach(s => s.addEventListener("mouseover", () => console.log("cos")));
@@ -151,7 +151,6 @@ var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
 
 {% block extrajs %}
 <script src="{% static 'js/like_button.js' %}"></script>
-{% endblock %}
 
-
+{% endblock%}
 {% endblock%}

@@ -41,7 +41,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to="images/", default="")
     total_rating = models.DecimalField(max_digits=3, decimal_places=2, default=0)
     count_rating = models.PositiveIntegerField(default=0)
-    likes = models.PositiveIntegerField(default=0)
+    likes = models.IntegerField(default=0)
 
     class Meta:
         ordering = ("name",)

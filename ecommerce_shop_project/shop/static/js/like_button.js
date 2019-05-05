@@ -5,7 +5,7 @@ $('button').on('click', function(event){
     $.ajax({
         url : '/like_product/',
         type : 'POST',
-        data : { product_id : $(this).attr("data-id")},
+        data : {product_id : $(this).attr("data-id")},
 
         success : function(data){
             element.html(' ' + data);
