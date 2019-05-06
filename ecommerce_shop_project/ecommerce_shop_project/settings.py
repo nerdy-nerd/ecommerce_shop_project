@@ -141,6 +141,7 @@ INTERNAL_IPS = ["127.0.0.1"]
 AUTH_USER_MODEL = "account.User"
 
 CART_SESSION_ID = "cart"
+CELERY_ALWAYS_EAGER = True
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 DEFAULT_FROM_EMAIL = "testing@example.com"
