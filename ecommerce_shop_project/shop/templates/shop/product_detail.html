@@ -8,6 +8,7 @@
 
 <head>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" type="text/css" rel="stylesheet">
+    <link href="{% static 'css/stars.css' %}" rel="stylesheet">
 </head>
 
 <div class="col-lg-9">
@@ -63,7 +64,6 @@
                     </span>
                     {% endfor %}
                     This product is not rated
-
                 </span>
                 {% endif %}
             </span>
@@ -161,6 +161,7 @@
         form.querySelector(".edit-button").classList.toggle('hidden');
     }
 
+
 </script>
 <script>
     document.querySelectorAll(".ratings > span > span").forEach(s => s.addEventListener("mouseover", () => console.log("cos")));
@@ -173,9 +174,9 @@
     // using jQuery
     var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
 </script>
-
 {% block extrajs %}
 <script src="{% static 'js/like_button.js' %}"></script>
+<script src="{% static 'js/stars.js' %}"></script>
 
 {% endblock%}
 {% endblock%}
