@@ -64,10 +64,10 @@
                     </span>
                     {% endfor %}
                     This product is not rated
+
                 </span>
                 {% endif %}
             </span>
-
             {% if user.is_authenticated %}
             <form action="{% url 'shop:add_rating' product_id=product.id  %}" method="post">
                 {% csrf_token %}
@@ -160,8 +160,6 @@
         form.querySelector(".submit-button").classList.toggle('hidden');
         form.querySelector(".edit-button").classList.toggle('hidden');
     }
-
-
 </script>
 <script>
     document.querySelectorAll(".ratings > span > span").forEach(s => s.addEventListener("mouseover", () => console.log("cos")));
