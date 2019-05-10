@@ -73,13 +73,12 @@ class AddressCreateView(CreateView):
                 email=email, defaults={"password": "pa$$123!", "is_active": False}
             )
             form.instance.user = user
-            self.object = form.save()
             form.cleaned_data.pop("email", None)
             # get address if exists, otherwise create
-            # address = Address.objects.filter(**form.cleaned_data).first()
-            # if not address:
-            # address = Address.objects.create(**form.cleaned_data)
-            # print(address.user)
-            # self.object = address
+            address = Address.objects.filter(**form.cleaned_data).first()
+            if not address:
+                self.object = form.save()
+            else:
+                self.object = address
         return HttpResponseRedirect(self.get_success_url())
 
