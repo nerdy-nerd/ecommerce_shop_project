@@ -5,5 +5,5 @@ django-debug-toolbar==1.11
 django-extensions==2.1.6
 Pillow==5.4.1
 django-crispy-forms==1.7.2
-git statuscelery==4.3.0
+celery==4.3.0
 rabbitmq-server==3.7.14
