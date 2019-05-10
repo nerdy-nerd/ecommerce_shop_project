@@ -32,7 +32,6 @@ def order_create(request, address_uuid=None):
                 )
             cart.clear()
             order_created.delay(order.id)
-
             return render(request, "orders/order/created.html", {"order": order})
     else:
         if request.user.is_authenticated:
