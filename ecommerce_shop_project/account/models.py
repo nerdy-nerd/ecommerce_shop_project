@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+import uuid
 
 
 class UserManager(BaseUserManager):
@@ -14,9 +15,9 @@ class UserManager(BaseUserManager):
 
         user_obj = self.model(email=self.normalize_email(email))
         user_obj.set_password(password)
-        user_obj.staff = is_staff
-        user_obj.admin = is_admin
-        user_obj.active = is_active
+        user_obj.is_staff = is_staff
+        user_obj.is_admin = is_admin
+        user_obj.is_active = is_active
         user_obj.save(using=self._db)
         return user_obj
 
@@ -36,8 +37,6 @@ class User(AbstractBaseUser):
     is_admin = models.BooleanField(default=False)  # superuser
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-
-    orders = models.ManyToManyField("orders.Order")
 
     USERNAME_FIELD = "email"  # username
     REQUIRED_FIELDS = []
@@ -62,7 +61,10 @@ class User(AbstractBaseUser):
 
 class Address(models.Model):
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="adresses")
+    user = models.ForeignKey(
+        User, on_delete=models.SET_NULL, related_name="addresses", null=True
+    )
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, null=True)
     name = models.CharField(max_length=100)
     phone = models.CharField(max_length=100, null=True)
     street = models.CharField(max_length=100, null=True)
@@ -70,3 +72,9 @@ class Address(models.Model):
     province = models.CharField(max_length=100, null=True, blank=True)
     postal_code = models.CharField(max_length=100, null=True)
     country = models.CharField(max_length=100, null=True)
+
+    def __str__(self):
+        return f"{self.id} {self.name}  \n \
+                {self.street}, {self.city} \n \
+                {self.postal_code}, {self.city} \n \
+                    {self.country} {self.user}"

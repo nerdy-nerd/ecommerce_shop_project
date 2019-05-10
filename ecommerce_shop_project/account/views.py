@@ -10,7 +10,7 @@ from django.contrib.auth.views import (
     PasswordResetConfirmView,
     PasswordResetCompleteView,
 )
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView, CreateView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -18,6 +18,7 @@ from .forms import AccountRegisterForm, UserUpdateForm
 from django.contrib.auth import get_user_model
 
 from orders.models import Order
+from .models import Address
 
 User = get_user_model()
 

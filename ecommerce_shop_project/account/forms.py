@@ -23,3 +23,4 @@ class UserAdminCreationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ("email", "is_staff", "is_admin")
+

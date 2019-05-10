@@ -19,7 +19,7 @@ class UserAdmin(BaseUserAdmin):
     filter_horizontal = ()
 
 
-admin.site.register(User, UserAdmin)
+admin.site.register(User)
 
 
 # Remove Group Model from admin. We're not using it.
