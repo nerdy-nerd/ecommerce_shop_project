@@ -48,7 +48,7 @@ class UserLogoutView(LogoutView):
         model = User
 
 
-@login_required(login_url=reverse_lazy("account:login"))
+@login_required
 def profile(request):
     return render(request, "account/profile.html")
 
@@ -94,7 +94,7 @@ class AccoutnPasswordResetCompleteView(PasswordResetCompleteView):
     template_name = "account/password_reset_complete.html"
 
 
-@login_required(login_url=reverse_lazy("account:login"))
+@login_required
 def order_detail(request, pk):
     if not request.user.orders.filter(pk=pk).exists():
         raise Http404()

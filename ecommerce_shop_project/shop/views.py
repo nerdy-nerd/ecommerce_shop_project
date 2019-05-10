@@ -8,7 +8,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import datetime
-from .models import Product, Category, Comment, Rating
+from .models import Product, Category, Comment, Rating, Like
 from cart.forms import CartAddProductForm
 from .forms import CommentForm, RatingForm
 
@@ -118,7 +118,7 @@ def about(request):
     return render(request, "shop/about.html", context=context)
 
 
-@login_required(login_url=reverse_lazy("account:login"))
+@login_required
 @require_POST
 def process_comment(request, product_pk=None, comment_pk=None):
     time_delta = datetime.timedelta(seconds=30)
@@ -143,7 +143,7 @@ def process_comment(request, product_pk=None, comment_pk=None):
     return redirect(product)  # same as product.get_absolute_url
 
 
-@login_required(login_url=reverse_lazy("account:login"))
+@login_required
 def process_rating(request, product_id):
     print("!!!!!!!!!", product_id)
     product = get_object_or_404(Product, id=product_id)
@@ -162,10 +162,10 @@ def process_rating(request, product_id):
     return redirect(product)
 
 
+@login_required
 @csrf_exempt
 def like_product(request):
     product_id = request.POST.get('product_id', None)
-
     likes = 0
     if product_id:
         product = Product.objects.get(id=int(product_id))

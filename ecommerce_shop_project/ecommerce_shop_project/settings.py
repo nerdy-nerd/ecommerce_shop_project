@@ -134,6 +134,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 LOGIN_REDIRECT_URL = "shop:index"
+LOGIN_URL = "account:login"
 
 INTERNAL_IPS = ["127.0.0.1"]
 
