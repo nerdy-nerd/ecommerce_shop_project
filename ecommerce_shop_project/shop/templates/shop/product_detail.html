@@ -19,17 +19,19 @@
             <h4>${{ product.price }}</h4>
             {% if user.is_authenticated %}
             <button id="likes" data-id="{{product.id}}" class="btn btn-danger fa fa-heart" type="button">
+                {% if product.likes > 0 %}
+                {{ product.likes }}
+                {% endif %}
+            </button>
+            {% endif %}
+            {% if not user.is_authenticated %}
+            <button id="likes1" disabled data-id="{{product.id}}" class="btn btn-danger fa fa-heart" type="button">
                 {% if product.likes > 0 %} {{ product.likes }} {% endif %}
             </button>
             {% endif %}
-                {% if not user.is_authenticated %}
-                <button id="likes1" disabled data-id="{{product.id}}" class="btn btn-danger fa fa-heart" type="button">
-                    {% if product.likes > 0 %} {{ product.likes }} {% endif %}
-                </button>
-                {% endif %}
-                <p class="card-text">{{ product.description}}</p>
+            <p class="card-text">{{ product.description}}</p>
 
-                <span class="ratings">
+            <span class="ratings">
             {% if product.count_rating %}
             <span class="text-warning">
                 {% for s in stars %}
@@ -56,28 +58,28 @@
             {% endif %}
     </span>
 
-                {% if user.is_authenticated %}
-                <form action="{% url 'shop:add_rating' product_id=product.id  %}" method="post">
-                    {% csrf_token %}
-                    <div id="field1">
+            {% if user.is_authenticated %}
+            <form action="{% url 'shop:add_rating' product_id=product.id  %}" method="post">
+                {% csrf_token %}
+                <div id="field1">
 
 
-                        {{ rating_form }}
+                    {{ rating_form }}
 
-                    </div>
-                </form>
-                {% endif %}
+                </div>
+            </form>
+            {% endif %}
 
 
-                <form action="{% url 'cart:cart_add' product.id %}" method="post">
-                    {% csrf_token %}
-                    <div id="field">
-                        <!--<button type="button" id="sub" class="sub">-</button>-->
-                        {{ cart_product_form }}
-                        <!--<button type="button" id="add" class="add">+</button>-->
-                    </div>
-                    <input type="submit" value="add to cart" class="btn btn-primary">
-                </form>
+            <form action="{% url 'cart:cart_add' product.id %}" method="post">
+                {% csrf_token %}
+                <div id="field">
+                    <!--<button type="button" id="sub" class="sub">-</button>-->
+                    {{ cart_product_form }}
+                    <!--<button type="button" id="add" class="add">+</button>-->
+                </div>
+                <input type="submit" value="add to cart" class="btn btn-primary">
+            </form>
         </div>
     </div>
 
@@ -145,9 +147,11 @@
 
 
 
+
 </script>
 <script>
     document.querySelectorAll(".ratings > span > span" ).forEach(s => s.addEventListener("mouseover", () => console.log("cos")));
+
 
 
 
@@ -160,6 +164,7 @@
 <script type="text/javascript">
 // using jQuery
 var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+
 
 
 
