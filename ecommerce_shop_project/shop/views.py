@@ -166,13 +166,11 @@ def process_rating(request, product_id):
 @csrf_exempt
 def like_product(request, product_id):
     product = get_object_or_404(Product, id=product_id)
-    print("!!!!!!!!!", product_id)
     user = request.user
     likes = product.likes
-    print(Like.objects.all())
     if not Like.objects.filter(product=product, user=user).exists():
-        print("!!!!!!!!!cscsssssssssssssss")
-        product.likes = likes + 1
+        likes = likes + 1
+        product.likes = likes
         product.save()
         Like.objects.create(product=product, user=user)
     return HttpResponse(likes)
