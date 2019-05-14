@@ -3,9 +3,8 @@ $('button').on('click', function(event){
     var element = $(this);
 
     $.ajax({
-        url : '/like_product/',
+        url : '/like_product/'+$(this).attr("data-id"),
         type : 'POST',
-        data : {product_id : $(this).attr("data-id")},
 
         success : function(data){
             element.html(' ' + data);

@@ -13,5 +13,5 @@ urlpatterns = [
     path("add_comment/<int:product_pk>/", views.process_comment, name="add_comment"),
     path("about/", views.about, name="about"),
     path("add_rating/<product_id>/", views.process_rating, name="add_rating"),
-    path("like_product/", views.like_product, name="like_product"),
+    path("like_product/<product_id>", views.like_product, name="like_product"),
 ]

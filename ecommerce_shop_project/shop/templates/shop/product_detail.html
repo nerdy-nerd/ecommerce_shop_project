@@ -19,16 +19,17 @@
             <h4>${{ product.price }}</h4>
             {% if user.is_authenticated %}
             <button id="likes" data-id="{{product.id}}" class="btn btn-danger fa fa-heart" type="button">
+                {% if product.likes > 0 %}
+                {{ product.likes }}
+                {% endif %}
+            </button>
+            {% endif %}
+            {% if not user.is_authenticated %}
+            <button id="likes1" disabled data-id="{{product.id}}" class="btn btn-danger fa fa-heart" type="button">
                 {% if product.likes > 0 %} {{ product.likes }} {% endif %}
             </button>
             {% endif %}
-                {% if not user.is_authenticated %}
-                <button id="likes1" disabled data-id="{{product.id}}" class="btn btn-danger fa fa-heart" type="button">
-                    {% if product.likes > 0 %} {{ product.likes }} {% endif %}
-                </button>
-                {% endif %}
-                <p class="card-text">{{ product.description}}</p>
-
+            <p class="card-text">{{ product.description}}</p>
                 <span class="ratings">
             {% if product.count_rating %}
             <span class="text-warning">
@@ -141,17 +142,9 @@
         form.querySelector(".edit-button").classList.toggle('hidden');
     }
 
-
-
-
-
 </script>
 <script>
     document.querySelectorAll(".ratings > span > span" ).forEach(s => s.addEventListener("mouseover", () => console.log("cos")));
-
-
-
-
 </script>
 
 <script src="https://code.jquery.com/jquery-3.4.0.min.js"
@@ -160,11 +153,6 @@
 <script type="text/javascript">
 // using jQuery
 var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
-
-
-
-
-
 </script>
 
 {% block extrajs %}
