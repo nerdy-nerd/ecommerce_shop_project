@@ -49,10 +49,13 @@ class Product(models.Model):
     def price(self):
         discount = self._get_most_recent_discount()
         return (
-            self._get_discount_price(discount.discount_percent)
+            round(self._get_discount_price(discount.discount_percent), 2)
             if discount
             else self.original_price
         )
+
+    def on_sale(self):
+        return bool(self._get_most_recent_discount())
 
     class Meta:
         ordering = ("name",)
@@ -81,8 +84,8 @@ class Product(models.Model):
 
     def _get_most_recent_discount(self):
 
-        active_discounts = self.discounts.all()
-        active_discounts = [x for x in active_discounts if x.is_active]
+        discounts = self.discounts.all()
+        active_discounts = [x for x in discounts if x.is_active]
         active_discounts.sort(key=attrgetter("start_time"))
         if active_discounts:
             return active_discounts[0]
@@ -140,4 +143,4 @@ class ProductDiscount(models.Model):
     @property
     def is_active(self):
         now = timezone.now()
-        return True
+        return self.start_time < now and self.end_time > now
