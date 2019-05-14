@@ -1,3 +1,7 @@
+from operator import attrgetter
+import datetime
+from decimal import Decimal
+
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth import get_user_model
@@ -6,7 +10,6 @@ from django.utils.text import slugify
 
 from django.conf import settings
 
-import datetime
 
 User = get_user_model()
 
@@ -30,7 +33,7 @@ class Product(models.Model):
     name = models.CharField(max_length=100, db_index=True)
     slug = models.SlugField(max_length=150, db_index=True)
     description = models.TextField()
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    original_price = models.DecimalField(max_digits=10, decimal_places=2)
     stock = models.PositiveIntegerField()
     available = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
@@ -41,6 +44,15 @@ class Product(models.Model):
     total_rating = models.DecimalField(max_digits=3, decimal_places=2, default=0)
     count_rating = models.PositiveIntegerField(default=0)
     likes = models.IntegerField(default=0)
+
+    @property
+    def price(self):
+        discount = self._get_most_recent_discount()
+        return (
+            self._get_discount_price(discount.discount_percent)
+            if discount
+            else self.original_price
+        )
 
     class Meta:
         ordering = ("name",)
@@ -56,6 +68,9 @@ class Product(models.Model):
 
         return unique_slug
 
+    def _get_discount_price(self, discount_percent):
+        return self.original_price * Decimal((1 - (discount_percent / 100)))
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = self._get_unique_slug()
@@ -64,8 +79,15 @@ class Product(models.Model):
     def get_absolute_url(self):
         return reverse("shop:product_detail", args=[str(self.id)])
 
-    def __str__(self):
-        return self.name
+    def _get_most_recent_discount(self):
+
+        active_discounts = self.discounts.all()
+        active_discounts = [x for x in active_discounts if x.is_active]
+        active_discounts.sort(key=attrgetter("start_time"))
+        if active_discounts:
+            return active_discounts[0]
+        else:
+            return None
 
 
 class Rating(models.Model):
@@ -74,7 +96,9 @@ class Rating(models.Model):
 
 
 class ProductImage(models.Model):
-    product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)
+    product = models.ForeignKey(
+        Product, related_name="images", on_delete=models.CASCADE
+    )
     image = models.ImageField(upload_to="images/", default="")
 
 
@@ -103,3 +127,17 @@ class Comment(models.Model):
 
     def get_absolute_url(self):
         return reverse("shop:edit_comment", kwargs={"comment_pk": int(self.id)})
+
+
+class ProductDiscount(models.Model):
+    product = models.ForeignKey(
+        Product, on_delete=models.DO_NOTHING, null=False, related_name="discounts"
+    )
+    discount_percent = models.PositiveIntegerField(default=0)
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
+
+    @property
+    def is_active(self):
+        now = timezone.now()
+        return True
