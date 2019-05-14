@@ -68,13 +68,15 @@ class AddressCreateView(CreateView):
 
         else:  # If user is anonymous get or create non_active account
             email = form.cleaned_data["email"]
-            user, _ = User.objects.get_or_create(
-                email=email, defaults={"password": "pa$$123!", "is_active": False}
-            )
+            user = User.objects.filter(email=email).first()
+            if not user:
+                user = User(email=email, is_active=False)
+                user.set_password("pass")
+                user.save()
             form.instance.user = user
             form.cleaned_data.pop("email", None)
             # get address if exists, otherwise create
-            address = Address.objects.filter(**form.cleaned_data).first()
+            address = Address.objects.filter(user=user, **form.cleaned_data).first()
             if not address:
                 self.object = form.save()
             else:
