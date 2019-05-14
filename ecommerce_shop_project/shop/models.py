@@ -38,7 +38,6 @@ class Product(models.Model):
     category = models.ForeignKey(
         Category, on_delete=models.SET_NULL, null=True, blank=True
     )
-    image = models.ImageField(upload_to="images/", default="")
     total_rating = models.DecimalField(max_digits=3, decimal_places=2, default=0)
     count_rating = models.PositiveIntegerField(default=0)
     likes = models.IntegerField(default=0)

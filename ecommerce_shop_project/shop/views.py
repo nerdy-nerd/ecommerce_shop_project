@@ -17,14 +17,26 @@ OBJECTS_PER_PAGE = 2
 
 def populate_products_add_ratings(products):
     for p in products:
-        if p.count_rating:
-            total_rating = int(p.total_rating / p.count_rating)
-            p.stars = range(total_rating)
-            p.empty_stars = range(5 - total_rating)
-        else:
-            p.stars = range(5)
-            p.empty_stars = None
+        p = populate_rating(p)
+        p = populate_image(p)
     return products
+
+def populate_rating(product):
+    if product.count_rating:
+        total_rating = int(product.total_rating / product.count_rating)
+        product.stars = range(total_rating)
+        product.empty_stars = range(5 - total_rating)
+    else:
+        product.stars = range(5)
+        product.empty_stars = None
+    return product
+
+
+def populate_image(product):
+    product.image = product.images.first().image.url
+    return product
+
+
 
 
 class IndexView(ListView):
@@ -79,6 +91,7 @@ class CategoryProductView(ListView):
 
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
+    product.image = product.images.first().image.url
     cart_product_form = CartAddProductForm()
     category_list = Category.objects.all()
     rating = 0
@@ -174,4 +187,3 @@ def like_product(request, product_id):
         product.save()
         Like.objects.create(product=product, user=user)
     return HttpResponse(likes)
-

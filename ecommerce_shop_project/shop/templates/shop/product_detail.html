@@ -13,7 +13,7 @@
 <div class="col-lg-9">
 
     <div class="card mt-4 product-info">
-        <img class="card-img-top img-fluid cover-image" src="{{product.image.url}}" alt="">
+        <img class="card-img-top img-fluid cover-image" src="{{product.image}}" alt="">
         <div class="card-body">
             <h3 class="card-title">{{ product.name }}</h3>
             <h4>${{ product.price }}</h4>
@@ -30,8 +30,7 @@
             </button>
             {% endif %}
             <p class="card-text">{{ product.description}}</p>
-
-            <span class="ratings">
+                <span class="ratings">
             {% if product.count_rating %}
             <span class="text-warning">
                 {% for s in stars %}
@@ -58,28 +57,28 @@
             {% endif %}
     </span>
 
-            {% if user.is_authenticated %}
-            <form action="{% url 'shop:add_rating' product_id=product.id  %}" method="post">
-                {% csrf_token %}
-                <div id="field1">
+                {% if user.is_authenticated %}
+                <form action="{% url 'shop:add_rating' product_id=product.id  %}" method="post">
+                    {% csrf_token %}
+                    <div id="field1">
 
 
-                    {{ rating_form }}
+                        {{ rating_form }}
 
-                </div>
-            </form>
-            {% endif %}
+                    </div>
+                </form>
+                {% endif %}
 
 
-            <form action="{% url 'cart:cart_add' product.id %}" method="post">
-                {% csrf_token %}
-                <div id="field">
-                    <!--<button type="button" id="sub" class="sub">-</button>-->
-                    {{ cart_product_form }}
-                    <!--<button type="button" id="add" class="add">+</button>-->
-                </div>
-                <input type="submit" value="add to cart" class="btn btn-primary">
-            </form>
+                <form action="{% url 'cart:cart_add' product.id %}" method="post">
+                    {% csrf_token %}
+                    <div id="field">
+                        <!--<button type="button" id="sub" class="sub">-</button>-->
+                        {{ cart_product_form }}
+                        <!--<button type="button" id="add" class="add">+</button>-->
+                    </div>
+                    <input type="submit" value="add to cart" class="btn btn-primary">
+                </form>
         </div>
     </div>
 
@@ -143,19 +142,9 @@
         form.querySelector(".edit-button").classList.toggle('hidden');
     }
 
-
-
-
-
-
 </script>
 <script>
     document.querySelectorAll(".ratings > span > span" ).forEach(s => s.addEventListener("mouseover", () => console.log("cos")));
-
-
-
-
-
 </script>
 
 <script src="https://code.jquery.com/jquery-3.4.0.min.js"
@@ -164,12 +153,6 @@
 <script type="text/javascript">
 // using jQuery
 var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
-
-
-
-
-
-
 </script>
 
 {% block extrajs %}
