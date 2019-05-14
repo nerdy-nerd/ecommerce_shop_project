@@ -10,14 +10,14 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AddField(
-            model_name='product',
-            name='count_rating',
-            field=models.PositiveIntegerField(default=0),
-        ),
-        migrations.AddField(
-            model_name='product',
-            name='total_rating',
-            field=models.DecimalField(decimal_places=2, default=0, max_digits=3),
-        ),
+        # migrations.AddField(
+        #     model_name='product',
+        #     name='count_rating',
+        #     field=models.PositiveIntegerField(default=0),
+        # ),
+        # migrations.AddField(
+        #     model_name='product',
+        #     name='total_rating',
+        #     field=models.DecimalField(decimal_places=2, default=0, max_digits=3),
+        # ),
     ]
