@@ -16,7 +16,6 @@
                             </div>
                             <div class="userData ml-3">
                                 <h2 class="d-block" style="font-size: 1.5rem; font-weight: bold">{{user.email}}</h2>
-                                <h6 class="d-block"><a href="{% url 'account:profile_edit' %}">Edit profile</a> </h6>
                                 <h6 class="d-block"><a href="{% url 'account:password_change' %}">Change password</a>
                                 </h6>
                             </div>
@@ -36,33 +35,6 @@
                             <div class="tab-pane active" id="1">
 
                                 <table class="table">
-                                    {% if user.first_name %}
-                                    <tr>
-                                        <th>Full Name</th>
-                                        <td>{{user.first_name}} {{user.last_name}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Phone</th>
-                                        <td> {{user.phone}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Adress</th>
-                                        <td>{{user.street}} <br>
-                                            {{user.code}} {{user.city}} <br>
-                                            {%if user.province%}
-                                            {{user.province}}
-                                            {% else %}
-
-                                            {%endif%}
-                                            {{user.country}}</td>
-                                    </tr>
-                                    {% else%}
-                                    <tr>
-                                        <th>Phone</th>
-                                        <td> Provide additional data by editing Your
-                                            profile</td>
-                                    </tr>
-                                    {% endif %}
                                     <tr>
                                         <th>Created</th>
                                         <td>{{ user.created }}</td>
@@ -71,7 +43,7 @@
                                 </table>
                             </div>
                             <div class="tab-pane" id="2">
-                                {% if user.orders %}
+                                {% if user.order_set %}
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
@@ -83,7 +55,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for order in user.orders.all %}
+                                        {% for order in user.order_set.all %}
                                         <tr>
                                             <td>{{order.pk}}</td>
                                             <td>{{order.created}}</td>
