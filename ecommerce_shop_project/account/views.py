@@ -97,9 +97,7 @@ class AccoutnPasswordResetCompleteView(PasswordResetCompleteView):
 
 @login_required
 def order_detail(request, pk):
-    get_object_or_404(request.user.orders, pk=pk)
-    if not request.user.orders.filter(pk=pk).exists():
-        raise Http404()
+    get_object_or_404(request.user.order_set, pk=pk)
     order = Order.objects.prefetch_related("items").get(pk=pk)
     # total_cost = order.get_total_cost()
     context = {"order": order}
