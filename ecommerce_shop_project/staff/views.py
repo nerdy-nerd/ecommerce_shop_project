@@ -72,7 +72,6 @@ class AddProductView(CreateView):
         "original_price",
         "stock",
         "available",
-        "image",
     ]
 
     def get_success_url(self):
@@ -90,7 +89,6 @@ class UpdateProductView(UpdateView):
         "original_price",
         "stock",
         "available",
-        "image",
     ]
 
     def get_success_url(self):

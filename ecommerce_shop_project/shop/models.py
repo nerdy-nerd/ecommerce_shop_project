@@ -86,7 +86,7 @@ class Product(models.Model):
 
         discounts = self.discounts.all()
         active_discounts = [x for x in discounts if x.is_active]
-        active_discounts.sort(key=attrgetter("start_time"))
+        active_discounts.sort(key=attrgetter("start_time"), reverse=True)
         if active_discounts:
             return active_discounts[0]
         else:
