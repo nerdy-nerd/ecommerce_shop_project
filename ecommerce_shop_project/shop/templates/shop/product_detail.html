@@ -30,55 +30,55 @@
             </button>
             {% endif %}
             <p class="card-text">{{ product.description}}</p>
-                <span class="ratings">
-            {% if product.count_rating %}
-            <span class="text-warning">
-                {% for s in stars %}
-                <span data-star="{{s}}">
-                &#9733;
-                </span>
-                {% endfor %}
-                {% for s in empty_stars %}
-                <span data-star="{{s|add:rating}}">
-                &#9734;
+            <span class="ratings">
+                {% if product.count_rating %}
+                <span class="text-warning">
+                    {% for s in stars %}
+                    <span data-star="{{s}}">
+                        &#9733;
                     </span>
-                {% endfor %}
-            </span>
-            {% else %}
-            <span class="text-secondary">
-                {% for i in stars %}
-                <span data-star="{{i}}">
-                   &#9733;
+                    {% endfor %}
+                    {% for s in empty_stars %}
+                    <span data-star="{{s|add:rating}}">
+                        &#9734;
+                    </span>
+                    {% endfor %}
                 </span>
-                {% endfor %}
+                {% else %}
+                <span class="text-secondary">
+                    {% for i in stars %}
+                    <span data-star="{{i}}">
+                        &#9733;
+                    </span>
+                    {% endfor %}
                     This product is not rated
 
-            </span>
-            {% endif %}
-    </span>
-
-                {% if user.is_authenticated %}
-                <form action="{% url 'shop:add_rating' product_id=product.id  %}" method="post">
-                    {% csrf_token %}
-                    <div id="field1">
-
-
-                        {{ rating_form }}
-
-                    </div>
-                </form>
+                </span>
                 {% endif %}
+            </span>
+
+            {% if user.is_authenticated %}
+            <form action="{% url 'shop:add_rating' product_id=product.id  %}" method="post">
+                {% csrf_token %}
+                <div id="field1">
 
 
-                <form action="{% url 'cart:cart_add' product.id %}" method="post">
-                    {% csrf_token %}
-                    <div id="field">
-                        <!--<button type="button" id="sub" class="sub">-</button>-->
-                        {{ cart_product_form }}
-                        <!--<button type="button" id="add" class="add">+</button>-->
-                    </div>
-                    <input type="submit" value="add to cart" class="btn btn-primary">
-                </form>
+                    {{ rating_form }}
+
+                </div>
+            </form>
+            {% endif %}
+
+
+            <form action="{% url 'cart:cart_add' product.id %}" method="post">
+                {% csrf_token %}
+                <div id="field">
+                    <!--<button type="button" id="sub" class="sub">-</button>-->
+                    {{ cart_product_form }}
+                    <!--<button type="button" id="add" class="add">+</button>-->
+                </div>
+                <input type="submit" value="add to cart" class="btn btn-primary">
+            </form>
         </div>
     </div>
 
@@ -91,39 +91,43 @@
             </div>
             <div class="comments-list">
                 {% for comment in comments %}
+                {% if comment.is_active %}
+                <div class="media">
+                    <div class="media-body">
+                        <h4 class="media-heading user_name">{{ comment.user }}</h4>
+                        <div class="body-text">{{comment.body}}</div>
+                    </div>
+                </div>
+                {% elif  user.id == comment.user_id and not comment.is_active %}
                 <div class="media">
                     <div class="media-body">
                         <h4 class="media-heading user_name">{{ comment.user }}</h4>
                         <form class="comment-{{comment.pk}}"
-                              action="{% url 'shop:edit_comment' comment_pk=comment.pk %}" method="POST">
+                            action="{% url 'shop:edit_comment' comment_pk=comment.pk %}" method="POST">
                             {% csrf_token %}
                             <input type="text" name="body" value="{{comment.body}}" class="hidden body-input">
                             <div class="body-text">{{comment.body}}</div>
 
-                            {% if user.id == comment.user_id and comment.is_editable%}
                             <input type="submit" value="save" class="hidden submit-button">
                             <input type="button" value="edit" class=" edit-button"
-                                   onclick="switchVisibiliy({{comment.pk}})">
-                            {% endif %}
-                        </form>
-                    </div>
-
-
-                </div>
-                {% endfor %}
-                {% if user.is_authenticated %}
-                <div class="media">
-                    <div class="media-body">
-                        <form method="POST" action="{% url 'shop:add_comment' product_pk=product.pk %}">
-                            {% csrf_token %}
-                            {{ form|crispy}}
-                            <button type="submit">Add Comment</button>
+                                onclick="switchVisibiliy({{comment.pk}})">
                         </form>
                     </div>
                 </div>
                 {% endif %}
+                {% endfor %}
             </div>
-
+            {% if user.is_authenticated %}
+            <div class="media">
+                <div class="media-body">
+                    <form method="POST" action="{% url 'shop:add_comment' product_pk=product.pk %}">
+                        {% csrf_token %}
+                        {{ form|crispy}}
+                        <input class="btn btn-info" type="submit" value="Add">
+                    </form>
+                </div>
+            </div>
+            {% endif %}
 
         </div>
     </div>
@@ -144,15 +148,15 @@
 
 </script>
 <script>
-    document.querySelectorAll(".ratings > span > span" ).forEach(s => s.addEventListener("mouseover", () => console.log("cos")));
+    document.querySelectorAll(".ratings > span > span").forEach(s => s.addEventListener("mouseover", () => console.log("cos")));
 </script>
 
 <script src="https://code.jquery.com/jquery-3.4.0.min.js"
-        integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
+    integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
 {% csrf_token %}
 <script type="text/javascript">
-// using jQuery
-var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+    // using jQuery
+    var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
 </script>
 
 {% block extrajs %}
