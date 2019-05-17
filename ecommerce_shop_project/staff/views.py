@@ -28,6 +28,12 @@ class ProductListView(ListView):
     )
 
 
+class ProductImageListView(ListView):
+    template_name = "staff/product_images_list.html"
+    context_object_name = "product_images"
+    queryset = models.ProductImage.objects.all().prefetch_related("product")
+
+
 class CategoryListView(ListView):
 
     template_name = "staff/category_list.html"
@@ -75,6 +81,15 @@ class AddProductView(CreateView):
         return reverse("staff:product_list")
 
 
+class AddProductImageView(CreateView):
+    template_name = "staff/add_product_image.html"
+    model = models.ProductImage
+    fields = ["product", "image"]
+
+    def get_success_url(self):
+        return reverse("staff:product_images_list")
+
+
 class UpdateProductView(UpdateView):
     model = models.Product
     template_name = "staff/update_product.html"
@@ -90,6 +105,22 @@ class UpdateProductView(UpdateView):
 
     def get_success_url(self):
         return reverse("staff:product_list")
+
+    def get_object(self):
+        prod = get_object_or_404(models.Product, pk=self.kwargs["pk"])
+        return prod
+
+
+class UpdateProductImageView(UpdateView):
+    model = models.Product
+    template_name = "staff/update_product_image.html"
+    fields = [
+        "name",
+        "image",
+    ]
+
+    def get_success_url(self):
+        return reverse("staff:product_images_list")
 
     def get_object(self):
         prod = get_object_or_404(models.Product, pk=self.kwargs["pk"])
@@ -119,6 +150,18 @@ class DeleteProductView(DeleteView):
     def get_object(self):
         prod = get_object_or_404(models.Product, pk=self.kwargs["pk"])
         return prod
+
+
+class DeleteProductImageView(DeleteView):
+    model = models.ProductImage
+    template_name = "staff/delete_product_image.html"
+
+    def get_success_url(self):
+        return reverse("staff:product_images_list")
+
+    def get_object(self):
+        image = get_object_or_404(models.ProductImage, pk=self.kwargs["pk"])
+        return image
 
 
 class DeleteCategoryView(DeleteView):

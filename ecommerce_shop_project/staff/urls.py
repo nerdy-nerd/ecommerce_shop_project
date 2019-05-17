@@ -2,16 +2,20 @@ from django.urls import path
 from .views import (
     PanelView,
     ProductListView,
+    ProductImageListView,
     CategoryListView,
     CommentListView,
     UserListView,
     OrderListView,
     OrderDetailView,
     AddProductView,
+    AddProductImageView,
     AddCategoryView,
     UpdateProductView,
+    UpdateProductImageView,
     UpdateCategoryView,
     DeleteProductView,
+    DeleteProductImageView,
     DeleteCategoryView,
     UserDetailView,
     CommentDetailView,
@@ -29,6 +33,9 @@ urlpatterns = [
         "product_list", staff_required(ProductListView.as_view()), name="product_list"
     ),
     path(
+        "product_images_list", staff_required(ProductImageListView.as_view()), name="product_images_list"
+    ),
+    path(
         "categories_list",
         staff_required(CategoryListView.as_view()),
         name="category_list",
@@ -40,6 +47,7 @@ urlpatterns = [
     path("user_list", staff_required(UserListView.as_view()), name="user_list"),
     # add
     path("add_product", staff_required(AddProductView.as_view()), name="add_product"),
+    path("add_product_image", staff_required(AddProductImageView.as_view()), name="add_product_image"),
     path(
         "add_category", staff_required(AddCategoryView.as_view()), name="add_category"
     ),
@@ -48,6 +56,11 @@ urlpatterns = [
         "update_product/<int:pk>",
         staff_required(UpdateProductView.as_view()),
         name="update_product",
+    ),
+    path(
+        "update_product_image/<int:pk>",
+        staff_required(UpdateProductImageView.as_view()),
+        name="update_product_image",
     ),
     path(
         "update_category/<int:pk>",
@@ -59,6 +72,11 @@ urlpatterns = [
         "delete_product/<int:pk>",
         staff_required(DeleteProductView.as_view()),
         name="delete_product",
+    ),
+    path(
+        "delete_product_image/<int:pk>",
+        staff_required(DeleteProductImageView.as_view()),
+        name="delete_product_image",
     ),
     path(
         "delete_category/<int:pk>",
