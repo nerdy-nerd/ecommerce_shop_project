@@ -1,0 +1,47 @@
+{% extends 'staff/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="row">
+    <div class="col">
+        <div>
+            <h2>Products' Images</h2>
+            <div class="row">
+                <div class="col">
+                    <a href="{% url 'staff:panel' %}" class="btn btn-info">Go back</a>
+                </div>
+                <div class="col text-right">
+                    <a href="{%url 'staff:add_product_image'%}" class="btn btn-info">Add image</a>
+                </div>
+            </div>
+        </div>
+
+
+
+        #{% with product_images.count as total_images %}
+        <small>Total: {{total_images}} </small>
+        {% endwith%}
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Image</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for image in product_images %}
+                <tr>
+                    <td>{{image.product}} </td>
+                    <td><img src="{{image.image.url}}" width="50" height="80"></td>
+                    <td><a href="{%url 'staff:delete_product_image' pk=image.pk%}" class="btn btn-secondary">Delete</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+{% endblock %}
