@@ -144,3 +144,6 @@ class ProductDiscount(models.Model):
     def is_active(self):
         now = timezone.now()
         return self.start_time < now and self.end_time > now
+
+    def __str__(self):
+        return f"product no. {self.product.id} discount. {self.discount_percent}"
