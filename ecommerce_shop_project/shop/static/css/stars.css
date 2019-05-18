@@ -1,8 +1,9 @@
 .rating {
   display: inline-block;
+  cursor: pointer;
 }
 
-.star {
+.data-star {
   background: none;
   border: none;
   font-size: 1.5em;
@@ -10,8 +11,8 @@
   cursor: pointer;
 }
 
-.star.is-active {
-  color: #ff0;
+.data-star:after {
+  cursor: pointer;
 }
 
 
