@@ -177,15 +177,3 @@ ul a:hover {
 #exTab1 .tab-content {
   padding : 5px 15px;
 }
-
-.product-on-sale-price h6
-{
-  display: inline;
-  text-decoration: line-through;
-}
-
-.product-on-sale-price h4
-{
-  display: inline;
-  color: red;
-}
