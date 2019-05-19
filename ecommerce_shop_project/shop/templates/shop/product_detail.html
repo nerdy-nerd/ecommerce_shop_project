@@ -111,6 +111,7 @@
                 <div class="media">
                     <div class="media-body">
                         <h4 class="media-heading user_name">{{ comment.user }}</h4>
+                        <small>Your comment is not publushed yet.</small>
                         <form class="comment-{{comment.pk}}"
                             action="{% url 'shop:edit_comment' comment_pk=comment.pk %}" method="POST">
                             {% csrf_token %}
