@@ -9,7 +9,12 @@ from django.views.generic.detail import SingleObjectMixin
 
 from shop import models
 from orders.models import Order
-from .forms import PublishCommentForm, OrderPayForm, DiscountProductForm, DiscountCategoryForm,
+from .forms import (
+    PublishCommentForm,
+    OrderPayForm,
+    DiscountProductForm,
+    DiscountCategoryForm,
+)
 
 User = get_user_model()
 
@@ -255,7 +260,7 @@ class OrderPay(UpdateView):
 
 def discount_product(request, pk):
     product = get_object_or_404(models.Product, pk=pk)
-    discounts = product.discounts.filter()
+    discounts = product.discounts.all()
     if request.method == "POST":
         form = DiscountProductForm(request.POST)
         if form.is_valid():
@@ -284,7 +289,7 @@ def delete_product_discount(request, pk):
 
 def discount_category(request, pk):
     category = get_object_or_404(models.Category, pk=pk)
-    discounts = category.discounts.filter()
+    discounts = category.discounts.all()
     if request.method == "POST":
         form = DiscountCategoryForm(request.POST)
         if form.is_valid():

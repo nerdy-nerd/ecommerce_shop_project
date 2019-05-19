@@ -3,10 +3,10 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-<h2>Update {{product.name}}:</h2>
+<h2>Update {{category.name}}:</h2>
 <div class="row">
     <div class="col">
-        <a href="{% url 'staff:product_list' %}" class="btn btn-info">Go back</a>
+        <a href="{% url 'staff:category_list' %}" class="btn btn-info">Go back</a>
     </div>
 </div>
 
@@ -28,7 +28,7 @@
                 <td>{{discount.end_time}}</td>
                 <td>{{discount.discount_percent}} &percnt;</td>
                 <td>
-                    <form method="GET" action="{% url 'staff:delete_product_discount' pk=discount.pk  %}"><input
+                    <form method="GET" action="{% url 'staff:delete_category_discount' pk=discount.pk  %}"><input
                             type="submit" class="btn btn-danger" value="delete"></form>
                 </td>
             </tr>

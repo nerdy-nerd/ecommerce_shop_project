@@ -1,7 +1,7 @@
 from django import forms
 from django.utils import timezone
 
-from shop.models import Comment, ProductDiscount
+from shop.models import Comment, ProductDiscount, CategoryDiscount
 from orders.models import Order
 
 
@@ -35,5 +35,5 @@ class DiscountCategoryForm(forms.ModelForm):
     discount_percent = forms.IntegerField(max_value=100, min_value=0)
 
     class Meta:
-        model = ProductDiscount
+        model = CategoryDiscount
         fields = ["discount_percent", "start_time", "end_time"]
