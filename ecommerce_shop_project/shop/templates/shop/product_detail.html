@@ -14,7 +14,7 @@
 
     <div class="card mt-4 product-info">
         {% for image in product.images.all %}
-        <img class="card-img-top img-fluid cover-image" src="{{image.image.url}}" alt="" width="250" height="380">
+            <img class="card-img-top img-fluid cover-image" src="{{image.image.url}}" alt="" width="250" height="380">
         {% endfor %}
         <div class="card-body">
             <h3 class="card-title">{{ product.name }}</h3>

@@ -37,7 +37,15 @@
         {% for product in products %}
         <div class="col-lg-4 col-md-6 mb-4">
             <div class="card h-100">
-                <a href="{{ product.get_absolute_url }}"><img class="card-img-top" src="{{product.images.first.image.url}}" alt="" width="250" height="380"></a>
+                <a href="{{ product.get_absolute_url }}">
+            {% with cover=product.images.first %}
+                {% if cover %}
+                    <img class="card-img-top" src="{{cover.image.url}}" alt="" width="250" height="380">
+                {% else %}
+                    <img class="card-img-top" src="https://imgflip.com/i/31a3mt" alt="" width="250" height="380">
+                {% endif %}
+            {% endwith %}
+                </a>
                 <div class="card-body">
                     <h4 class="card-title">
                         <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
