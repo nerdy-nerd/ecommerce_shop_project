@@ -9,7 +9,7 @@ from django.views.generic.detail import SingleObjectMixin
 
 from shop import models
 from orders.models import Order
-from .forms import PublishCommentForm, OrderPayForm, DiscountProductForm
+from .forms import PublishCommentForm, OrderPayForm, DiscountProductForm, DiscountCategoryForm,
 
 User = get_user_model()
 
@@ -114,10 +114,7 @@ class UpdateProductView(UpdateView):
 class UpdateProductImageView(UpdateView):
     model = models.Product
     template_name = "staff/update_product_image.html"
-    fields = [
-        "name",
-        "image",
-    ]
+    fields = ["name", "image"]
 
     def get_success_url(self):
         return reverse("staff:product_images_list")
@@ -278,9 +275,47 @@ def discount_product(request, pk):
     )
 
 
-def delete_discount(request, pk):
+def delete_product_discount(request, pk):
     discount = get_object_or_404(models.ProductDiscount, pk=pk)
     prod_pk = discount.product.pk
     discount.delete()
     return redirect("staff:discount_product", prod_pk)
+
+
+def discount_category(request, pk):
+    category = get_object_or_404(models.Category, pk=pk)
+    discounts = category.discounts.filter()
+    if request.method == "POST":
+        form = DiscountCategoryForm(request.POST)
+        if form.is_valid():
+            cat_disc = form.save(commit=False)
+            cat_disc.category = category
+            cat_disc.save()
+            products = category.product_set.all()
+            for product in products:
+                disc = models.ProductDiscount(
+                    product=product,
+                    discount_percent=form.cleaned_data["discount_percent"],
+                    start_time=form.cleaned_data["start_time"],
+                    end_time=form.cleaned_data["end_time"],
+                    category_discount=cat_disc,
+                )
+                disc.save()
+            return redirect("staff:category_list")
+
+    else:
+        form = DiscountCategoryForm()
+
+    return render(
+        request,
+        "staff/discount_category.html",
+        {"form": form, "category": category, "discounts": discounts},
+    )
+
+
+def delete_category_discount(request, pk):
+    discount = get_object_or_404(models.CategoryDiscount, pk=pk)
+    cat_pk = discount.category_id
+    discount.delete()
+    return redirect("staff:discount_category", cat_pk)
 
