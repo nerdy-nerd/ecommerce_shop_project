@@ -21,6 +21,7 @@ def populate_products_add_ratings(products):
         p = populate_image(p)
     return products
 
+
 def populate_rating(product):
     if product.count_rating:
         total_rating = int(product.total_rating / product.count_rating)
@@ -35,8 +36,6 @@ def populate_rating(product):
 def populate_image(product):
     product.image = product.images.first().image.url
     return product
-
-
 
 
 class IndexView(ListView):
@@ -104,7 +103,7 @@ def product_detail(request, pk):
         stars = range(5)
         empty_stars = None
     # comments
-    comments = product.comment_set.filter(is_active=True).prefetch_related("user")
+    comments = product.comment_set.all().prefetch_related("user")
     # queryset = models.Comment.objects.all().prefetch_related("product", "user")
     likes = product.likes
     form = CommentForm()
@@ -138,6 +137,7 @@ def process_comment(request, product_pk=None, comment_pk=None):
 
     form = CommentForm(request.POST)
     if form.is_valid():
+        print("valid")
         if product_pk:
             product = get_object_or_404(Product, pk=product_pk)
 
@@ -145,8 +145,7 @@ def process_comment(request, product_pk=None, comment_pk=None):
             new_comment.product = product
             new_comment.user = request.user
             new_comment.save()
-        else:
-
+        elif comment_pk:
             comment = get_object_or_404(Comment, pk=comment_pk)
             form = CommentForm(request.POST, instance=comment)
             form.save()
