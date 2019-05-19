@@ -9,7 +9,7 @@ from django.views.generic.detail import SingleObjectMixin
 
 from shop import models
 from orders.models import Order
-from .forms import PublishCommentForm, OrderPayForm, DiscountProductForm
+from .forms import PublishCommentForm, OrderPayForm
 
 User = get_user_model()
 
@@ -21,11 +21,7 @@ class PanelView(TemplateView):
 class ProductListView(ListView):
     template_name = "staff/product_list.html"
     context_object_name = "products"
-    queryset = (
-        models.Product.objects.all()
-        .prefetch_related("category")
-        .prefetch_related("discounts")
-    )
+    queryset = models.Product.objects.all().prefetch_related("category")
 
 
 class CategoryListView(ListView):
@@ -69,7 +65,7 @@ class AddCategoryView(CreateView):
 class AddProductView(CreateView):
     template_name = "staff/add_product.html"
     model = models.Product
-    fields = ["category", "name", "description", "original_price", "stock", "available"]
+    fields = ["category", "name", "description", "price", "stock", "available", "image"]
 
     def get_success_url(self):
         return reverse("staff:product_list")
@@ -83,9 +79,10 @@ class UpdateProductView(UpdateView):
         "name",
         "slug",
         "description",
-        "original_price",
+        "price",
         "stock",
         "available",
+        "image",
     ]
 
     def get_success_url(self):
@@ -211,33 +208,3 @@ class OrderPay(UpdateView):
 
     def get_success_url(self):
         return reverse("staff:order_list")
-
-
-def discount_product(request, pk):
-    product = get_object_or_404(models.Product, pk=pk)
-    discounts = product.discounts.filter()
-    if request.method == "POST":
-        form = DiscountProductForm(request.POST)
-        if form.is_valid():
-            prod_disc = form.save(commit=False)
-            prod_disc.product = product
-            prod_disc.save()
-
-            return redirect("staff:product_list")
-
-    else:
-        form = DiscountProductForm()
-
-    return render(
-        request,
-        "staff/discount_product.html",
-        {"form": form, "product": product, "discounts": discounts},
-    )
-
-
-def delete_discount(request, pk):
-    discount = get_object_or_404(models.ProductDiscount, pk=pk)
-    prod_pk = discount.product.pk
-    discount.delete()
-    return redirect("staff:discount_product", prod_pk)
-
