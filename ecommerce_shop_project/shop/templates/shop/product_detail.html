@@ -173,11 +173,11 @@ star.removeClass("hover");
 star.prevAll().removeClass("hover");
 }));
 
-<!--document.querySelectorAll(".ratings > span " ).forEach(s => s.addEventListener("click", () =>-->
-<!--const star = $(event.target);-->
-<!--star.addClass("hover");-->
-<!--star.prevAll().addClass("hover");-->
-<!--}));-->
+document.querySelectorAll(".ratings > span " ).forEach(s => s.addEventListener("click", () => {
+const star = $(event.target);
+star.addClass("selected");
+star.prevAll().addClass("selected");
+}));
 
 </script>
 
@@ -185,14 +185,18 @@ star.prevAll().removeClass("hover");
 .empty-star {
 color: black;
 }
+
 .hover {
 color: red;
 }
 
 .text-warning > span {
-cursor: pointer}
+cursor: pointer
+}
 
-
+.selected {
+    color: red;
+}
 </style>
 <script src="https://code.jquery.com/jquery-3.4.0.min.js"
     integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>

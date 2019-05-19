@@ -2,12 +2,10 @@ from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 from django.views.generic.list import ListView
 from django.contrib.auth.decorators import login_required
-from django.urls import reverse_lazy
 from django.views.decorators.http import require_POST
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-import datetime
 from .models import Product, Category, Comment, Rating, Like
 from cart.forms import CartAddProductForm
 from .forms import CommentForm, RatingForm
@@ -121,8 +119,6 @@ def about(request):
 @login_required
 @require_POST
 def process_comment(request, product_pk=None, comment_pk=None):
-    time_delta = datetime.timedelta(seconds=30)
-
     form = CommentForm(request.POST)
     if form.is_valid():
         print("valid")
@@ -144,16 +140,14 @@ def process_comment(request, product_pk=None, comment_pk=None):
 
 
 @login_required
+@csrf_exempt
 def process_rating(request, product_id):
-    print("!!!!!!!!!", product_id)
     product = get_object_or_404(Product, id=product_id)
     user = request.user
     print(Rating.objects.all())
     if not Rating.objects.filter(product=product, user=user).exists():
-        print("!!!!!!!!!cscsssssssssssssss")
         form = RatingForm(request.POST)
         if form.is_valid():
-            print("!!!!!!!!!cscsssssssssssssss!!!!!!!!!!!!!!!!!!!!!!!!")
             rating_note = form.cleaned_data["rating"]
             product.total_rating += rating_note
             product.count_rating += 1
