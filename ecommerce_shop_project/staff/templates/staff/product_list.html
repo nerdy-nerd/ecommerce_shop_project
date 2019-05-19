@@ -39,6 +39,7 @@
                     <td>{{product.stock}}</td>
                     <td>{{product.price}}</td>
                     <td><a href="{%url 'staff:update_product' pk=product.pk%}" class="btn btn-secondary">Edit</a></td>
+                    <td><a href="{%url 'staff:discount_product' pk=product.pk%}" class="btn btn-info">Discount</a></td>
                 </tr>
                 {% endfor %}
             </tbody>

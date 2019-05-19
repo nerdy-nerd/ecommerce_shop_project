@@ -20,6 +20,8 @@ from .views import (
     UserDetailView,
     CommentDetailView,
     toggle_comment_activity,
+    discount_product,
+    delete_discount,
 )
 from .decorators import staff_required
 
@@ -81,6 +83,11 @@ urlpatterns = [
         staff_required(DeleteCategoryView.as_view()),
         name="delete_category",
     ),
+    path(
+        "delete_discount/<int:pk>/",
+        staff_required(delete_discount),
+        name="delete_discount",
+    ),
     # detail
     path(
         "user_detail/<int:pk>",
@@ -107,5 +114,10 @@ urlpatterns = [
         "toggle_comment/<int:pk>",
         staff_required(toggle_comment_activity),
         name="toggle_comment",
+    ),
+    path(
+        "discount_product/<int:pk>",
+        staff_required(discount_product),
+        name="discount_product",
     ),
 ]
