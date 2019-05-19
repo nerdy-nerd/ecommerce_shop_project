@@ -77,6 +77,9 @@ class ProductImage(models.Model):
     product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to="images/", default="")
 
+    def __str__(self):
+        return "image for {}".format(self.product)
+
 
 class Like(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
