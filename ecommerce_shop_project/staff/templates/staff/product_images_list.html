@@ -32,8 +32,8 @@
             <tbody>
                 {% for image in product_images %}
                 <tr>
-                    <td>{{image.product}} </td>
-                    <td><img src="{{image.image.url}}" width="50" height="80"></td>
+                    <td>{{image.product.name}} </td>
+                    <td><a href="{{ image.product.get_absolute_url }}"><img src="{{image.image.url}}" width="50" height="80"></a></td>
                     <td><a href="{%url 'staff:delete_product_image' pk=image.pk%}" class="btn btn-secondary">Delete</a></td>
                 </tr>
                 {% endfor %}
@@ -41,7 +41,5 @@
         </table>
     </div>
 </div>
-
-
 
 {% endblock %}
