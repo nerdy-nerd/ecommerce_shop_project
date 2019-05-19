@@ -18,7 +18,16 @@
         {% endfor %}
         <div class="card-body">
             <h3 class="card-title">{{ product.name }}</h3>
-            <h4>${{ product.price }}</h4>
+            {% if product.on_sale %}
+            <div class="product-on-sale-price">
+                <h6>${{ product.original_price }}</h6>
+                <h4>${{ product.price }} SALE!</h4>
+            </div>
+            {% else %}
+            <div class="product-price ">
+                <h5>${{ product.price }}</h5>
+            </div>
+            {% endif %}
             {% if user.is_authenticated %}
             <button id="likes" data-id="{{product.id}}" class="btn btn-danger fa fa-heart" type="button">
                 {% if product.likes > 0 %}
@@ -104,6 +113,7 @@
                 <div class="media">
                     <div class="media-body">
                         <h4 class="media-heading user_name">{{ comment.user }}</h4>
+                        <small>Your comment is not publushed yet.</small>
                         <form class="comment-{{comment.pk}}"
                             action="{% url 'shop:edit_comment' comment_pk=comment.pk %}" method="POST">
                             {% csrf_token %}
@@ -113,6 +123,9 @@
                             <input type="submit" value="save" class="hidden submit-button">
                             <input type="button" value="edit" class=" edit-button"
                                 onclick="switchVisibiliy({{comment.pk}})">
+
+
+
                         </form>
                     </div>
                 </div>

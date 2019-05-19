@@ -50,7 +50,16 @@
                     <h4 class="card-title">
                         <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
                     </h4>
-                    <h5>${{ product.price }}</h5>
+                    {% if product.on_sale %}
+                    <div class="product-on-sale-price">
+                        <h6>${{ product.original_price }}</h6>
+                        <h4>${{ product.price }} SALE!</h4>
+                    </div>
+                    {% else %}
+                    <div class="product-price ">
+                        <h5>${{ product.price }}</h5>
+                    </div>
+                    {% endif %}
                     <p class="card-text">{{ product.description|truncatewords:7}}</p>
                 </div>
                 <div class="card-footer">
