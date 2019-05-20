@@ -40,8 +40,15 @@ Your Shopping Cart
             <tr>
                 <td>
                     <a href="{{ product.get_absolute_url }}">
-                        <img src="{% if product.image %} {{ product.image.url }} {% else %} {% static 'img/default.jpg' %} {% endif %}"
-                             alt="..." style="height: 130px; width: auto">
+                        {% with cover=product.images.first %}
+                        {% if cover %}
+                        <img class="card-img-top" src="{{cover.image.url}}" alt=""
+                             style="height: 130px; width: auto">
+                        {% else %}
+                        <img class="card-img-top" src="https://imgflip.com/i/31a3mt" alt=""
+                             style="height: 130px; width: auto">
+                        {% endif %}
+                        {% endwith %}
                     </a>
                 </td>
                 <td>{{ product.name }}</td>
