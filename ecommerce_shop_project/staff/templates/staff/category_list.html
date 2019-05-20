@@ -37,6 +37,8 @@
                     <td></td>
                     <td><a href="{% url 'staff:update_category' pk=category.pk %}" class="btn btn-secondary">Edit</a>
                     </td>
+                    <td><a href="{%url 'staff:discount_category' pk=category.pk%}" class="btn btn-info">Discount</a>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>

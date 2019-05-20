@@ -21,7 +21,9 @@ from .views import (
     CommentDetailView,
     toggle_comment_activity,
     discount_product,
-    delete_discount,
+    delete_product_discount,
+    discount_category,
+    delete_category_discount,
 )
 from .decorators import staff_required
 
@@ -33,7 +35,9 @@ urlpatterns = [
         "product_list", staff_required(ProductListView.as_view()), name="product_list"
     ),
     path(
-        "product_images_list", staff_required(ProductImageListView.as_view()), name="product_images_list"
+        "product_images_list",
+        staff_required(ProductImageListView.as_view()),
+        name="product_images_list",
     ),
     path(
         "categories_list",
@@ -47,7 +51,11 @@ urlpatterns = [
     path("user_list", staff_required(UserListView.as_view()), name="user_list"),
     # add
     path("add_product", staff_required(AddProductView.as_view()), name="add_product"),
-    path("add_product_image", staff_required(AddProductImageView.as_view()), name="add_product_image"),
+    path(
+        "add_product_image",
+        staff_required(AddProductImageView.as_view()),
+        name="add_product_image",
+    ),
     path(
         "add_category", staff_required(AddCategoryView.as_view()), name="add_category"
     ),
@@ -84,9 +92,14 @@ urlpatterns = [
         name="delete_category",
     ),
     path(
-        "delete_discount/<int:pk>/",
-        staff_required(delete_discount),
-        name="delete_discount",
+        "delete_product_discount/<int:pk>/",
+        staff_required(delete_product_discount),
+        name="delete_product_discount",
+    ),
+    path(
+        "delete_category_discount/<int:pk>/",
+        staff_required(delete_category_discount),
+        name="delete_category_discount",
     ),
     # detail
     path(
@@ -119,5 +132,10 @@ urlpatterns = [
         "discount_product/<int:pk>",
         staff_required(discount_product),
         name="discount_product",
+    ),
+    path(
+        "discount_category/<int:pk>",
+        staff_required(discount_category),
+        name="discount_category",
     ),
 ]

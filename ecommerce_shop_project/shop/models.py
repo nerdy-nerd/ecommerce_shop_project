@@ -135,6 +135,23 @@ class Comment(models.Model):
         return reverse("shop:edit_comment", kwargs={"comment_pk": int(self.id)})
 
 
+class CategoryDiscount(models.Model):
+    category = models.ForeignKey(
+        Category, on_delete=models.DO_NOTHING, null=False, related_name="discounts"
+    )
+    discount_percent = models.PositiveIntegerField(default=0)
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
+
+    @property
+    def is_active(self):
+        now = timezone.now()
+        return self.start_time < now and self.end_time > now
+
+    def __str__(self):
+        return f"category no. {self.category.id} discount. {self.discount_percent}"
+
+
 class ProductDiscount(models.Model):
     product = models.ForeignKey(
         Product, on_delete=models.DO_NOTHING, null=False, related_name="discounts"
@@ -142,6 +159,9 @@ class ProductDiscount(models.Model):
     discount_percent = models.PositiveIntegerField(default=0)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
+    category_discount = models.ForeignKey(
+        CategoryDiscount, on_delete=models.CASCADE, null=True
+    )
 
     @property
     def is_active(self):
