@@ -1,0 +1,18 @@
+.rating {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.data-star {
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  padding: 0 0.15em;
+  cursor: pointer;
+}
+
+.data-star:after {
+  cursor: pointer;
+}
+
+

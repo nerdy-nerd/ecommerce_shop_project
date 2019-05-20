@@ -8,6 +8,7 @@
 
 <head>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" type="text/css" rel="stylesheet">
+    <link href="{% static 'css/stars.css' %}" rel="stylesheet">
 </head>
 
 <div class="col-lg-9">
@@ -42,30 +43,30 @@
             {% endif %}
             <p class="card-text">{{ product.description}}</p>
             <span class="ratings">
-                {% if product.count_rating %}
+            {% if product.count_rating %}
                 <span class="text-warning">
-                    {% for s in stars %}
+                {% for s in stars %}
                     <span data-star="{{s}}">
                         &#9733;
                     </span>
-                    {% endfor %}
-                    {% for s in empty_stars %}
-                    <span data-star="{{s|add:rating}}">
-                        &#9734;
+                {% endfor %}
+                {% for s in empty_stars %}
+                    <span data-star="{{s|add:rating}}" class="empty-star">
+                        &#9733;
                     </span>
-                    {% endfor %}
+                {% endfor %}
                 </span>
-                {% else %}
-                <span class="text-secondary">
-                    {% for i in stars %}
+            {% else %}
+                <span class="text-dark">
+                {% for i in stars %}
                     <span data-star="{{i}}">
                         &#9733;
                     </span>
-                    {% endfor %}
-                    This product is not rated
+                {% endfor %}
 
                 </span>
-                {% endif %}
+                This product is not rated
+            {% endif %}
             </span>
 
             {% if user.is_authenticated %}
@@ -84,9 +85,7 @@
             <form action="{% url 'cart:cart_add' product.id %}" method="post">
                 {% csrf_token %}
                 <div id="field">
-                    <!--<button type="button" id="sub" class="sub">-</button>-->
                     {{ cart_product_form }}
-                    <!--<button type="button" id="add" class="add">+</button>-->
                 </div>
                 <input type="submit" value="add to cart" class="btn btn-primary">
             </form>
@@ -160,12 +159,45 @@
         form.querySelector(".submit-button").classList.toggle('hidden');
         form.querySelector(".edit-button").classList.toggle('hidden');
     }
-
 </script>
 <script>
-    document.querySelectorAll(".ratings > span > span").forEach(s => s.addEventListener("mouseover", () => console.log("cos")));
+document.querySelectorAll(".ratings > span " ).forEach(s => s.addEventListener("mouseover", () => {
+const star = $(event.target);
+star.addClass("hover");
+star.prevAll().addClass("hover");
+}));
+
+document.querySelectorAll(".ratings > span " ).forEach(s => s.addEventListener("mouseout", () => {
+const star = $(event.target);
+star.removeClass("hover");
+star.prevAll().removeClass("hover");
+}));
+
+document.querySelectorAll(".ratings > span " ).forEach(s => s.addEventListener("click", () => {
+const star = $(event.target);
+star.addClass("selected");
+star.prevAll().addClass("selected");
+}));
+
 </script>
 
+<style>
+.empty-star {
+color: black;
+}
+
+.hover {
+color: red;
+}
+
+.text-warning > span {
+cursor: pointer
+}
+
+.selected {
+    color: red;
+}
+</style>
 <script src="https://code.jquery.com/jquery-3.4.0.min.js"
     integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
 {% csrf_token %}
@@ -173,9 +205,9 @@
     // using jQuery
     var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
 </script>
-
 {% block extrajs %}
 <script src="{% static 'js/like_button.js' %}"></script>
+<script src="{% static 'js/stars.js' %}"></script>
 
 {% endblock%}
 {% endblock%}
