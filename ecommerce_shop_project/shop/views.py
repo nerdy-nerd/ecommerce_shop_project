@@ -141,18 +141,19 @@ def process_comment(request, product_pk=None, comment_pk=None):
 
 @login_required
 @csrf_exempt
-def process_rating(request, product_id):
+def process_rating(request, product_id, star_data):
+    print(product_id)
     product = get_object_or_404(Product, id=product_id)
     user = request.user
     print(Rating.objects.all())
-    if not Rating.objects.filter(product=product, user=user).exists():
-        form = RatingForm(request.POST)
-        if form.is_valid():
-            rating_note = form.cleaned_data["rating"]
-            product.total_rating += rating_note
-            product.count_rating += 1
-            product.save()
-            Rating.objects.create(product=product, user=user)
+    # if not Rating.objects.filter(product=product, user=user).exists():
+    #     form = RatingForm(request.POST)
+    #     if form.is_valid():
+    #         rating_note = form.cleaned_data["rating"]
+    #         product.total_rating += rating_note
+    #         product.count_rating += 1
+    #         product.save()
+    #         Rating.objects.create(product=product, user=user)
     return redirect(product)
 
 

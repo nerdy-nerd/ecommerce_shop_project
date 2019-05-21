@@ -30,7 +30,8 @@
             </div>
             {% endif %}
             {% if user.is_authenticated %}
-            <button id="likes" data-id="{{product.id}}" class="btn btn-danger fa fa-heart" type="button">
+            <button id="likes" hej
+                    class="btn btn-danger fa fa-heart" type="button">
                 {% if product.likes > 0 %}
                 {{ product.likes }}
                 {% endif %}
@@ -46,12 +47,12 @@
             {% if product.count_rating %}
                 <span class="text-warning">
                 {% for s in stars %}
-                    <span data-star="{{s}}">
+                    <span data-star="{{s}}" class="data-star" data-id="{{product.id}}">
                         &#9733;
                     </span>
                 {% endfor %}
                 {% for s in empty_stars %}
-                    <span data-star="{{s|add:rating}}" class="empty-star">
+                    <span data-star="{{s|add:rating}}" class="empty-star data-star" data-id="{{product.id}}">
                         &#9733;
                     </span>
                 {% endfor %}
@@ -59,7 +60,7 @@
             {% else %}
                 <span class="text-dark">
                 {% for i in stars %}
-                    <span data-star="{{i}}">
+                    <span data-star="{{i}}" class="data-star" data-id="{{product.id}}">
                         &#9733;
                     </span>
                 {% endfor %}
