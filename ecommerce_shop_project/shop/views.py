@@ -8,21 +8,27 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import Product, Category, Comment, Rating, Like
 from cart.forms import CartAddProductForm
-from .forms import CommentForm, RatingForm
+from .forms import CommentForm
+from django.http import JsonResponse
+
 
 OBJECTS_PER_PAGE = 2
 
 
 def populate_products_add_ratings(products):
     for product in products:
-        if product.count_rating:
-            total_rating = int(product.total_rating / product.count_rating)
-            product.stars = range(total_rating)
-            product.empty_stars = range(5 - total_rating)
-        else:
-            product.stars = range(5)
-            product.empty_stars = None
+        stars, empty_stars = count_stars(product)
+        product.stars = range(stars)
+        product.empty_stars = range(empty_stars)
     return products
+
+
+def count_stars(product):
+    # star rating
+    if product.count_rating:
+        rating = int(product.total_rating / product.count_rating)
+        return rating, 5 - rating
+    return 0, 5
 
 
 class IndexView(ListView):
@@ -79,31 +85,20 @@ def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
     cart_product_form = CartAddProductForm()
     category_list = Category.objects.all()
-    rating = 0
-    # star rating
-    if product.count_rating:
-        rating = int(product.total_rating / product.count_rating)
-        stars = range(rating)
-        empty_stars = range(5 - rating)
-    else:
-        stars = range(5)
-        empty_stars = None
     # comments
     comments = product.comment_set.all().prefetch_related("user")
-    # queryset = models.Comment.objects.all().prefetch_related("product", "user")
     likes = product.likes
+    stars, empty_stars = count_stars(product)
     form = CommentForm()
-    rating_form = RatingForm()
     context = {
         "product": product,
         "category_list": category_list,
-        "stars": stars,
-        "empty_stars": empty_stars,
+        "stars": range(stars),
+        "empty_stars": range(empty_stars),
         "comments": comments,
         "form": form,
+        "rating": stars,
         "cart_product_form": cart_product_form,
-        "rating_form": rating_form,
-        "rating": rating,
         "likes": likes,
     }
     return render(request, "shop/product_detail.html", context=context)
@@ -141,20 +136,16 @@ def process_comment(request, product_pk=None, comment_pk=None):
 
 @login_required
 @csrf_exempt
-def process_rating(request, product_id, star_data):
-    print(product_id)
+def process_rating(request, product_id, stars):
     product = get_object_or_404(Product, id=product_id)
     user = request.user
-    print(Rating.objects.all())
-    # if not Rating.objects.filter(product=product, user=user).exists():
-    #     form = RatingForm(request.POST)
-    #     if form.is_valid():
-    #         rating_note = form.cleaned_data["rating"]
-    #         product.total_rating += rating_note
-    #         product.count_rating += 1
-    #         product.save()
-    #         Rating.objects.create(product=product, user=user)
-    return redirect(product)
+    if not Rating.objects.filter(product=product, user=user).exists():
+        product.total_rating += stars + 1
+        product.count_rating += 1
+        product.save()
+        Rating.objects.create(product=product, user=user)
+    stars, _ = count_stars(product)
+    return JsonResponse({"stars": stars})
 
 
 @login_required

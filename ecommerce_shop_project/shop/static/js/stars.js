@@ -1,14 +1,26 @@
-$(".data-star" ).on('click', function(event){
+$(".clickable > span" ).on('click', function(event){
     event.preventDefault();
     var element = $(this);
-    var rating = rating;
 
     $.ajax({
         url : '/add_rating/' + $(this).attr("data-id") + '/' + $(this).attr("data-star"),
-        data: {rating: rating},
+//        data: {data_star: data_star},
         type : 'POST',
 
         success : function(data){
+            const spans = document.querySelectorAll(".ratings > span");
+            spans.forEach(s => {
+                console.log(s);
+                s.classList.remove("empty-star");
+                s.classList.remove("text-dark");
+                s.classList.remove("hover");
+            });
+            const not_rated = document.querySelector(".not_rated");
+            if (not_rated){
+                not_rated.remove();
+            }
+            Array.from(spans).slice(data.stars).forEach(s => s.classList.add("empty-star"));
+            console.log(data.stars);
 //            element.html(' ' + data);
         }
     });
