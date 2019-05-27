@@ -5,13 +5,6 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('shop', '0015_auto_20190510_2013'),
-    ]
+    dependencies = [("shop", "0001_squashed_0015_auto_20190510_2013")]
 
-    operations = [
-        migrations.RemoveField(
-            model_name='product',
-            name='image',
-        ),
-    ]
+    operations = [migrations.RemoveField(model_name="product", name="image")]
