@@ -80,7 +80,7 @@ class Product(models.Model):
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse("shop:product_detail", args=[str(self.id)])
+        return reverse("shop:product_detail", args=[str(self.slug)])
 
     def _get_most_recent_discount(self):
 
