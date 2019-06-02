@@ -81,8 +81,8 @@ class CategoryProductView(ListView):
         return context
 
 
-def product_detail(request, pk):
-    product = get_object_or_404(Product, pk=pk)
+def product_detail(request, slug):
+    product = get_object_or_404(Product, slug=slug)
     cart_product_form = CartAddProductForm()
     category_list = Category.objects.all()
     # comments
