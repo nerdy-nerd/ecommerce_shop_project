@@ -43,12 +43,10 @@ class TestCartDetailView(TestCase):
         response.context["cart"].add(product=product2)
 
         self.assertEqual(response.status_code, 200)
-        print(response.content)
-        self.assertContains(response, "items")
         self.assertEqual(len(response.context["cart"]), 2)
 
 
-class TestCartAddlView(TestCase):
+class TestCartAddView(TestCase):
     def setUp(self):
         self.category = category1 = Category.objects.create(name="category1")
         self.product = product1 = Product.objects.create(
@@ -70,15 +68,25 @@ class TestCartAddlView(TestCase):
 
         self.assertEqual(response.status_code, 404)
 
-    # def test_cart_with_product(self):
-    #     category1 = Category.objects.create(name="category1")
-    #     product1 = Product.objects.create(
-    #         name="product1", original_price=100, category=category1, stock=1
-    #     )
-    #     response = self.client.get(self.url)
-    #     response.context["cart"].add(product=product1)
 
-    #     self.assertEqual(response.status_code, 200)
+class TestCartRemoveView(TestCase):
+    def setUp(self):
+        self.category = category1 = Category.objects.create(name="category1")
+        self.product = product1 = Product.objects.create(
+            name="product1", original_price=100, category=category1, stock=10
+        )
 
-    #     self.assertContains(response, "item")
-    #     self.assertEqual(len(response.context["cart"]), 1)
+    def test_remove_product(self):
+        response = self.client.post(reverse("cart:cart_remove", args=[self.product.id]))
+
+        self.assertRedirects(
+            response,
+            reverse("cart:cart_detail"),
+            status_code=302,
+            target_status_code=200,
+        )
+        
+
+    def test_remove_product_with_wrong_id(self):
+        response = self.client.post(reverse("cart:cart_add", args=[999]))
+        self.assertEqual(response.status_code, 404)
