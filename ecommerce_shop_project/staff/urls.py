@@ -24,6 +24,8 @@ from .views import (
     delete_product_discount,
     discount_category,
     delete_category_discount,
+    list_from_api,
+    AddProductFromApi,
 )
 from .decorators import staff_required
 
@@ -47,9 +49,15 @@ urlpatterns = [
     path(
         "comment_list", staff_required(CommentListView.as_view()), name="comment_list"
     ),
+    path("list_from_api", staff_required(list_from_api), name="list_from_api"),
     path("order_list", staff_required(OrderListView.as_view()), name="order_list"),
     path("user_list", staff_required(UserListView.as_view()), name="user_list"),
     # add
+    path(
+        "add_from_api/<str:id>",
+        staff_required(AddProductFromApi.as_view()),
+        name="add_from_api",
+    ),
     path("add_product", staff_required(AddProductView.as_view()), name="add_product"),
     path(
         "add_product_image",

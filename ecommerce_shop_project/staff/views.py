@@ -7,6 +7,8 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth import get_user_model
 from django.views.generic.detail import SingleObjectMixin
 
+import requests
+
 from shop import models
 from orders.models import Order
 from .forms import (
@@ -323,4 +325,54 @@ def delete_category_discount(request, pk):
     cat_pk = discount.category_id
     discount.delete()
     return redirect("staff:discount_category", cat_pk)
+
+
+def list_from_api(request):
+    if request.method == "GET":
+
+        url = "https://www.googleapis.com/books/v1/volumes?q={}&maxResults=10"
+        query = request.GET.get("q")
+        books = None
+        if query:
+            resp = requests.get(url.format(query)).json()
+
+            books = [
+                {
+                    "id": volume.get("id"),
+                    "title": volume.get("volumeInfo").get("title"),
+                    "authors": volume.get("volumeInfo").get("authors"),
+                    "desc": "description" in volume.get("volumeInfo"),
+                }
+                for volume in resp["items"]
+            ]
+        return render(
+            request, "staff/list_from_api.html", {"books": books, "query": query}
+        )
+    else:
+        return render(request, "staff/list_from_api.html", {"books": []})
+
+
+class AddProductFromApi(CreateView):
+    template_name = "staff/add_product.html"
+    model = models.Product
+    fields = ["category", "name", "description", "original_price", "stock", "available"]
+
+    def get(self, request, *args, **kwargs):
+        url = "https://www.googleapis.com/books/v1/volumes?q={}"
+        query = self.kwargs.get('id')
+        books = None
+        if query:
+            resp = requests.get(url.format(query)).json()
+            self.kwargs["title"] = resp["items"][0]["volumeInfo"].get("title")
+            self.kwargs["desc"] = resp["items"][0]["volumeInfo"].get("description")
+        return super().get(request, *args, **kwargs)
+
+    def get_initial(self):
+        initial = super().get_initial()
+        initial['name'] = self.kwargs.get("title")
+        initial['description'] = self.kwargs.get("desc")
+        return initial
+
+    def get_success_url(self):
+        return reverse("staff:product_list")
 
